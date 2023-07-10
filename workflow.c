@@ -1,0 +1,14 @@
+/*
+	Possible workflow for collaborating on Github.
+
+	The set up would be one main (origen) branch and a separate branch for each of us.
+	- Making a new branch
+		type git branch "branch name".
+	- Moving to the specific branch
+		* git checkout "branch name".
+		* git checkout main (to move back to the main branch)
+	- Merging changes remotely
+		* move to main branch
+		* git merch "branch name" (to add changes made to the main branch)
+		* add, commit and push to add to the remote repository
+*/
