@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   lex_list.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/12 15:53:51 by arommers      ########   odam.nl         */
+/*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
+/*   Updated: 2023/07/12 16:09:11 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+// one function to add nodes
 
-int	main(void)
-{
-	char	*input;
+//one function to allocate and make a new node
 
-	input = readline(PROMPT);
-	while (input != NULL)
-	{
-		printf("You entered: %s\n", input);
-		add_history(input);
-		free(input);
-		input = readline(PROMPT);
-	}
-	return (0);
-}
+// function to add the new node to the linked list
+
+//function prototype: int	add_node (t_lexer **list, t_tokens token, char *chars)
