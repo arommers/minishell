@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/12 14:22:02 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/12 16:08:35 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define PROMPT "\x1B[96;1m[minishell]:\x1B[0m"
+# define PROMPT "\x1B[96;1m[minishell]: \x1B[0m"
 
 typedef enum s_tokens {
 	PIPE,
@@ -32,18 +32,18 @@ typedef enum s_tokens {
 }	t_tokens;
 
 typedef struct s_lexer {
-	char			*data;
-	t_tokens		token;
+	char			*chars;
+	t_tokens		*token;
 	int				len;
 	struct s_lexer	*prev;
 	struct s_lexer	*next;
 }	t_lexer;
 
 typedef struct s_data {
+	char			*input;
 	char			**env;
-	char			*args;
 	char			*pwd;
 	t_lexer			*lexer;
-}
+}	t_data;
 
 #endif
