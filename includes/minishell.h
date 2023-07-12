@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/10 15:05:30 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/12 14:22:02 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,27 @@
 
 # define PROMPT "\x1B[96;1m[minishell]:\x1B[0m"
 
-enum e_type {
-	WORD,
-	WHITE_SPACE,
+typedef enum s_tokens {
 	PIPE,
-	LESS,
-	LESS_LESS,
 	GREAT,
-	GREAT_GREAT,
-};
+	GREATER,
+	LESS,
+	LESSER
+}	t_tokens;
 
-enum e_state {
-	DEFAULT,
-	IN_SQUOTE,
-	IN_DQUOTE,
-};
 typedef struct s_lexer {
 	char			*data;
+	t_tokens		token;
 	int				len;
-	enum e_type		*type;
-	enum e_state	*state;
 	struct s_lexer	*prev;
 	struct s_lexer	*next;
 }	t_lexer;
+
+typedef struct s_data {
+	char			**env;
+	char			*args;
+	char			*pwd;
+	t_lexer			*lexer;
+}
 
 #endif
