@@ -8,10 +8,10 @@
 		* git checkout "branch name".
 		* git checkout master (to move back to the main branch)
 	- Merging changes remotely
-		* add, commit and push from branch to master
+		* add, commit from branch to master
 		* move to main branch
 		* git merch "branch name" (to add changes made to the main branch)
-		* add, commit and push to add to the remote repository
+		* push to add to the remote repository
 	- When starting git pull first
 		* push changes to own branch
 		* move to branch and start working on it
