@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/14 13:29:13 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/14 13:53:06 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	skip_spaces(char *str)
 
 // check if the char is a token
 
-int	check_token(char c)
+int	check_index(char c)
 {
 	if (c == '|' || c == '<' || c == '>')
 		return (1);
@@ -55,7 +55,7 @@ int	save_token(char *input)
 		//add '<<' node, j = 2;
 	else if (&input[i] == '<');
 		// '<' node, j = 1
-	if (&input[i] == '>' && &input[i + 1] == '>')
+	else if (&input[i] == '>' && &input[i + 1] == '>')
 		// add '>>' node, j = 2;
 	else if (&input[i] == '>');
 		// add '>' node, j = 1;
@@ -76,10 +76,10 @@ int	tokenizer(char *input)
 	{
 		j = 0;
 		i += skip_spaces(input);
-		if (check_tokens(&input[i]))
-			j = save_token(input[i]); 
+		if (check_index(&input[i]))
+			j = save_token(input); 
 		else
-			j = save_words(input[i]);
+			j = save_words(input);
 		i += j;
 	}
 	return (1);

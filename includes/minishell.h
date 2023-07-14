@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/14 13:06:25 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/14 15:00:24 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ typedef struct s_lexer {
 
 typedef struct s_data {
 	char			*input;
-	char			**env;
+	t_env			*env;
 	char			*pwd;
+	char			*oldpwd;
 	t_lexer			*lexer;
 }	t_data;
 
