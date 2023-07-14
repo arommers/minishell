@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/14 15:03:53 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/14 15:07:57 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,6 @@ t_lexer	*make_node(t_lexer *new, t_tokens token, char *chars)
 // Return value should
 
 int	add_node(t_lexer **head, t_tokens token, char *chars)
-{
-	t_lexer	*new;
-	t_lexer	*current;
-
-	new = make_node(new, token, chars);
-	if (!new)
-		return (0);
-	if (!*head)
-	{
-		*head = new;
-		return (1);
-	}
-	current = *head;
-	while (current->next)
-		current = current->next;
-	current->next = new;
-	new->prev = current;
-	new->next = NULL;
-	return (1);
-}
-
-int	add_tmp_node(t_lexer **head, t_tokens token, char *chars)
 {
 	t_lexer	*new;
 	t_lexer	*current;
