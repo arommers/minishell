@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/14 15:00:24 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/16 11:26:26 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@
 # define PROMPT "\x1B[96;1m[minishell]: \x1B[0m"
 
 typedef enum s_tokens {
+	WORDS,
 	PIPE,
-	GREAT,
-	GREATER,
 	LESS,
-	LESSER
+	LESSLESS,
+	GREAT,
+	GREATGREAT,
 }	t_tokens;
 
 typedef struct s_lexer {
