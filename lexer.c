@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 11:35:14 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/16 11:37:29 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	is_space(char c)
 {
-	if (c == 32 || c >= 9 && c <= 13)
+	if (c == 32 || c > 8 && c < 14)
 		return (1);
 	return (0);
 }
