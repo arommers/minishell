@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 11:37:29 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/16 13:24:51 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,42 +58,43 @@ int	check_index(char *input, int i)
 
 // determine type of token and store it in the lexer list
 
-int	save_token(char *input)
+int	store_token(t_data *data, int i)
 {
-	int	i;
+	int	token;
 	int	j;
 
-	i = 0;
-	j = 0;
-	if (&input[i] == '<' && &input[i + 1] == '<')
-		//add '<<' node, j = 2;
-	else if (&input[i] == '<');
-		// '<' node, j = 1
-	else if (&input[i] == '>' && &input[i + 1] == '>')
-		// add '>>' node, j = 2;
-	else if (&input[i] == '>');
-		// add '>' node, j = 1;
+	token = check_index(data->input, i);
+	if (token == LESSLESS || token == GREATGREAT)
+	{
+		if (add_node(&data->lexer, (t_tokens)token, NULL) != 1)
+			return (-1);
+		j = 2;
+	}
 	else
-		// add '|' node, j = 1;
+	{
+		if (add_node(&data->lexer, (t_tokens)token, NULL) != 1)
+			return (-1);
+		j = 1;
+	}
 	return (j);
 }
 
-// Read through the input and devide into tokens in the linked list
+// Read through the input and devide into tokens in the lexer linked list
 
-int	tokenizer(char *input)
+int	tokenizer(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (input[i])
+	while (data->input[i])
 	{
 		j = 0;
-		i += skip_spaces(input);
-		if (check_index(input, i))
-			j = save_token(input); 
+		i += skip_spaces(data->input);
+		if (check_index(data->input, i))
+			j = store_token(data, i); 
 		else
-			j = save_words(input);
+			j = store_words(data->input);
 		i += j;
 	}
 	return (1);

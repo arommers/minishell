@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/12 15:53:51 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/16 11:55:05 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	main(void)
 {
-	char	*input;
+	t_data	data;
 
-	input = readline(PROMPT);
-	while (input != NULL)
+	data.input = readline(PROMPT);
+	while (data.input != NULL)
 	{
-		printf("You entered: %s\n", input);
-		add_history(input);
-		free(input);
-		input = readline(PROMPT);
+		printf("You entered: %s\n", data.input);
+		add_history(data.input);
+		free(data.input);
+		data.input = readline(PROMPT);
 	}
 	return (0);
 }

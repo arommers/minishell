@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 11:26:26 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/16 12:54:31 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,12 @@ typedef enum s_tokens {
 typedef struct s_lexer {
 	char			*chars;
 	t_tokens		*token;
-	// int				len;
 	struct s_lexer	*prev;
 	struct s_lexer	*next;
 }	t_lexer;
 
 typedef struct s_data {
 	char			*input;
-	t_env			*env;
-	char			*pwd;
-	char			*oldpwd;
 	t_lexer			*lexer;
 }	t_data;
 
