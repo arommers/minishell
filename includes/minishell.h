@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 12:54:31 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/16 16:33:23 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,16 @@ typedef struct s_data {
 	char			*input;
 	t_lexer			*lexer;
 }	t_data;
+
+// Lexer Functions
+
+int			is_space(char c);
+int			skip_spaces(char *str, int i);
+int			tokenizer(t_data *data);
+t_tokens	check_index(char *input, int i);
+int			store_token(t_data *data, int i);
+int			add_node(t_lexer **head, t_tokens *token, char *str);
+
+void	print_lex_list(t_lexer *head);
 
 #endif

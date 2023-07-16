@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 11:55:05 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/16 15:46:12 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	main(void)
 	t_data	data;
 
 	data.input = readline(PROMPT);
+	data.lexer = NULL;
 	while (data.input != NULL)
 	{
-		printf("You entered: %s\n", data.input);
+		// printf("You entered: %s\n", data.input);
+		tokenizer(&data);
 		add_history(data.input);
 		free(data.input);
 		data.input = readline(PROMPT);
