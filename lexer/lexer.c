@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/17 14:55:33 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/17 16:21:01 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,10 @@ int	store_words(t_data *data, int i)
 	j = 0;
 	while (data->input[i + j] && check_index(data->input, i + j) == 0)
 	{
-		j += check_quotes(data->input, j, data->input[j]);
+		if (check_quotes(data->input[i + j]))
+			j += store_quoted(data->input, j, data->input[j]);
 		if (is_space(data->input[i + j]))
-		{
-			if (add_node(&data->lexer, 0, ft_substr(data->input, i, j)) != 1)
-				return (-1);
-			return (j);
-		}
+			break ;
 		j++;
 	}
 	if (add_node(&data->lexer, 0, ft_substr(data->input, i, j)) != 1)
