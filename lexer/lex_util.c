@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/17 12:00:21 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/17 16:26:43 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/17 16:44:24 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	skip_spaces(char *str, int i)
 	return (j);
 }
 
+// Check if the character at the current index is a single or double quote
+
 int	check_quotes(char q)
 {
 	if (q == '\'' || q == '\"')
@@ -40,11 +42,13 @@ int	check_quotes(char q)
 	return (0);
 }
 
+// Iterate until matching quote or the end of the string is found
+
 int	store_quoted(char *input, int i, char q)
 {
 	int	j;
 
-	j = 1;
+	j = 0;
 	while (input[i + j] && input[i + j] != q)
 		j++;
 	return (j);
