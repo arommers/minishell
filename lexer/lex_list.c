@@ -6,11 +6,11 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/17 09:58:12 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/17 14:45:19 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	print_lex_list(t_lexer *head)
 {

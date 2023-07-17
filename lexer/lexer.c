@@ -6,11 +6,11 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/17 12:53:13 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/17 14:55:33 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 // check if the passed argument is a token and determine which
 
@@ -59,20 +59,27 @@ int	store_token(t_data *data, int i)
 	return (j);
 }
 
-// Iterates throught the input str until it reaches a delimiter or the end of the line.
+// Iterates throught the input string until it reaches a delimiter
+// or the end of the lineand stores the string in a node
 
-int	store_words(char *input, int i)
+int	store_words(t_data *data, int i)
 {
-	int	j;
+	int		j;
 
 	j = 0;
-	while (input[i + j])
+	while (data->input[i + j] && check_index(data->input, i + j) == 0)
 	{
-		// if double quote
-		// if single quote
-		if (is_space(input[i + j]))
+		j += check_quotes(data->input, j, data->input[j]);
+		if (is_space(data->input[i + j]))
+		{
+			if (add_node(&data->lexer, 0, ft_substr(data->input, i, j)) != 1)
+				return (-1);
 			return (j);
+		}
+		j++;
 	}
+	if (add_node(&data->lexer, 0, ft_substr(data->input, i, j)) != 1)
+		return (-1);
 	return (j);
 }
 
@@ -91,7 +98,7 @@ int	tokenizer(t_data *data)
 		if (check_index(data->input, i))
 			j = store_token(data, i); 
 		else
-			j = store_words(data->input, i);
+			j = store_words(data, i);
 		if (j < 0)
 			return (0);
 		i += j;

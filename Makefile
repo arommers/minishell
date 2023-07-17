@@ -6,7 +6,7 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/10 17:23:05 by mgoedkoo      ########   odam.nl          #
+#    Updated: 2023/07/17 14:53:23 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,5 +46,3 @@ $(NAME): $(OBJS)
 $(OBJS): build/%.o : %.c
 	@mkdir -p build
 	cc $(CFLAGS) -c $< -o $@
-
-.PHONY: all clean fclean re

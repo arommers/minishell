@@ -6,11 +6,11 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/17 12:00:21 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/17 12:06:34 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/17 14:45:23 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 // check if current char is a white space
 
