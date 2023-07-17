@@ -6,32 +6,11 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 16:36:45 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/17 12:53:13 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-// check if current char is a white space
-
-int	is_space(char c)
-{
-	if (c == 32 || (c > 8 && c < 14))
-		return (1);
-	return (0);
-}
-
-//skip white spaces so they don't get stored
-
-int	skip_spaces(char *str, int i)
-{
-	int	j;
-
-	j = 0;
-	while (is_space(str[i + j]))
-		i++;
-	return (i);
-}
 
 // check if the passed argument is a token and determine which
 
@@ -64,17 +43,35 @@ int	store_token(t_data *data, int i)
 	int			j;
 
 	token = check_index(data->input, i);
+	printf("%d\n", token);
 	if (token == LESSLESS || token == GREATGREAT)
 	{
-		if (add_node(&data->lexer, &token, NULL) != 1)
+		if (add_node(&data->lexer, token, NULL) != 1)
 			return (-1);
 		j = 2;
 	}
 	else
 	{
-		if (add_node(&data->lexer, &token, NULL) != 1)
+		if (add_node(&data->lexer, token, NULL) != 1)
 			return (-1);
 		j = 1;
+	}
+	return (j);
+}
+
+// Iterates throught the input str until it reaches a delimiter or the end of the line.
+
+int	store_words(char *input, int i)
+{
+	int	j;
+
+	j = 0;
+	while (input[i + j])
+	{
+		// if double quote
+		// if single quote
+		if (is_space(input[i + j]))
+			return (j);
 	}
 	return (j);
 }
@@ -93,10 +90,10 @@ int	tokenizer(t_data *data)
 		i += skip_spaces(data->input, i);
 		if (check_index(data->input, i))
 			j = store_token(data, i); 
-		// else
-		// 	j = store_words(data->input);
-		// if (j < 0)
-		// 	return (0);
+		else
+			j = store_words(data->input, i);
+		if (j < 0)
+			return (0);
 		i += j;
 	}
 	print_lex_list(data->lexer);

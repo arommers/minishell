@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 16:33:23 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/17 09:57:58 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef enum s_tokens {
 
 typedef struct s_lexer {
 	char			*chars;
-	t_tokens		*token;
+	t_tokens		token;
 	struct s_lexer	*prev;
 	struct s_lexer	*next;
 }	t_lexer;
@@ -51,7 +51,7 @@ int			skip_spaces(char *str, int i);
 int			tokenizer(t_data *data);
 t_tokens	check_index(char *input, int i);
 int			store_token(t_data *data, int i);
-int			add_node(t_lexer **head, t_tokens *token, char *str);
+int			add_node(t_lexer **head, t_tokens token, char *str);
 
 void	print_lex_list(t_lexer *head);
 

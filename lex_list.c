@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 15:45:05 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/17 09:58:12 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_lex_list(t_lexer *head)
 	i = 0;
 	while (current)
 	{
-		printf("NODE %d: %d\n", i, *current->token);
+		printf("NODE %d: %d\n", i, current->token);
 		i++;
 		current = current->next;
 	}
@@ -29,7 +29,7 @@ void	print_lex_list(t_lexer *head)
 
 // Create a new node for the lexer list
 
-t_lexer	*make_node(t_lexer *new, t_tokens *token, char *str)
+t_lexer	*make_node(t_lexer *new, t_tokens token, char *str)
 {
 	new = malloc(sizeof(t_lexer));
 	if (!new)
@@ -43,7 +43,7 @@ t_lexer	*make_node(t_lexer *new, t_tokens *token, char *str)
 
 // Creates a new node and adds it to the back of the doubly linked list
 
-int	add_node(t_lexer **head, t_tokens *token, char *str)
+int	add_node(t_lexer **head, t_tokens token, char *str)
 {
 	t_lexer	*new;
 	t_lexer	*current;
