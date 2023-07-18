@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 21:13:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/17 19:52:26 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/18 14:33:21 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static void	first_cmd(t_data *data, int fd_io[], int orig_pipe[], pid_t *pid)
 }
 
 // creates last child process
-static void	last_cmd(t_data *data, int size, int orig_pipe[], int fd_io[], pid_t *pid)
+static void	last_cmd(t_data *data, int orig_pipe[], int fd_io[], pid_t last_pid)
 {
-	pid[size - 1] = fork();
-	if (pid[size - 1] == -1)
+	last_pid = fork();
+	if (last_pid == -1)
 		exit_error(NULL, NULL, 1);
-	if (pid[size - 1] == 0)
+	if (last_pid == 0)
 		last_child(data, find_last_cmd(data->cmds), orig_pipe, fd_io);
 	close(orig_pipe[0]);
 }
@@ -54,8 +54,8 @@ static void	last_cmd(t_data *data, int size, int orig_pipe[], int fd_io[], pid_t
 static int	multi_pipes(t_data *data, int size, int pipe_in[], pid_t *pid)
 {
 	t_cmds	*cmd;
-	int	pipe_out[2];
-	int	i;
+	int		pipe_out[2];
+	int		i;
 
 	cmd = (data->cmds)->next;
 	i = 1;
@@ -91,6 +91,6 @@ void	pipex(t_data *data, int size, int fd_io[])
 	first_cmd(data, fd_io, orig_pipe, pid);
 	if (size > 2)
 		orig_pipe[0] = multi_pipes(data, size, orig_pipe, pid);
-	last_cmd(data, size, orig_pipe, fd_io, pid);
+	last_cmd(data, orig_pipe, fd_io, pid[size - 1]);
 	wait_for_children(size, pid);
 }

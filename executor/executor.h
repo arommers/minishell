@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:46:58 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/17 19:51:10 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/18 14:34:03 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ typedef struct s_data
 {
 	t_env			*envp;
 	struct s_cmds	*cmds;
-} t_data;
+}	t_data;
 
 typedef enum s_tokens
 {
-	PIPE = 1,
+	WORDS,
+	PIPE,
 	GREAT,
 	GREATER,
 	LESS,
@@ -60,7 +61,7 @@ typedef struct s_lexer
 typedef struct s_cmds
 {
 	char			**cmd_argv;
-	// int				(*builtin)(t_data *, struct s_cmds *);
+	int				(*builtin)(t_data *, struct s_cmds *);
 	char			*hd_file;
 	t_lexer			*redirects;
 	struct s_cmds	*next;

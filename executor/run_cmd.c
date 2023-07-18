@@ -6,14 +6,14 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/17 19:52:42 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/18 14:30:56 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-// loops through paths from the env variable until it finds working path to command,
-// exits program if no working path is found
+// loops through paths from the env variable until it finds working path
+// to command, exits program if no working path is found
 static char	*try_all_paths(char *cmd, char **all_paths, char *cmd_path)
 {
 	char	*full_path;
@@ -65,8 +65,8 @@ static char	*find_envp_paths(t_env *envp, char *envp_paths)
 	if (!tmp)
 		return (NULL);
 	envp_paths = ft_strdup(tmp->var + 5);
-		if (!envp_paths)
-			exit_error(NULL, NULL, 1);
+	if (!envp_paths)
+		exit_error(NULL, NULL, 1);
 	return (envp_paths);
 }
 

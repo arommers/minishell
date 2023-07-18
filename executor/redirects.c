@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/17 19:52:34 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/18 14:30:04 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int	create_heredoc(t_lexer *tmp, int fd_in)
 static int	redirect_input(t_lexer *tmp, int fd_in)
 {
 	char	*infile;
-	
-	if (tmp->token = LESS)
+
+	if (tmp->token == LESS)
 	{
 		infile = tmp->str;
 		fd_in = open(infile, O_RDONLY);
@@ -40,7 +40,7 @@ static int	redirect_output(t_lexer *tmp, int fd_out)
 	char	*outfile;
 
 	outfile = tmp->str;
-	if (tmp->token = GREAT)
+	if (tmp->token == GREAT)
 		fd_out = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else
 		fd_out = open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
@@ -53,7 +53,7 @@ static int	redirect_output(t_lexer *tmp, int fd_out)
 int	*redirects(t_data *data, int fd_io[])
 {
 	t_lexer	*tmp;
-	
+
 	tmp = data->cmds->redirects;
 	while (tmp)
 	{
