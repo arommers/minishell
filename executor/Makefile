@@ -6,13 +6,14 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/17 19:49:57 by mgoedkoo      ########   odam.nl          #
+#    Updated: 2023/07/18 15:26:05 by mgoedkoo      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =		minishell_executor
 SRCS =		children.c\
 			cmds_utils.c\
+			heredoc.c\
 			main.c\
 			pipex.c\
 			redirects.c\
