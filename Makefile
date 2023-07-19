@@ -6,7 +6,7 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/19 12:45:20 by arommers      ########   odam.nl          #
+#    Updated: 2023/07/19 16:19:07 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ CFLAGS	=	-Wall -Wextra -Werror
 NAME	=	minishell
 LIBFT	=	./libft/libft.a
 INCLUDE =	-I./includes
-SRCS 	=	
+SRC 	=	./lexer/lexer.c ./lexer/lex_list.c	\
+			./lexer/lex_util.c .lexer//main.c
+			
 OBJ_DIR = 	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 
@@ -33,7 +35,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)	
 	@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -lreadline
 	@echo "$(CYAN)-------------------------------------------"
 	@echo "	$(NAME) = NOW READY FOR USE!"
 	@echo "-------------------------------------------$(RESET)"
@@ -41,20 +43,20 @@ $(NAME): $(LIBFT) $(OBJ)
 $(LIBFT):
 	@$(MAKE) -C ./libft
 
-$(OBJ_DIR)/%.o: ./src/%.c
+$(OBJ_DIR)/%.o: ./lexer/%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 
 clean:
-	@$(MAKE) clean -C ./Libft
+	@$(MAKE) clean -C ./libft
 	@rm -rf $(OBJ_DIR)
 	@echo "$(NAME) cleaned up nicely"
 
 fclean: clean
-	@$(MAKE) clean -C ./Libft
+	@$(MAKE) clean -C ./libft
 	rm -f $(NAME)
-	@echo "$(GREEN) $(PROJECT) $(RESET) Cleansed ✅"
+	@echo "$(GREEN) $(NAME) $(RESET) Cleansed ✅"
 
 re: fclean all
 

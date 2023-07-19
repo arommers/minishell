@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/17 17:05:56 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/19 16:34:41 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ t_tokens	check_index(char *input, int i)
 		return (PIPE);
 	else if (input[i] == '<')
 	{
-		if (i + 1 < strlen(input) && input[i + 1] == '<')
+		if (i + 1 < (int)strlen(input) && input[i + 1] == '<')
 			return (LESSLESS);
 		else
 			return (LESS);
 	}
 	else if (input[i] == '>')
 	{
-		if (i + 1 < strlen(input) && input[i + 1] == '>')
+		if (i + 1 < (int)strlen(input) && input[i + 1] == '>')
 			return (GREATGREAT);
 		else
 			return (GREAT);
@@ -43,7 +43,6 @@ int	store_token(t_data *data, int i)
 	int			j;
 
 	token = check_index(data->input, i);
-	printf("%d\n", token);
 	if (token == LESSLESS || token == GREATGREAT)
 	{
 		if (add_node(&data->lexer, token, NULL) != 1)
@@ -70,7 +69,7 @@ int	store_words(t_data *data, int i)
 	while (data->input[i + j] && check_index(data->input, i + j) == 0)
 	{
 		if (check_quotes(data->input[i + j]))
-			j += store_quoted(data->input, j + 1, data->input[j]);
+			j += store_quoted(data->input, j + 1, data->input[i + j]);
 		if (is_space(data->input[i + j]))
 			break ;
 		if (data->input[i + j])

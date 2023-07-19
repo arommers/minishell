@@ -6,11 +6,11 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/16 15:46:12 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/19 14:04:13 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	main(void)
 {
@@ -20,7 +20,6 @@ int	main(void)
 	data.lexer = NULL;
 	while (data.input != NULL)
 	{
-		// printf("You entered: %s\n", data.input);
 		tokenizer(&data);
 		add_history(data.input);
 		free(data.input);

@@ -6,24 +6,58 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/17 14:45:19 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/19 16:23:15 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	free_lexer(t_lexer *head)
+{
+	t_lexer	*tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free (tmp);
+	}
+}
+
+int	check_j(t_tokens token)
+{
+	if (token == PIPE)
+		return (1);
+	else if (token == LESS)
+		return (2);
+	else if (token == LESSLESS)
+		return (3);
+	else if (token == GREAT)
+		return (4);
+	else
+		return (5);
+}
+
 void	print_lex_list(t_lexer *head)
 {
+	char			*tmp[] = {"WORDS", "PIPE", "LESS", "LESSLESS", "GREAT", "GREATGREAT", NULL};
 	t_lexer			*current;
 	int				i;
+	int				j;
 
 	current = head;
 	i = 0;
 	while (current)
 	{
-		printf("NODE %d: %d\n", i, current->token);
-		i++;
+		if (current->token == 0)
+			printf("NODE %d: %s\n", i, current->chars);
+		else
+		{
+			j = check_j(current->token);
+			printf("NODE %d: %s\n", i, tmp[j]);
+		}
 		current = current->next;
+		i++;
 	}
 }
 
@@ -34,7 +68,7 @@ t_lexer	*make_node(t_lexer *new, t_tokens token, char *str)
 	new = malloc(sizeof(t_lexer));
 	if (!new)
 		return (NULL);
-	// new->chars = str;
+	new->chars = str;
 	new->token = token;
 	new->prev = NULL;
 	new->next = NULL;
@@ -48,6 +82,7 @@ int	add_node(t_lexer **head, t_tokens token, char *str)
 	t_lexer	*new;
 	t_lexer	*current;
 
+	new = NULL;
 	new = make_node(new, token, str);
 	if (!new)
 		return (0);

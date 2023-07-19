@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/17 09:57:58 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/19 16:23:29 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <fcntl.h>
+# include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -46,13 +47,18 @@ typedef struct s_data {
 
 // Lexer Functions
 
-int			is_space(char c);
-int			skip_spaces(char *str, int i);
 int			tokenizer(t_data *data);
 t_tokens	check_index(char *input, int i);
 int			store_token(t_data *data, int i);
 int			add_node(t_lexer **head, t_tokens token, char *str);
 
-void	print_lex_list(t_lexer *head);
+// Lexer Utilities
+
+int			is_space(char c);
+void		free_lexer(t_lexer *head);
+int			skip_spaces(char *str, int i);
+int			check_quotes(char q);
+void		print_lex_list(t_lexer *head);
+int			store_quoted(char *input, int i, char q);
 
 #endif
