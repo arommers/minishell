@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/18 17:14:14 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/19 14:00:29 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*generate_filename(void)
 	return (filename);
 }
 
-int	heredoc(t_cmds *cmds, t_lexer *heredoc)
+void	heredoc(t_cmds *cmds, t_lexer *heredoc)
 {
 	if (cmds->hd_filename)
 		free(cmds->hd_filename);
