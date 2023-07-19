@@ -6,7 +6,7 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/19 12:43:48 by arommers      ########   odam.nl          #
+#    Updated: 2023/07/19 12:45:20 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 NAME	=	minishell
 LIBFT	=	./libft/libft.a
 INCLUDE =	-I./includes
-SRCS 	=	children.c\
-			main.c\
-			pipex.c\
-			run_cmd.c\
-			utils.c
+SRCS 	=	
 OBJ_DIR = 	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 
