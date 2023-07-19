@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/18 16:42:25 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/19 16:50:59 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	redirect_input(t_cmds *cmds, t_lexer *tmp, int fd_in)
 		infile = tmp->str;
 		fd_in = open(infile, O_RDONLY);
 		if (fd_in == -1)
-			exit_error_bonus(infile, NULL, 1);
+			exit_error(infile, NULL, 1);
 	}
 	else
 	{
@@ -43,7 +43,7 @@ static int	redirect_output(t_lexer *tmp, int fd_out)
 	else
 		fd_out = open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd_out == -1)
-		exit_error_bonus(outfile, NULL, 1);
+		exit_error(outfile, NULL, 1);
 	return (fd_out);
 }
 
@@ -66,7 +66,7 @@ int	*redirects(t_data *data, int fd_io[])
 	{
 		fd_io[0] = open(data->cmds->hd_filename, O_RDONLY);
 		if (fd_io[0] == -1)
-			exit_error_bonus(data->cmds->hd_filename, NULL, 1);
+			exit_error(data->cmds->hd_filename, NULL, 1);
 	}
 	return (fd_io);
 }

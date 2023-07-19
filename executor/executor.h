@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:46:58 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/18 16:03:50 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/19 16:01:58 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	t_env			*envp;
+	char			**envp;
+	t_env			*env;
 	struct s_cmds	*cmds;
 }	t_data;
 

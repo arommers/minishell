@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   singe_cmd.c                                        :+:    :+:            */
+/*   single_cmd.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 17:04:08 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/18 14:31:06 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/19 17:22:44 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	single_cmd(t_data *data, int fd_io[])
 {
 	pid_t	pid;
+	int		stat;
 
 	if (!data->cmds->cmd_argv)
 		exit(EXIT_SUCCESS);

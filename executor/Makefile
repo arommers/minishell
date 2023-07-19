@@ -6,11 +6,11 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/18 15:26:05 by mgoedkoo      ########   odam.nl          #
+#    Updated: 2023/07/19 17:20:08 by mgoedkoo      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =		minishell_executor
+NAME =		executor
 SRCS =		children.c\
 			cmds_utils.c\
 			heredoc.c\
