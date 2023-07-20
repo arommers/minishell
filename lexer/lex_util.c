@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/17 12:00:21 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/20 10:46:47 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/20 11:46:20 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ int	store_quoted(char *input, int i, char q)
 	j = 0;
 	while (input[i + j] && input[i + j] != q)
 		j++;
-	return (j);
+	return (j + 1);
 }
