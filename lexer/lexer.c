@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/20 12:22:05 by adri          ########   odam.nl         */
+/*   Updated: 2023/07/20 13:36:26 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	store_words(t_data *data, int i)
 		{
 			j += store_quoted(data->input, i + j + 1, data->input[i + j]);
 		}
-		if (is_space(data->input[i + j]))
+		if (is_space(data->input[i + j]) || !data->input[i + j])
 			break ;
 		if (data->input[i + j])
 			j++;
@@ -103,5 +103,7 @@ int	tokenizer(t_data *data)
 		i += j;
 	}
 	print_lex_list(data->lexer);
+	free_lexer(&data->lexer);
+	data->lexer = NULL;
 	return (1);
 }

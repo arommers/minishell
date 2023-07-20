@@ -6,20 +6,22 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/19 16:23:15 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/20 13:34:01 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_lexer(t_lexer *head)
+void	free_lexer(t_lexer **head)
 {
 	t_lexer	*tmp;
+	t_lexer	*current;
 
-	while (head)
+	current = *head;
+	while (current)
 	{
-		tmp = head;
-		head = head->next;
+		tmp = current;
+		current = current->next;
 		free (tmp);
 	}
 }

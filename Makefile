@@ -3,10 +3,10 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
+#    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/20 12:04:15 by adri          ########   odam.nl          #
+#    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
+#    Updated: 2023/07/20 13:38:34 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ clean:
 	@$(MAKE) clean -C ./libft
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(LIBFT)
-	@echo "$(NAME) cleaned up nicely"
+	@echo "$(NAME) Cleansed ✅"
 
 fclean: clean
 	@$(MAKE) clean -C ./libft
