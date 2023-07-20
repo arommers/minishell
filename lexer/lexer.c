@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/20 11:44:37 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/20 12:22:05 by adri          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,15 @@ int	store_token(t_data *data, int i)
 int	store_words(t_data *data, int i)
 {
 	int		j;
-	int		q_flag;
 
 	j = 0;
-	q_flag = 0;
 	while (data->input[i + j] && !check_index(data->input, i + j))
 	{
 		if (check_quotes(data->input[i + j]))
 		{
-			q_flag = 1;
-			j += store_quoted(data->input, j + 1, data->input[i + j]);
+			j += store_quoted(data->input, i + j + 1, data->input[i + j]);
 		}
-		if (is_space(data->input[i + j]) && !q_flag)
+		if (is_space(data->input[i + j]))
 			break ;
 		if (data->input[i + j])
 			j++;

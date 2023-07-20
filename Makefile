@@ -6,7 +6,7 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/19 16:19:07 by arommers      ########   odam.nl          #
+#    Updated: 2023/07/20 12:04:15 by adri          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ $(OBJ_DIR)/%.o: ./lexer/%.c
 clean:
 	@$(MAKE) clean -C ./libft
 	@rm -rf $(OBJ_DIR)
+	@rm -rf $(LIBFT)
 	@echo "$(NAME) cleaned up nicely"
 
 fclean: clean
