@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/20 14:07:14 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/20 14:47:37 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,18 @@ typedef struct s_lexer {
 	struct s_lexer	*next;
 }	t_lexer;
 
+typedef struct s_cmd {
+	char			**cmd;
+	// char		*builtins
+	t_lexer			*re_dir;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}	t_cmd;
+
 typedef struct s_data {
 	char			*input;
 	t_lexer			*lexer;
-	t_lexer			*re_dir;
+	t_cmd			*cmds;
 }	t_data;
 
 // Lexer Functions

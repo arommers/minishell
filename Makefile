@@ -6,7 +6,7 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/07/20 13:38:34 by arommers      ########   odam.nl          #
+#    Updated: 2023/07/20 14:58:40 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ CFLAGS	=	-Wall -Wextra -Werror
 NAME	=	minishell
 LIBFT	=	./libft/libft.a
 INCLUDE =	-I./includes
-SRC 	=	./lexer/lexer.c ./lexer/lex_list.c	\
-			./lexer/lex_util.c .lexer//main.c
+SRC 	=	./parsing/lexer.c ./parsing/lex_list.c	\
+			./parsing/lex_util.c .parsing/main.c
 			
 OBJ_DIR = 	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
@@ -43,7 +43,7 @@ $(NAME): $(LIBFT) $(OBJ)
 $(LIBFT):
 	@$(MAKE) -C ./libft
 
-$(OBJ_DIR)/%.o: ./lexer/%.c
+$(OBJ_DIR)/%.o: ./parsing/%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
