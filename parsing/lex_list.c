@@ -6,25 +6,11 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/20 13:34:01 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/21 12:44:06 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	free_lexer(t_lexer **head)
-{
-	t_lexer	*tmp;
-	t_lexer	*current;
-
-	current = *head;
-	while (current)
-	{
-		tmp = current;
-		current = current->next;
-		free (tmp);
-	}
-}
 
 int	check_j(t_tokens token)
 {
@@ -52,11 +38,11 @@ void	print_lex_list(t_lexer *head)
 	while (current)
 	{
 		if (current->token == 0)
-			printf("NODE %d: %s\n", i, current->chars);
+			printf("NODE %d: %s\n", current->index, current->chars);
 		else
 		{
 			j = check_j(current->token);
-			printf("NODE %d: %s\n", i, tmp[j]);
+			printf("NODE %d: %s\n", current->index, tmp[j]);
 		}
 		current = current->next;
 		i++;
@@ -67,12 +53,14 @@ void	print_lex_list(t_lexer *head)
 
 t_lexer	*make_node(t_lexer *new, t_tokens token, char *str)
 {
+	static int	index;
+
 	new = malloc(sizeof(t_lexer));
 	if (!new)
 		return (NULL);
 	new->chars = str;
 	new->token = token;
-	new->prev = NULL;
+	new->index = index++;
 	new->next = NULL;
 	return (new);
 }
@@ -97,7 +85,6 @@ int	add_node(t_lexer **head, t_tokens token, char *str)
 	while (current->next)
 		current = current->next;
 	current->next = new;
-	new->prev = current;
 	new->next = NULL;
 	return (1);
 }

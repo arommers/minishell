@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/20 14:47:37 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/21 12:38:39 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef enum s_tokens {
 typedef struct s_lexer {
 	char			*chars;
 	t_tokens		token;
-	struct s_lexer	*prev;
+	int				index;
 	struct s_lexer	*next;
 }	t_lexer;
 
@@ -52,6 +52,7 @@ typedef struct s_data {
 	char			*input;
 	t_lexer			*lexer;
 	t_cmd			*cmds;
+	int				nr_pipes;
 }	t_data;
 
 // Lexer Functions
@@ -69,5 +70,11 @@ int			skip_spaces(char *str, int i);
 int			check_quotes(char q);
 void		print_lex_list(t_lexer *head);
 int			store_quoted(char *input, int i, char q);
+
+// Parser Functions
+
+// Parser Utilities
+
+void		count_pipes(t_data *data);	
 
 #endif
