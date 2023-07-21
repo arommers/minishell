@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:43:31 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/21 13:23:24 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/21 14:53:08 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void	free_lexer(t_lexer **head)
 	while (current)
 	{
 		tmp = current;
+		if (current->chars)
+			free(current->chars);
 		current = current->next;
 		free (tmp);
 	}
+	head = NULL;
 }
 
 // Delete a node with a matching value from the list
