@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/21 12:44:06 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/24 14:20:18 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	print_lex_list(t_lexer *head)
 
 // Create a new node for the lexer list
 
-t_lexer	*make_node(t_lexer *new, t_tokens token, char *str)
+t_lexer	*make_lex_node(t_lexer *new, t_tokens token, char *str)
 {
 	static int	index;
 
@@ -67,13 +67,13 @@ t_lexer	*make_node(t_lexer *new, t_tokens token, char *str)
 
 // Creates a new node and adds it to the back of the doubly linked list
 
-int	add_node(t_lexer **head, t_tokens token, char *str)
+int	add_lex_node(t_lexer **head, t_tokens token, char *str)
 {
 	t_lexer	*new;
 	t_lexer	*current;
 
 	new = NULL;
-	new = make_node(new, token, str);
+	new = make_lex_node(new, token, str);
 	if (!new)
 		return (0);
 	if (!*head)

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/21 17:07:28 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/24 14:21:18 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_cmd {
 	char			**cmd;
 	// char		*builtins
 	t_lexer			*re_dir;
-	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -60,7 +59,8 @@ typedef struct s_data {
 int			tokenizer(t_data *data);
 t_tokens	check_index(char *input, int i);
 int			store_token(t_data *data, int i);
-int			add_node(t_lexer **head, t_tokens token, char *str);
+t_lexer		*make_lex_node(t_lexer *new, t_tokens token, char *str);
+int			add_lex_node(t_lexer **head, t_tokens token, char *str);
 
 // Lexer Utilities
 

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 15:18:45 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/21 17:10:42 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/24 17:15:07 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 //	Store redirects in a linked list and remove them from the lexer list.
 //	Store a simple command in a node and remove them from the leer list.
+//	Each cmd node has its own list for redirects
 
-t_cmd	*group_tokens(t_data *data)
+t_cmd	*group_tokens(t_data *data, t_cmd *cmd)
 {
-	t_cmd	*cmd_node;
-	t_lexer	*re_dir;
+	t_cmd	*new;
 	t_lexer	*current;
 	int		args;
 
-	cmd_node = NULL;
-	re_dir = store_redir(data);
-	store_arg(cmd_node, data);
+	cmd = add_cmd_node(&cmd, data);
+	cmd->re_dir = store_redir(&data->lexer, cmd);
+	store_arg(new, data);
 	args = count_args(data->lexer);
 	current = data->lexer;
 	while (args)
 	{
-		cmd_node->
+		new->
 		args--;
 	}
 	return ();
@@ -48,9 +48,7 @@ int	parser(t_data *data)
 	{
 		if (data->lexer->token == PIPE)
 			del_lex_node(&data->lexer, data->lexer->index);
-		cmd = group_tokens(data);
-		if (add_cmd_node(&cmd) != 1)
-			return (0);
+		group_tokens(data, cmd);
 		reset_index(data->lexer);
 	}
 	return (1);

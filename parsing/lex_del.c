@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:43:31 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/21 14:53:08 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/24 17:24:19 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	del_lex_node(t_lexer **head, int match)
 		free(tmp);
 	}
 	*head = current;
+	if (!current)
+		return ;
 	while (current->next && current->next->index != match)
 		current = current->next;
 	if (current->next)

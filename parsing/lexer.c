@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/20 13:36:26 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/24 14:26:53 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	store_token(t_data *data, int i)
 	token = check_index(data->input, i);
 	if (token == LESSLESS || token == GREATGREAT)
 	{
-		if (add_node(&data->lexer, token, NULL) != 1)
+		if (add_lex_node(&data->lexer, token, NULL) != 1)
 			return (-1);
 		j = 2;
 	}
 	else
 	{
-		if (add_node(&data->lexer, token, NULL) != 1)
+		if (add_lex_node(&data->lexer, token, NULL) != 1)
 			return (-1);
 		j = 1;
 	}
@@ -59,7 +59,7 @@ int	store_token(t_data *data, int i)
 }
 
 // Iterates throught the input string until it reaches a delimiter
-// or the end of the lineand stores the string in a node
+// or the end of the line and stores the string in a node
 
 int	store_words(t_data *data, int i)
 {
@@ -77,7 +77,7 @@ int	store_words(t_data *data, int i)
 		if (data->input[i + j])
 			j++;
 	}
-	if (add_node(&data->lexer, 0, ft_substr(data->input, i, j)) != 1)
+	if (add_lex_node(&data->lexer, 0, ft_substr(data->input, i, j)) != 1)
 		return (-1);
 	return (j);
 }
