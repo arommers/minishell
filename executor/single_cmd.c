@@ -6,13 +6,13 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 17:04:08 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/19 17:22:44 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/24 14:43:48 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-// creates only child process, waits for it and gets exit status
+// expands cmd, creates only child process, waits for it and gets exit status
 void	single_cmd(t_data *data, int fd_io[])
 {
 	pid_t	pid;
@@ -20,6 +20,7 @@ void	single_cmd(t_data *data, int fd_io[])
 
 	if (!data->cmds->cmd_argv)
 		exit(EXIT_SUCCESS);
+	expand_cmd(data->cmds->cmd_argv);
 	pid = fork();
 	if (pid == -1)
 		exit_error(NULL, NULL, 1);

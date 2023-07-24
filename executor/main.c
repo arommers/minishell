@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/19 17:27:12 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/24 17:33:53 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	**make_argv(char *cmd)
 	char	**cmd_argv;
 
 	cmd_argv = malloc(sizeof(char *) * 2);
-	cmd_argv[0] = cmd;
+	cmd_argv[0] = ft_strdup(cmd);
 	cmd_argv[1] = NULL;
 	return (cmd_argv);
 }
@@ -52,21 +52,21 @@ static void	fill_data(t_data *data, char **envp)
 {
 	t_cmds	*cmds;
 	t_cmds	*cmds2;
-	t_lexer	*redirects2;
+	// t_lexer	*redirects2;
 
 	data->envp = envp;
 	cmds = malloc(sizeof(t_cmds));
 	cmds->redirects = malloc(sizeof(t_lexer));
-	redirects2 = malloc(sizeof(t_lexer));
+	// redirects2 = malloc(sizeof(t_lexer));
 	cmds2 = malloc(sizeof(t_cmds));
 	data->cmds = cmds;
 	cmds->hd_filename = NULL;
-	cmds->redirects->token = GREATER;
-	cmds->redirects->str = "outfile.txt";
-	cmds->redirects->next = redirects2;
-	redirects2->token = LESSER;
-	redirects2->str = "end";
-	redirects2->next = NULL;
+	cmds->redirects->token = LESSER;
+	cmds->redirects->str = ft_strdup("one\'two\'\"three\"four\'\"five\"\'");
+	cmds->redirects->next = NULL;
+	// redirects2->token = GREATER;
+	// redirects2->str = ft_strdup("outfile.txt");
+	// redirects2->next = NULL;
 	cmds->cmd_argv = make_argv("sort");
 	cmds->next = cmds2;
 	cmds2->cmd_argv = make_argv("uniq");

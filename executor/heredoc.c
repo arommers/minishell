@@ -6,18 +6,19 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/19 17:35:25 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/24 17:42:45 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-// opens new hd file, stores input in there until deliminator is encountered
+// opens new hd file, reads and expands input, stores it in file
 // IGNORE COMMENTED BIT: I use get_next_line instead of readline when testing
-static void	create_heredoc(t_lexer *heredoc, char *filename)
+static void	create_heredoc(t_lexer *heredoc, char *filename, int isquoted)
 {
 	int		fd;
 	char	*line;
+	char	*tmp_str;
 
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
@@ -26,6 +27,12 @@ static void	create_heredoc(t_lexer *heredoc, char *filename)
 	// line = get_next_line(0);
 	while (line && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str)) != 0)
 	{
+		if (isquoted == 0 && ft_strchr(line, '$'))
+		{
+			tmp_str = expand_heredoc_input(line);
+			free(line);
+			line = tmp_str;
+		}
 		ft_putendl_fd(line, fd);
 		// ft_putstr_fd(line, fd);
 		free(line);
@@ -52,11 +59,22 @@ static char	*generate_filename(void)
 	return (filename);
 }
 
-// checks if there is already a heredoc, replaces its name and makes new one
+// replaces old heredoc, checks for quotes and makes new one
 void	heredoc(t_cmds *cmds, t_lexer *heredoc)
 {
+	int		isquoted;
+	char	*tmp_str;
+
 	if (cmds->hd_filename)
 		free(cmds->hd_filename);
 	cmds->hd_filename = generate_filename();
-	create_heredoc(heredoc, cmds->hd_filename);
+	isquoted = 0;
+	if (quote_strchr(heredoc->str))
+	{
+		tmp_str = expand_heredoc_str(heredoc->str);
+		free(heredoc->str);
+		heredoc->str = tmp_str;
+		isquoted = 1;
+	}
+	create_heredoc(heredoc, cmds->hd_filename, isquoted);
 }

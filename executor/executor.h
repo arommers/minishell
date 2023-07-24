@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:46:58 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/19 16:01:58 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/24 16:11:28 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }	t_lexer;
 
-// should redirects really be in cmds struct, or better as its own struct in data?
+// should redirects really be in cmds struct,
+// or better as its own struct in data?
 typedef struct s_cmds
 {
 	char			**cmd_argv;
@@ -72,14 +73,22 @@ typedef struct s_cmds
 
 int		cmds_size(t_cmds *cmds);
 void	exit_error(char *cmd, char *err_msg, int exit_code);
+void	expand_cmd(char **cmd_argv);
+char	*expand_heredoc_input(char *str);
+char	*expand_heredoc_str(char *str);
+char	*expand_str(char *str);
 t_cmds	*find_last_cmd(t_cmds *cmds);
 void	first_child(t_data *data, t_cmds *cmd, int fd_io[], int pipe_out[]);
 void	heredoc(t_cmds *cmds, t_lexer *heredoc);
+int		isquote(char c);
 void	last_child(t_data *data, t_cmds *cmd, int pipe_in[], int fd_io[]);
+int		len_till_quote(char *str, char quote);
 void	middle_child(t_data *data, t_cmds *cmd, int pipe_in[], int pipe_out[]);
 void	only_child(t_data *data, t_cmds *cmd, int fd_io[]);
 void	pipex(t_data *data, int size, int fd_io[]);
+char	*quote_strchr(char *str);
 int		*redirects(t_data *data, int fd_io[]);
+char	*remove_quotes(char *str);
 void	run_cmd(t_data *data, char **cmd_argv);
 void	single_cmd(t_data *data, int fd_io[]);
 

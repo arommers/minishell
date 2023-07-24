@@ -6,16 +6,18 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/19 17:20:08 by mgoedkoo      ########   odam.nl          #
+#    Updated: 2023/07/24 15:07:03 by mgoedkoo      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =		executor
 SRCS =		children.c\
 			cmds_utils.c\
+			expander.c\
 			heredoc.c\
 			main.c\
 			pipex.c\
+			quote_utils.c\
 			redirects.c\
 			run_cmd.c\
 			single_cmd.c
