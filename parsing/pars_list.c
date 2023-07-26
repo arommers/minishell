@@ -6,13 +6,13 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 10:31:34 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/26 13:31:55 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_cmd	*make_cmd_node(t_cmd *new, t_data *data)
+t_cmd	*make_cmd_node(t_cmd *new)
 {
 	t_cmd	*new;
 
@@ -30,7 +30,7 @@ t_cmd	*add_cmd_node(t_cmd **head, t_data *data)
 	t_cmd	*new;
 	t_cmd	*current;
 
-	new = make_cmd_node(head, data);
+	new = make_cmd_node(new);
 	if (!new)
 		return (NULL);
 	if (!*head)
@@ -54,49 +54,50 @@ t_cmd	*add_cmd_node(t_cmd **head, t_data *data)
 // 	while ()
 // }
 
-t_lexer	*store_redir(t_lexer **head, t_cmd *cmd)
-{
-	t_lexer	*current;
-	t_lexer	*re_dir;
+// t_lexer	*store_redir(t_lexer **head, t_cmd *cmd)
+// {
+// 	t_lexer	*current;
+// 	t_lexer	*re_dir;
 
-	current = *head;
-	re_dir = NULL;
-	while (current && current->token == WORDS)
-	{
-		if (!current || current->token == PIPE)
-			return (re_dir);
-		// if ( 2 consecutive wrong tokens)
-		// error;
-		if (current && (current->token > 1 && current->token < 6))
-		{
-			add_lex_node(&re_dir, current->token, current->chars);
-			del_lex_node(&current, current->index);
-			del_lex_node(&current, current->index);
-		}
-		else
-			current = current->next;
-	}
-	*head = current;
-	return (re_dir);
-}
+// 	current = *head;
+// 	re_dir = NULL;
+// 	while (current && current->token == WORDS)
+// 	{
+// 		if (!current || current->token == PIPE)
+// 			return (re_dir);
+// 		// if ( 2 consecutive wrong tokens)
+// 		// error;
+// 		if (current && (current->token > 1 && current->token < 6))
+// 		{
+// 			add_lex_node(&re_dir, current->token, current->chars);
+// 			del_lex_node(&current, current->index);
+// 			del_lex_node(&current, current->index);
+// 		}
+// 		else
+// 			current = current->next;
+// 	}
+// 	*head = current;
+// 	return (re_dir);
+// }
 
 void	store_redir(t_lexer **head, t_cmd *cmd)
 {
 	t_lexer	*current;
-	t_lexer	*re_dir;
 
 	current = *head;
-	re_dir = NULL;
-	while (current)
+	while (current && current->token == WORDS)
+		current = current->next;
+	if (!current || current->token == PIPE)
+		return ;
+	// if (!current->next)
+	// 	no filename errors etc
+	// if (current->next->token)
+	// 	double token errors etc
+	if (current->token > 1 && current->token < 6)
 	{
-		if (!current || current->token == PIPE)
-			return ;
-		if (current->token > 1 && current->token < 6)
-		{
-			add_lex_node(&re_dir, current->token, current->next->chars);
-			del_lex_node(head, (*head)->index);
-			del_lex_node(head, (*head)->next->index);
-		}
+		add_lex_node(&cmd->re_dir, current->token, current->next->chars);
+		del_lex_node(head, (*head)->index);
+		del_lex_node(head, (*head)->index);
 	}
 	store_redir(head, cmd);
 }
