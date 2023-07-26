@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/21 10:27:11 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/26 16:06:13 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ int	main(void)
 	while (data.input != NULL)
 	{
 		tokenizer(&data);
-		// parser(&data);
+		parser(&data);
 		add_history(data.input);
+		free_lexer(&data.lexer);
 		free(data.input);
 		data.input = readline(PROMPT);
 	}

@@ -6,30 +6,37 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 13:52:07 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/26 16:17:30 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/*	Intializes a new cmd node.
+	sets all it's members to NULL.
+*/
+
 t_cmd	*make_cmd_node(t_cmd *new)
 {
-	t_cmd	*new;
-
-	new = malloc(sizof(t_cmd));
+	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
-	new->cmd = NULL;
+	new->args = NULL;
 	new->re_dir = NULL;
 	new->next = NULL;
 	return (new);
 }
 
-t_cmd	*add_cmd_node(t_cmd **head, t_data *data)
+/*	Adds a new node to the cmd linked list.
+	If the lists points to NULL it creates a new head node .
+*/
+
+t_cmd	*add_cmd_node(t_cmd **head)
 {
 	t_cmd	*new;
 	t_cmd	*current;
 
+	new = NULL;
 	new = make_cmd_node(new);
 	if (!new)
 		return (NULL);

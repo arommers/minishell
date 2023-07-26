@@ -6,7 +6,7 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/07/24 11:07:36 by arommers      ########   odam.nl          #
+#    Updated: 2023/07/26 16:11:12 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ LIBFT	=	./libft/libft.a
 INCLUDE =	-I./includes
 SRC 	=	./parsing/lexer.c ./parsing/lex_list.c	\
 			./parsing/lex_util.c .parsing/main.c	\
-			./parsing/lex_del.c
+			./parsing/lex_del.c ./parsing/parser.c 	\
+			./parsing/pars_list.c					\
+			./parsing/pars_util.c
 			
 OBJ_DIR = 	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))

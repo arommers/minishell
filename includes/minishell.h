@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 13:58:35 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/26 16:14:13 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,31 @@ int			is_space(char c);
 void		free_lexer(t_lexer **head);
 int			skip_spaces(char *str, int i);
 int			check_quotes(char q);
-void		print_lex_list(t_lexer *head);
 int			store_quoted(char *input, int i, char q);
+
+// Lexer List Functions
+
+int			check_j(t_tokens token);
+void		print_lex_list(t_lexer *head);
+void		del_lex_node(t_lexer **head, int match);
+t_lexer		*make_lex_node(t_lexer *new, t_tokens token, char *str);
+int			add_lex_node(t_lexer **head, t_tokens token, char *str);
 
 // Parser Functions
 
+int			parser(t_data *data);
+void		group_tokens(t_data *data, t_cmd *cmd);
+void		store_args(t_data *data, t_cmd *cmd, int i);
+void		store_redir(t_lexer **lexer, t_cmd *cmd);
+
 // Parser Utilities
 
-void		count_pipes(t_data *data);	
+int			count_args(t_lexer *head);
+void		count_pipes(t_data *data);
+
+//	Parser List Functions
+
+t_cmd		*make_cmd_node(t_cmd *new);
+t_cmd		*add_cmd_node(t_cmd **head);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 13:29:36 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/26 15:04:48 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	add_lex_node(t_lexer **head, t_tokens token, char *str)
 	t_lexer	*new;
 	t_lexer	*current;
 
+	new = NULL;
 	new = make_lex_node(new, token, str);
 	if (!new)
 		return (0);
