@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 10:10:48 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/26 13:58:35 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_lexer {
 }	t_lexer;
 
 typedef struct s_cmd {
-	char			**cmd;
+	char			**args;
 	// char		*builtins
 	t_lexer			*re_dir;
 	struct s_cmd	*next;

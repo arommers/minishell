@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 13:31:55 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/26 13:52:07 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,39 +46,11 @@ t_cmd	*add_cmd_node(t_cmd **head, t_data *data)
 	return (new);
 }
 
-// void	*del_redir(t_lexer *head)
-// {
-// 	t_lexer	*current;
-
-// 	current = head;
-// 	while ()
-// }
-
-// t_lexer	*store_redir(t_lexer **head, t_cmd *cmd)
-// {
-// 	t_lexer	*current;
-// 	t_lexer	*re_dir;
-
-// 	current = *head;
-// 	re_dir = NULL;
-// 	while (current && current->token == WORDS)
-// 	{
-// 		if (!current || current->token == PIPE)
-// 			return (re_dir);
-// 		// if ( 2 consecutive wrong tokens)
-// 		// error;
-// 		if (current && (current->token > 1 && current->token < 6))
-// 		{
-// 			add_lex_node(&re_dir, current->token, current->chars);
-// 			del_lex_node(&current, current->index);
-// 			del_lex_node(&current, current->index);
-// 		}
-// 		else
-// 			current = current->next;
-// 	}
-// 	*head = current;
-// 	return (re_dir);
-// }
+/*	Go over the lex list and store any encountered tokens
+	and subsequent filenames iin a new linked list.
+	The list itself will be stored in the cmd node.
+	The original nodes are deleted from the lext list
+	and the pointer moved up. */
 
 void	store_redir(t_lexer **head, t_cmd *cmd)
 {
