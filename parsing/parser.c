@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 15:18:45 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/24 17:15:07 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/26 10:19:13 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd	*group_tokens(t_data *data, t_cmd *cmd)
 	int		args;
 
 	cmd = add_cmd_node(&cmd, data);
-	cmd->re_dir = store_redir(&data->lexer, cmd);
+	store_redir(&data->lexer, cmd);
 	store_arg(new, data);
 	args = count_args(data->lexer);
 	current = data->lexer;
