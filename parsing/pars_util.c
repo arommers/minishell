@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:36:53 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 15:59:54 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/27 13:30:05 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ int	count_args(t_lexer *head)
 
 	i = 0;
 	current = head;
+	// printf("%s\n", current->chars);
 	while (current && current->token != PIPE)
 	{
 		current = current->next;
 		i++;
 	}
+	// printf("%d\n", i);
 	return (i);
 }

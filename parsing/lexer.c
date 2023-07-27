@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 16:05:42 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/27 12:05:54 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ int	tokenizer(t_data *data)
 		i += j;
 	}
 	print_lex_list(data->lexer);
-	parser(data);
+	// print_cmd_list(data->cmds);
 	return (1);
 }

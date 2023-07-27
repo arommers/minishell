@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 16:14:13 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/27 13:44:24 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef enum s_tokens {
 typedef struct s_lexer {
 	char			*chars;
 	t_tokens		token;
-	int				index;
 	struct s_lexer	*next;
 }	t_lexer;
 
@@ -72,16 +71,14 @@ int			store_quoted(char *input, int i, char q);
 
 // Lexer List Functions
 
-int			check_j(t_tokens token);
-void		print_lex_list(t_lexer *head);
-void		del_lex_node(t_lexer **head, int match);
+void		del_lex_node(t_lexer **head);
 t_lexer		*make_lex_node(t_lexer *new, t_tokens token, char *str);
 int			add_lex_node(t_lexer **head, t_tokens token, char *str);
 
 // Parser Functions
 
 int			parser(t_data *data);
-void		group_tokens(t_data *data, t_cmd *cmd);
+void		group_tokens(t_data *data);
 void		store_args(t_data *data, t_cmd *cmd, int i);
 void		store_redir(t_lexer **lexer, t_cmd *cmd);
 
@@ -94,5 +91,13 @@ void		count_pipes(t_data *data);
 
 t_cmd		*make_cmd_node(t_cmd *new);
 t_cmd		*add_cmd_node(t_cmd **head);
+
+//	Print Fucnctions
+
+char		*make_str(char **head);
+int			check_j(t_tokens token);
+void		print_cmd_list(t_cmd *head);
+void		print_lex_list(t_lexer *head);
+
 
 #endif

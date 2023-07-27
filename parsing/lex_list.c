@@ -6,61 +6,21 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 15:04:48 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/27 13:38:28 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	check_j(t_tokens token)
-{
-	if (token == PIPE)
-		return (1);
-	else if (token == LESS)
-		return (2);
-	else if (token == LESSLESS)
-		return (3);
-	else if (token == GREAT)
-		return (4);
-	else
-		return (5);
-}
-
-void	print_lex_list(t_lexer *head)
-{
-	char			*tmp[] = {"WORDS", "PIPE", "LESS", "LESSLESS", "GREAT", "GREATGREAT", NULL};
-	t_lexer			*current;
-	int				i;
-	int				j;
-
-	current = head;
-	i = 0;
-	while (current)
-	{
-		if (current->token == 0)
-			printf("NODE %d: %s\n", current->index, current->chars);
-		else
-		{
-			j = check_j(current->token);
-			printf("NODE %d: %s\n", current->index, tmp[j]);
-		}
-		current = current->next;
-		i++;
-	}
-}
-
 // Create a new node for the lexer list
 
 t_lexer	*make_lex_node(t_lexer *new, t_tokens token, char *str)
 {
-	static int	index;
-
 	new = malloc(sizeof(t_lexer));
 	if (!new)
 		return (NULL);
 	new->token = token;
 	new->chars = str;
-	new->index = index++;
 	new->next = NULL;
 	return (new);
 }

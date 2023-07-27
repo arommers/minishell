@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/26 16:17:30 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/27 15:55:59 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_cmd	*make_cmd_node(t_cmd *new)
 }
 
 /*	Adds a new node to the cmd linked list.
-	If the lists points to NULL it creates a new head node .
+	If the list points to NULL it creates a new head node .
 */
 
 t_cmd	*add_cmd_node(t_cmd **head)
@@ -63,6 +63,8 @@ void	store_redir(t_lexer **head, t_cmd *cmd)
 {
 	t_lexer	*current;
 
+	if (!*head || !head)
+		return ;
 	current = *head;
 	while (current && current->token == WORDS)
 		current = current->next;
@@ -74,9 +76,14 @@ void	store_redir(t_lexer **head, t_cmd *cmd)
 	// 	double token errors etc
 	if (current->token > 1 && current->token < 6)
 	{
+		// if (!current->next->next)
+		// 	*head = current;
 		add_lex_node(&cmd->re_dir, current->token, current->next->chars);
-		del_lex_node(head, (*head)->index);
-		del_lex_node(head, (*head)->index);
+		printf("%s\n", current->chars);
+		del_lex_node(&current);
+		printf("%s\n", current->chars);
+		del_lex_node(&current);
 	}
+	*head = current;
 	store_redir(head, cmd);
 }
