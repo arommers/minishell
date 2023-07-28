@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/27 12:05:54 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/28 14:01:53 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	store_token(t_data *data, int i)
 	token = check_index(data->input, i);
 	if (token == LESSLESS || token == GREATGREAT)
 	{
-		if (add_lex_node(&data->lexer, token, NULL) != 1)
+		if (add_lex_node(&(data->lexer), token, NULL) != 1)
 			return (-1);
 		j = 2;
 	}
 	else
 	{
-		if (add_lex_node(&data->lexer, token, NULL) != 1)
+		if (add_lex_node(&(data->lexer), token, NULL) != 1)
 			return (-1);
 		j = 1;
 	}
@@ -77,7 +77,7 @@ int	store_words(t_data *data, int i)
 		if (data->input[i + j])
 			j++;
 	}
-	if (add_lex_node(&data->lexer, 0, ft_substr(data->input, i, j)) != 1)
+	if (add_lex_node(&(data->lexer), 0, ft_substr(data->input, i, j)) != 1)
 		return (-1);
 	return (j);
 }

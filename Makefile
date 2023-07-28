@@ -6,12 +6,12 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/07/27 10:04:59 by arommers      ########   odam.nl          #
+#    Updated: 2023/07/28 13:38:37 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC		= 	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -g
 NAME	=	minishell
 LIBFT	=	./libft/libft.a
 INCLUDE =	-I./includes

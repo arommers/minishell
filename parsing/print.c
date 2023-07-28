@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/27 10:01:26 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/27 17:00:50 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/28 13:46:59 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ char	*make_str(char **head)
 	len = 0;
 	while (head[i])
 		len += ft_strlen(head[i++]);
-	printf("test\n");
-	tmp = malloc(len * sizeof(char) + 1);
+	tmp = malloc((len + 1) * sizeof(char));
 	i = 0;
 	while (head[i])
 	{
@@ -86,18 +85,18 @@ char	*make_str(char **head)
 
 void	print_cmd_list(t_cmd *head)
 {
-	t_cmd	*current;
-	char	*tmp;
 	int		i;
+	char	*tmp;
+	t_cmd	*current;
 
 	i = 0;
 	current = head;
-	tmp = make_str(head->args);
-	printf("%s\n", tmp);
 	while (current)
 	{
+		tmp = make_str(current->args);
+		printf("%s\n", tmp);
 		printf("CMD_NODE: %d, ARGS: %s TOKEN: %d FILE: %s\n", i++, tmp,
-			head->re_dir->token, head->re_dir->chars);
+			current->re_dir->token, current->re_dir->chars);
 		free(tmp);
 		current = current->next;
 	}
