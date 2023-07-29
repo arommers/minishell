@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/19 17:26:49 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/26 14:33:04 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,6 @@ static char	*get_path(char *cmd, char *envp_paths)
 	return (try_all_paths(cmd, all_paths, cmd_path));
 }
 
-// loops through env list until the PATH variable is found
-// IGNORE COMMENTED BIT: I use envp from main() when testing
-static char	*find_envp_paths(t_data *data, char *envp_paths)
-{
-	t_env	*tmp;
-	// int	i;
-
-	tmp = data->env;
-	while (tmp && !ft_strnstr(tmp->var, "PATH", ft_strlen(tmp->var)))
-		tmp = tmp->next;
-	if (!tmp)
-		return (NULL);
-	envp_paths = ft_strdup(tmp->var + 5);
-	// i = 0;
-	// while (data->envp[i] && !ft_strnstr(data->envp[i], "PATH", ft_strlen(data->envp[i])))
-	// 	i++;
-	// if (!data->envp[i])
-	// 	return (NULL);
-	// envp_paths = ft_strdup(data->envp[i] + 5);
-	if (!envp_paths)
-		exit_error(NULL, NULL, 1);
-	return (envp_paths);
-}
-
 // looks for working path to command before executing command
 void	run_cmd(t_data *data, char **cmd_argv)
 {
@@ -86,9 +62,13 @@ void	run_cmd(t_data *data, char **cmd_argv)
 
 	work_path = cmd_argv[0];
 	envp_paths = NULL;
-	envp_paths = find_envp_paths(data, envp_paths);
-	if (envp_paths)
+	if (getenv("PATH"))
+	{
+		envp_paths = ft_strdup(getenv("PATH"));
+		if (!envp_paths)
+			exit_error(NULL, NULL, 1);
 		work_path = get_path(cmd_argv[0], envp_paths);
+	}
 	if (execve(work_path, cmd_argv, data->envp) == -1)
 		exit_error(work_path, NULL, 126);
 }

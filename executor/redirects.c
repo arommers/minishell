@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/24 14:53:04 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/26 16:33:41 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,8 @@ static int	redirect_input(t_cmds *cmds, t_lexer *tmp, int fd_in)
 	if (tmp->token == LESS)
 	{
 		if (quote_strchr(tmp->str) || ft_strchr(tmp->str, '$'))
-		{
-			infile = expand_str(tmp->str);
-			free(tmp->str);
-			tmp->str = infile;
-		}
-		else
-			infile = tmp->str;
+			tmp->str = expand_str(tmp->str, 0);
+		infile = tmp->str;
 		fd_in = open(infile, O_RDONLY);
 		if (fd_in == -1)
 			exit_error(infile, NULL, 1);
@@ -45,13 +40,8 @@ static int	redirect_output(t_lexer *tmp, int fd_out)
 	char	*outfile;
 
 	if (quote_strchr(tmp->str) || ft_strchr(tmp->str, '$'))
-	{
-		outfile = expand_str(tmp->str);
-		free(tmp->str);
-		tmp->str = outfile;
-	}
-	else
-		outfile = tmp->str;
+		tmp->str = expand_str(tmp->str, 0);
+	outfile = tmp->str;
 	if (tmp->token == GREAT)
 		fd_out = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else

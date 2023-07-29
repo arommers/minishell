@@ -6,13 +6,13 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/24 17:33:53 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/29 18:47:57 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-// exits program in case of error (CHANGE TO FIT MINISHELL !!!)
+// exits program in case of error (CHANGE TO FIT MINISHELL)
 // cmd =		if running specific command causes the error
 // err_msg =	error message in case error occurs in minishell itself
 //				(so can't use perror)
@@ -37,13 +37,14 @@ void	exit_error(char *cmd, char *err_msg, int exit_code)
 }
 
 // IGNORE: dummy data
-static char	**make_argv(char *cmd)
+static char	**make_argv(char *cmd, char *arg)
 {
 	char	**cmd_argv;
 
-	cmd_argv = malloc(sizeof(char *) * 2);
+	cmd_argv = malloc(sizeof(char *) * 3);
 	cmd_argv[0] = ft_strdup(cmd);
-	cmd_argv[1] = NULL;
+	cmd_argv[1] = ft_strdup(arg);
+	cmd_argv[2] = NULL;
 	return (cmd_argv);
 }
 
@@ -51,26 +52,27 @@ static char	**make_argv(char *cmd)
 static void	fill_data(t_data *data, char **envp)
 {
 	t_cmds	*cmds;
-	t_cmds	*cmds2;
+	// t_cmds	*cmds2;
 	// t_lexer	*redirects2;
 
 	data->envp = envp;
 	cmds = malloc(sizeof(t_cmds));
-	cmds->redirects = malloc(sizeof(t_lexer));
+	cmds->redirects = NULL;
+	// cmds->redirects = malloc(sizeof(t_lexer));
 	// redirects2 = malloc(sizeof(t_lexer));
-	cmds2 = malloc(sizeof(t_cmds));
+	// cmds2 = malloc(sizeof(t_cmds));
 	data->cmds = cmds;
-	cmds->hd_filename = NULL;
-	cmds->redirects->token = LESSER;
-	cmds->redirects->str = ft_strdup("one\'two\'\"three\"four\'\"five\"\'");
-	cmds->redirects->next = NULL;
+	// cmds->hd_filename = NULL;
+	// cmds->redirects->token = LESSER;
+	// cmds->redirects->str = ft_strdup("end");
+	// cmds->redirects->next = NULL;
 	// redirects2->token = GREATER;
 	// redirects2->str = ft_strdup("outfile.txt");
 	// redirects2->next = NULL;
-	cmds->cmd_argv = make_argv("sort");
-	cmds->next = cmds2;
-	cmds2->cmd_argv = make_argv("uniq");
-	cmds2->next = NULL;
+	cmds->cmd_argv = make_argv("echo", "\"Hello, I am \'$USER\'\"");
+	cmds->next = NULL;
+	// cmds2->cmd_argv = make_argv("uniq");
+	// cmds2->next = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)

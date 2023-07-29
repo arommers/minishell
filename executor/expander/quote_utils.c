@@ -5,13 +5,14 @@
 /*                                                     +:+                    */
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/24 15:07:25 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/24 17:14:16 by mgoedkoo      ########   odam.nl         */
+/*   Created: 2023/07/26 17:09:53 by mgoedkoo      #+#    #+#                 */
+/*   Updated: 2023/07/29 18:54:00 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../executor.h"
 
+// searches string for quotes, returns first one encountered
 char	*quote_strchr(char *str)
 {
 	char	*single_quote;
@@ -33,6 +34,7 @@ char	*quote_strchr(char *str)
 	return (NULL);
 }
 
+// checks if char is quote
 int	isquote(char c)
 {
 	if (c == '\'' || c == '\"')
@@ -40,6 +42,7 @@ int	isquote(char c)
 	return (0);
 }
 
+// counts len of string till the given quote
 int	len_till_quote(char *str, char quote)
 {
 	char	*find_quote;
