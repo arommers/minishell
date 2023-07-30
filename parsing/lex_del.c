@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:43:31 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/28 11:51:40 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/30 16:38:22 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void	del_lex_node(t_lexer **head)
 	t_lexer	*tmp;
 
 	current = *head;
-	printf("del_node\n");
+	if (current->token == 0)
+		printf("DEL_NODE: %s\n", current->chars);
+	else
+		printf("DEL_NODE: %d\n", current->token);
 	if (current)
 	{
 		tmp = current;

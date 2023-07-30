@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/28 16:12:21 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/30 16:29:21 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,40 +62,67 @@ t_cmd	*add_cmd_node(t_cmd **head)
 void	store_redir(t_lexer **head, t_cmd *cmd)
 {
 	t_lexer	*current;
-	t_lexer	*second;
 	t_cmd	*tmp;
 
 	current = *head;
 	tmp = cmd;
 	while (tmp->next)
 		tmp = tmp->next;
-	while (current && current->token == WORDS)
-	{
-		if (current->next->token > 1 && current->next->token < 6)
-			second = current;
+	while (current && current->token == WORDS && !current->is_token)
 		current = current->next;
-	}
 	if (!current || current->token == PIPE)
 		return ;
 	// if (!current->next)
-	// 	no filename errors etc
+	// 	// file error
 	// if (current->next->token)
-	// 	double token errors etc
+	// 	double error
 	if (current->token > 1 && current->token < 6)
 	{
-		add_lex_node(&(tmp->re_dir), current->token, current->next->chars);
-		printf("%s\n", current->chars);
-		del_lex_node(&current);
-		printf("%s\n", current->chars);
-		del_lex_node(&current);
+		current->is_token = 1;
+		current->next->is_token = 1;
+		add_lex_node(&tmp->re_dir, current->token, current->next->chars);
+		current = current->next->next;
 	}
-	if (!current)
-	{
-		printf("test\n");
-		printf("%s\n", second->chars);
-		*head = second;
-	}
-	else
-		*head = current;
-	store_redir(head, cmd);
+	store_redir(&current, cmd);
 }
+
+// void	store_redir(t_lexer **head, t_cmd *cmd)
+// {
+// 	t_lexer	*current;
+// 	t_lexer	*second;
+// 	t_cmd	*tmp;
+
+// 	current = *head;
+// 	tmp = cmd;
+// 	while (tmp->next)
+// 		tmp = tmp->next;
+// 	while (current && current->token == WORDS)
+// 	{
+// 		if (current->next->token > 1 && current->next->token < 6)
+// 			second = current;
+// 		current = current->next;
+// 	}
+// 	if (!current || current->token == PIPE)
+// 		return ;
+// 	// if (!current->next)
+// 	// 	no filename errors etc
+// 	// if (current->next->token)
+// 	// 	double token errors etc
+// 	if (current->token > 1 && current->token < 6)
+// 	{
+// 		add_lex_node(&(tmp->re_dir), current->token, current->next->chars);
+// 		printf("%s\n", current->chars);
+// 		del_lex_node(&current);
+// 		printf("%s\n", current->chars);
+// 		del_lex_node(&current);
+// 	}
+// 	if (!current)
+// 	{
+// 		printf("test\n");
+// 		printf("%s\n", second->chars);
+// 		*head = second;
+// 	}
+// 	else
+// 		*head = current;
+// 	store_redir(head, cmd);
+// }

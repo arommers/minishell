@@ -6,11 +6,12 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 13:23:42 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2022/10/25 14:38:13 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/30 14:53:43 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 char	*ft_strdup(char *src)
 {
