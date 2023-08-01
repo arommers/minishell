@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:46:58 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 13:42:48 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 14:06:58 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef struct s_data
 {
+	char			**envp;
 	struct s_cmd	*cmds;
 }	t_data;
 
@@ -37,7 +38,7 @@ typedef enum s_tokens
 typedef struct s_lexer
 {
 	int				is_token;
-	char			*str;
+	char			*chars;
 	t_tokens		token;
 	struct s_lexer	*next;
 }	t_lexer;

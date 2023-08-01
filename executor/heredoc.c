@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 12:53:59 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 14:09:12 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	create_heredoc(t_lexer *heredoc, char *filename, int isquoted)
 	if (!fd)
 		exit_error(filename, NULL, 1);
 	line = readline("> ");
-	while (line && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str)) != 0)
+	while (line && ft_strncmp(heredoc->chars, line, 
+			ft_strlen(heredoc->chars)) != 0)
 	{
 		if (isquoted == 0 && ft_strchr(line, '$'))
 			line = expand_var(line);
@@ -59,9 +60,9 @@ void	heredoc(t_cmd *cmd, t_lexer *heredoc)
 		free(cmd->hd_filename);
 	cmd->hd_filename = generate_filename();
 	isquoted = 0;
-	if (quote_strchr(heredoc->str))
+	if (quote_strchr(heredoc->chars))
 	{
-		heredoc->str = expand_str(heredoc->str, 1);
+		heredoc->chars = expand_str(heredoc->chars, 1);
 		isquoted = 1;
 	}
 	create_heredoc(heredoc, cmd->hd_filename, isquoted);
