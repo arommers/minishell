@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/26 14:33:04 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 13:32:07 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static char	*get_path(char *cmd, char *envp_paths)
 }
 
 // looks for working path to command before executing command
+// (CHANGE TO FIT LINKED LIST ENV)
 void	run_cmd(t_data *data, char **cmd_argv)
 {
 	char	*envp_paths;

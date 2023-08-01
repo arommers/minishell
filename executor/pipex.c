@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 21:13:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 12:53:14 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 13:45:02 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static void	first_cmd(t_data *data, int fd_io[], int orig_pipe[], pid_t *pid)
 	t_cmd	*cmd;
 
 	cmd = data->cmds;
-	expand_cmd(cmd->cmd_argv);
+	expand_cmd(cmd->args);
 	cmd->fd_io = fd_io;
-	if (cmd->redirects)
+	if (cmd->re_dir)
 		cmd->fd_io = redirects(cmd, cmd->fd_io);
-	if (cmd->cmd_argv)
+	if (cmd->args)
 	{
 		pid[0] = fork();
 		if (pid[0] == -1)
@@ -56,11 +56,11 @@ static void	last_cmd(t_data *data, int fd_io[], int orig_pipe[], pid_t last_pid)
 	t_cmd	*cmd;
 
 	cmd = find_last_cmd(data->cmds);
-	expand_cmd(cmd->cmd_argv);
+	expand_cmd(cmd->args);
 	cmd->fd_io = fd_io;
-	if (cmd->redirects)
+	if (cmd->re_dir)
 		cmd->fd_io = redirects(cmd, cmd->fd_io);
-	if (cmd->cmd_argv)
+	if (cmd->args)
 	{
 		last_pid = fork();
 		if (last_pid == -1)
@@ -83,15 +83,15 @@ static int	multi_pipes(t_data *data, int size, int fd_io[], int pipe_in[], pid_t
 	i = 1;
 	while (i < size - 1)
 	{
-		expand_cmd(cmd->cmd_argv);
+		expand_cmd(cmd->args);
 		cmd->fd_io = fd_io;
-		if (cmd->redirects)
+		if (cmd->re_dir)
 			cmd->fd_io = redirects(cmd, cmd->fd_io);
 		if (i != 1)
 			pipe_in[0] = pipe_out[0];
 		if (pipe(pipe_out) == -1)
 			exit_error(NULL, NULL, 1);
-		if (cmd->cmd_argv)
+		if (cmd->args)
 		{
 			pid[i] = fork();
 			if (pid[i] == -1)

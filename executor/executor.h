@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:46:58 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 12:50:56 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 13:42:48 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,12 @@
 # include "../libft/libft.h"
 # include <fcntl.h>
 # include <sys/wait.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <sys/ioctl.h>
-# include <signal.h>
-# include <dirent.h>
 # include <stdio.h>
-# include <termios.h>
-# include <term.h>
-# include <curses.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_env
-{
-	char			*var;
-	struct s_env	*prev;
-	struct s_env	*next;
-}	t_env;
-
 typedef struct s_data
 {
-	char			**envp;
-	t_env			*env;
 	struct s_cmd	*cmds;
 }	t_data;
 
@@ -61,10 +44,10 @@ typedef struct s_lexer
 
 typedef struct s_cmd
 {
-	char			**cmd_argv;
+	char			**args;
 	char			*hd_filename;
 	int				*fd_io;
-	t_lexer			*redirects;
+	t_lexer			*re_dir;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -88,7 +71,6 @@ void	only_child(t_data *data, t_cmd *cmd);
 int		pipex(t_data *data, int size, int fd_io[]);
 char	*quote_strchr(char *str);
 int		*redirects(t_cmd *cmd, int fd_io[]);
-char	*remove_quotes(char *str);
 void	run_cmd(t_data *data, char **cmd_argv);
 int		single_cmd(t_data *data, int fd_io[]);
 

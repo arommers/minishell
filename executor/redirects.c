@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 12:51:48 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 13:45:42 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	*redirects(t_cmd *cmd, int fd_io[])
 {
 	t_lexer	*tmp;
 
-	tmp = cmd->redirects;
+	tmp = cmd->re_dir;
 	while (tmp)
 	{
 		if (tmp->token == LESS || tmp->token == LESSLESS)
