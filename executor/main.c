@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/29 18:47:57 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 12:46:46 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ static char	**make_argv(char *cmd, char *arg)
 // IGNORE: dummy data
 static void	fill_data(t_data *data, char **envp)
 {
-	t_cmds	*cmds;
-	// t_cmds	*cmds2;
+	t_cmd	*cmds;
+	// t_cmd	*cmds2;
 	// t_lexer	*redirects2;
 
 	data->envp = envp;
-	cmds = malloc(sizeof(t_cmds));
+	cmds = malloc(sizeof(t_cmd));
 	cmds->redirects = NULL;
 	// cmds->redirects = malloc(sizeof(t_lexer));
 	// redirects2 = malloc(sizeof(t_lexer));
-	// cmds2 = malloc(sizeof(t_cmds));
+	// cmds2 = malloc(sizeof(t_cmd));
 	data->cmds = cmds;
 	// cmds->hd_filename = NULL;
 	// cmds->redirects->token = LESSER;
@@ -75,6 +75,7 @@ static void	fill_data(t_data *data, char **envp)
 	// cmds2->next = NULL;
 }
 
+// QUESTION: is this the best way to initialize fd_io[]?
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
@@ -86,14 +87,15 @@ int	main(int argc, char **argv, char **envp)
 	data = malloc(sizeof(t_data));
 	fill_data(data, envp);
 	fd_io = malloc(sizeof(int) * 2);
+	if (!fd_io)
+		exit_error(NULL, NULL, 1);
 	fd_io[0] = STDIN_FILENO;
 	fd_io[1] = STDOUT_FILENO;
-	if (data->cmds->redirects)
-		fd_io = redirects(data, fd_io);
 	size = cmds_size(data->cmds);
 	if (size == 1)
 		single_cmd(data, fd_io);
 	else
 		pipex(data, size, fd_io);
+	free(fd_io);
 	return (0);
 }

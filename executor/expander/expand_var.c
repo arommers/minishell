@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 16:06:34 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/29 18:51:45 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/31 15:42:25 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*get_var(char *str)
 }
 
 // makes temporary array, expands the variable parts, and joins
-// it back together (NEED TO ADD $? AND $digit)
+// it back together (NEED TO ADD $ARG, $? AND $digit)
 char	*expand_var(char *str)
 {
 	char	**tmp_array;

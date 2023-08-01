@@ -6,14 +6,14 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/26 16:33:41 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 12:51:48 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 // either expands infile and opens it, or creates heredoc
-static int	redirect_input(t_cmds *cmds, t_lexer *tmp, int fd_in)
+static int	redirect_input(t_cmd *cmd, t_lexer *tmp, int fd_in)
 {
 	char	*infile;
 
@@ -28,7 +28,7 @@ static int	redirect_input(t_cmds *cmds, t_lexer *tmp, int fd_in)
 	}
 	else
 	{
-		heredoc(cmds, tmp);
+		heredoc(cmd, tmp);
 		fd_in = -1;
 	}
 	return (fd_in);
@@ -53,24 +53,24 @@ static int	redirect_output(t_lexer *tmp, int fd_out)
 
 // loops through redirects, separates input- from output-tokens,
 // checks if last input-token was a heredoc
-int	*redirects(t_data *data, int fd_io[])
+int	*redirects(t_cmd *cmd, int fd_io[])
 {
 	t_lexer	*tmp;
 
-	tmp = data->cmds->redirects;
+	tmp = cmd->redirects;
 	while (tmp)
 	{
-		if (tmp->token == LESS || tmp->token == LESSER)
-			fd_io[0] = redirect_input(data->cmds, tmp, fd_io[0]);
+		if (tmp->token == LESS || tmp->token == LESSLESS)
+			fd_io[0] = redirect_input(cmd, tmp, fd_io[0]);
 		else
 			fd_io[1] = redirect_output(tmp, fd_io[1]);
 		tmp = tmp->next;
 	}
 	if (fd_io[0] == -1)
 	{
-		fd_io[0] = open(data->cmds->hd_filename, O_RDONLY);
+		fd_io[0] = open(cmd->hd_filename, O_RDONLY);
 		if (fd_io[0] == -1)
-			exit_error(data->cmds->hd_filename, NULL, 1);
+			exit_error(cmd->hd_filename, NULL, 1);
 	}
 	return (fd_io);
 }

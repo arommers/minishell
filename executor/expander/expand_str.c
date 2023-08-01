@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 14:53:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/29 18:45:35 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/01 12:21:51 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static char	**make_tmp_array(char *str, char c, char **tmp_array)
 // loops through array, removes quotes, expands variables if necessary
 static char	**expand_tmp_array(char **tmp_array, int isheredoc)
 {
-	int	i;
+	char	*tmp_str;
+	int		i;
 
 	i = 0;
 	while (tmp_array[i])
@@ -81,10 +82,12 @@ static char	**expand_tmp_array(char **tmp_array, int isheredoc)
 			tmp_array[i] = expand_var(tmp_array[i]);
 		if (isquote(tmp_array[i][0]))
 		{
-			tmp_array[i] = ft_substr(tmp_array[i], 1,
+			tmp_str = ft_substr(tmp_array[i], 1,
 					ft_strlen(tmp_array[i]) - 2);
-			if (!tmp_array[i])
+			if (!tmp_str)
 				exit_error(NULL, NULL, 1);
+			free(tmp_array[i]);
+			tmp_array[i] = tmp_str;
 		}
 		i++;
 	}
