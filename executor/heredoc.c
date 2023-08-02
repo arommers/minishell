@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 14:09:12 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:58:40 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../includes/minishell.h"
 
 // opens new hd file, reads and expands input, stores it in file
 static void	create_heredoc(t_lexer *heredoc, char *filename, int isquoted)

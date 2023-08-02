@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 17:11:19 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/29 18:56:07 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:59:57 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../executor.h"
+#include "../includes/minishell.h"
 
 // checks if char is a letter, digit or underscore
 int	isvarchr(char c)

@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/24 15:07:25 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 12:19:53 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:59:31 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../executor.h"
+#include "../includes/minishell.h"
 
 static void	free_array(char **tmp_array)
 {

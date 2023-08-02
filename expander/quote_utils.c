@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 17:09:53 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/29 18:54:00 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:59:47 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../executor.h"
+#include "../includes/minishell.h"
 
 // searches string for quotes, returns first one encountered
 char	*quote_strchr(char *str)

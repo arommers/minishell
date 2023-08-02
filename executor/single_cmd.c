@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 17:04:08 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/02 13:50:04 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:59:12 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../includes/minishell.h"
 
 // expands cmd, creates only child process, waits for it and gets exit status
 int	single_cmd(t_data *data)

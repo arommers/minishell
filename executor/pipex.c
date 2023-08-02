@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 21:13:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/02 14:01:51 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:58:52 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../includes/minishell.h"
 
 // waits for all child processes and gets exit status of last one
 static int	wait_for_children(int size, pid_t *pid)

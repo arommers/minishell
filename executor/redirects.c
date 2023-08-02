@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/02 14:00:57 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:58:59 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../includes/minishell.h"
 
 // either expands infile and opens it, or creates heredoc
 static int	redirect_input(t_cmd *cmd, t_lexer *tmp, int fd_in)

@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 13:32:07 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:59:06 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../includes/minishell.h"
 
 // loops through paths from the env variable until it finds working path
 // to command, exits program if no working path is found

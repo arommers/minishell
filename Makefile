@@ -6,7 +6,7 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/07/28 13:38:37 by arommers      ########   odam.nl          #
+#    Updated: 2023/08/02 16:06:14 by mgoedkoo      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,20 @@ CFLAGS	=	-Wall -Wextra -Werror -g
 NAME	=	minishell
 LIBFT	=	./libft/libft.a
 INCLUDE =	-I./includes
-SRC 	=	./parsing/lexer.c ./parsing/lex_list.c	\
+SRC 	=	./executor/children.c\
+			./executor/cmds_utils.c\
+			./executor/executor.c\
+			./executor/heredoc.c\
+			./executor/pipex.c\
+			./executor/redirects.c\
+			./executor/run_cmd.c\
+			./executor/single_cmd.c\
+			./expander/expand_str.c\
+			./expander/expand_utils.c\
+			./expander/expand_var.c\
+			./expander/quote_utils.c\
+			./expander/var_utils.c\
+			./parsing/lexer.c ./parsing/lex_list.c	\
 			./parsing/lex_util.c .parsing/main.c	\
 			./parsing/lex_del.c ./parsing/parser.c 	\
 			./parsing/pars_list.c					\

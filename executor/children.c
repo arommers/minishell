@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 21:15:46 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 13:34:16 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:58:26 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../includes/minishell.h"
 
 // no pipes, only fd_in and fd_out
 void	only_child(t_data *data, t_cmd *cmd)

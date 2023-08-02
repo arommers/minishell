@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 14:53:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 12:21:51 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:59:22 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../executor.h"
+#include "../includes/minishell.h"
 
 // counts size of array by counting quoted + unquoted parts
 static int	count_parts(char *str, char c, int parts)

@@ -6,11 +6,11 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 16:06:34 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/31 15:42:25 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:59:39 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../executor.h"
+#include "../includes/minishell.h"
 
 // counts size of array by counting variables + parts inbetween
 static int	count_parts(char *str, int parts)
