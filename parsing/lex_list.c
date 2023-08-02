@@ -6,42 +6,35 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/14 15:48:04 by arommers      ########   odam.nl         */
+/*   Updated: 2023/07/30 13:59:26 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-// one function to add nodes
+#include "../includes/minishell.h"
 
-//one function to allocate and make a new node
+// Create a new node for the lexer list
 
-// function to add the new node to the linked list
-
-//function prototype: int	add_node (t_lexer **list, t_tokens token, char *chars)
-
-#include "includes/minishell.h"
-
-t_lexer	*make_node(t_lexer *new, t_tokens token, char *chars)
+t_lexer	*make_lex_node(t_lexer *new, t_tokens token, char *str)
 {
 	new = malloc(sizeof(t_lexer));
 	if (!new)
 		return (NULL);
-	new->chars = chars;
 	new->token = token;
-	// new->len = len;
-	new->prev = NULL;
+	new->chars = str;
+	new->is_token = 0;
 	new->next = NULL;
 	return (new);
 }
 
-// function to add nodes.
-// Return value should
+// Creates a new node and adds it to the back of the doubly linked list
 
-int	add_node(t_lexer **head, t_tokens token, char *chars)
+int	add_lex_node(t_lexer **head, t_tokens token, char *str)
 {
 	t_lexer	*new;
 	t_lexer	*current;
 
-	new = make_node(new, token, chars);
+	new = NULL;
+	new = make_lex_node(new, token, str);
 	if (!new)
 		return (0);
 	if (!*head)
@@ -53,29 +46,6 @@ int	add_node(t_lexer **head, t_tokens token, char *chars)
 	while (current->next)
 		current = current->next;
 	current->next = new;
-	new->prev = current;
-	new->next = NULL;
-	return (1);
-}
-
-int	add_another_node(t_lexer **head, t_tokens token, char *chars)
-{
-	t_lexer	*new;
-	t_lexer	*current;
-
-	new = make_node(new, token, chars);
-	if (!new)
-		return (0);
-	if (!*head)
-	{
-		*head = new;
-		return (1);
-	}
-	current = *head;
-	while (current->next)
-		current = current->next;
-	current->next = new;
-	new->prev = current;
 	new->next = NULL;
 	return (1);
 }

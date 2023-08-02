@@ -3,48 +3,66 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
+#    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/10 17:23:05 by mgoedkoo      ########   odam.nl          #
+#    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
+#    Updated: 2023/07/28 13:38:37 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =		minishell
-SRCS =		children.c\
-			main.c\
-			pipex.c\
-			run_cmd.c\
-			utils.c
-OBJS =		$(SRCS:%.c=build/%.o)
-LIBFT =		libft/
-# RL_DIR =	$(shell brew --prefix readline)
-# RL_LIB =	-L $(RL_DIR)/lib -lreadline -lhistory 
-CFLAGS +=	-Wall -Wextra -Werror
+CC		= 	gcc
+CFLAGS	=	-Wall -Wextra -Werror -g
+NAME	=	minishell
+LIBFT	=	./libft/libft.a
+INCLUDE =	-I./includes
+SRC 	=	./parsing/lexer.c ./parsing/lex_list.c	\
+			./parsing/lex_util.c .parsing/main.c	\
+			./parsing/lex_del.c ./parsing/parser.c 	\
+			./parsing/pars_list.c					\
+			./parsing/pars_util.c					\
+			./parsing/print.c
+			
+OBJ_DIR = 	obj
+OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
+
+BOLD    := \033[1m./SRC/
+RED     := \033[31;1m
+GREEN   := \033[32;1m
+YELLOW  := \033[33;1m
+BLUE    := \033[34;1m
+MAGENTA := \033[35;1m
+CYAN    := \033[36;1m
+WHITE   := \033[37;1m
+RESET	= \x1b[0m
 
 all: $(NAME)
 
+$(NAME): $(LIBFT) $(OBJ)	
+	@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -lreadline
+	@echo "$(CYAN)-------------------------------------------"
+	@echo "	$(NAME) = NOW READY FOR USE!"
+	@echo "-------------------------------------------$(RESET)"
+
+$(LIBFT):
+	@$(MAKE) -C ./libft
+
+$(OBJ_DIR)/%.o: ./parsing/%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+
 clean:
-	@make clean -C $(LIBFT)
-	rm -f $(OBJS)
-	rm -df build
-	@echo "$(NAME) cleaned up nicely"
+	@$(MAKE) clean -C ./libft
+	@rm -rf $(OBJ_DIR)
+	@rm -rf $(LIBFT)
+	@echo "$(NAME) Cleansed ✅"
 
 fclean: clean
-	@make fclean -C $(LIBFT)
+	@$(MAKE) clean -C ./libft
 	rm -f $(NAME)
-	@echo "$(NAME) fcleaned up nicely"
+	@echo "$(GREEN) $(NAME) $(RESET) Cleansed ✅"
 
 re: fclean all
-
-$(NAME): $(OBJS)
-	@echo "the $(NAME) o-files are ready"
-	@make all -C $(LIBFT)
-	cc $(C-FlAGS) -o $(NAME) $^ -L $(LIBFT) -lft
-	@echo "$(NAME) is ready"
-
-$(OBJS): build/%.o : %.c
-	@mkdir -p build
-	cc $(CFLAGS) -c $< -o $@
 
 .PHONY: all clean fclean re

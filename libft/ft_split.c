@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/22 14:37:55 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2022/10/27 17:05:26 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/07/20 12:12:22 by adri          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 static size_t	counter(char const *s, char c)
 {
 	size_t	count;
-	size_t	chr;
+	// size_t	chr;
 	int		i;
 
 	count = 1;
-	chr = 0;
+	// chr = 0;
 	i = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == c)
-			chr++;
+		// if (s[i] == c)
+			// chr++;
 		if (s[i] == c && s[i + 1] != c && s[i + 1] != '\0')
 			count++;
 		i++;
