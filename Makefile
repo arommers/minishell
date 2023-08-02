@@ -6,7 +6,7 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/08/02 16:06:14 by mgoedkoo      ########   odam.nl          #
+#    Updated: 2023/08/02 16:47:37 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,19 @@ CFLAGS	=	-Wall -Wextra -Werror -g
 NAME	=	minishell
 LIBFT	=	./libft/libft.a
 INCLUDE =	-I./includes
-SRC 	=	./executor/children.c\
-			./executor/cmds_utils.c\
-			./executor/executor.c\
-			./executor/heredoc.c\
-			./executor/pipex.c\
-			./executor/redirects.c\
-			./executor/run_cmd.c\
-			./executor/single_cmd.c\
-			./expander/expand_str.c\
-			./expander/expand_utils.c\
-			./expander/expand_var.c\
-			./expander/quote_utils.c\
-			./expander/var_utils.c\
+SRC 	=	./parsing/children.c\
+			./parsing/cmds_utils.c\
+			./parsing/executor.c\
+			./parsing/heredoc.c\
+			./parsing/pipex.c\
+			./parsing/redirects.c\
+			./parsing/run_cmd.c\
+			./parsing/single_cmd.c\
+			./parsing/expand_str.c\
+			./parsing/expand_utils.c\
+			./parsing/expand_var.c\
+			./parsing/quote_utils.c\
+			./parsing/var_utils.c\
 			./parsing/lexer.c ./parsing/lex_list.c	\
 			./parsing/lex_util.c .parsing/main.c	\
 			./parsing/lex_del.c ./parsing/parser.c 	\

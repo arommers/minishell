@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/02 15:59:06 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 16:44:14 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ void	run_cmd(t_data *data, char **cmd_argv)
 			exit_error(NULL, NULL, 1);
 		work_path = get_path(cmd_argv[0], envp_paths);
 	}
-	if (execve(work_path, cmd_argv, data->envp) == -1)
+	if (execve(work_path, cmd_argv, data->env) == -1)
 		exit_error(work_path, NULL, 126);
 }

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/02 16:08:05 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 16:37:37 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_cmd {
 }	t_cmd;
 
 typedef struct s_data {
+	char			**env;
 	char			*input;
 	t_lexer			*lexer;
 	t_cmd			*cmds;

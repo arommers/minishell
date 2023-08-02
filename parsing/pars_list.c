@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/07/30 16:29:21 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/02 16:50:13 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_cmd	*make_cmd_node(t_cmd *new)
 	new->args = NULL;
 	new->re_dir = NULL;
 	new->next = NULL;
+	new->fd_io = NULL;
+	new->hd_filename = NULL;
 	return (new);
 }
 
