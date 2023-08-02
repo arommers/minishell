@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 21:13:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 13:45:02 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 14:01:51 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,13 @@ static int	wait_for_children(int size, pid_t *pid)
 }
 
 // expands cmd, creates 1st child process
-static void	first_cmd(t_data *data, int fd_io[], int orig_pipe[], pid_t *pid)
+static void	first_cmd(t_data *data, int orig_pipe[], pid_t *pid)
 {
 	t_cmd	*cmd;
 
 	cmd = data->cmds;
 	expand_cmd(cmd->args);
-	cmd->fd_io = fd_io;
-	if (cmd->re_dir)
-		cmd->fd_io = redirects(cmd, cmd->fd_io);
+	cmd->fd_io = redirects(cmd);
 	if (cmd->args)
 	{
 		pid[0] = fork();
@@ -51,15 +49,13 @@ static void	first_cmd(t_data *data, int fd_io[], int orig_pipe[], pid_t *pid)
 }
 
 // expands cmd, creates last child process
-static void	last_cmd(t_data *data, int fd_io[], int orig_pipe[], pid_t last_pid)
+static void	last_cmd(t_data *data, int orig_pipe[], pid_t last_pid)
 {
 	t_cmd	*cmd;
 
 	cmd = find_last_cmd(data->cmds);
 	expand_cmd(cmd->args);
-	cmd->fd_io = fd_io;
-	if (cmd->re_dir)
-		cmd->fd_io = redirects(cmd, cmd->fd_io);
+	cmd->fd_io = redirects(cmd);
 	if (cmd->args)
 	{
 		last_pid = fork();
@@ -73,7 +69,7 @@ static void	last_cmd(t_data *data, int fd_io[], int orig_pipe[], pid_t last_pid)
 
 // loops through cmds, expands them, creates 2nd pipe and middle child processes
 // QUESTION: can vars in cmds struct help wit norm errors?
-static int	multi_pipes(t_data *data, int size, int fd_io[], int pipe_in[], pid_t *pid)
+static int	multi_pipes(t_data *data, int size, int pipe_in[], pid_t *pid)
 {
 	t_cmd	*cmd;
 	int		pipe_out[2];
@@ -84,9 +80,7 @@ static int	multi_pipes(t_data *data, int size, int fd_io[], int pipe_in[], pid_t
 	while (i < size - 1)
 	{
 		expand_cmd(cmd->args);
-		cmd->fd_io = fd_io;
-		if (cmd->re_dir)
-			cmd->fd_io = redirects(cmd, cmd->fd_io);
+		cmd->fd_io = redirects(cmd);
 		if (i != 1)
 			pipe_in[0] = pipe_out[0];
 		if (pipe(pipe_out) == -1)
@@ -107,7 +101,7 @@ static int	multi_pipes(t_data *data, int size, int fd_io[], int pipe_in[], pid_t
 }
 
 // creates process ids, initializes them and creates 1st pipe
-int	pipex(t_data *data, int size, int fd_io[])
+int	pipex(t_data *data, int size)
 {
 	pid_t	*pid;
 	int		orig_pipe[2];
@@ -124,9 +118,9 @@ int	pipex(t_data *data, int size, int fd_io[])
 		pid[i] = -1;
 		i++;
 	}
-	first_cmd(data, fd_io, orig_pipe, pid);
+	first_cmd(data, orig_pipe, pid);
 	if (size > 2)
-		orig_pipe[0] = multi_pipes(data, size, fd_io, orig_pipe, pid);
-	last_cmd(data, fd_io, orig_pipe, pid[size - 1]);
+		orig_pipe[0] = multi_pipes(data, size, orig_pipe, pid);
+	last_cmd(data, orig_pipe, pid[size - 1]);
 	return (wait_for_children(size, pid));
 }

@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 13:00:00 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 14:03:33 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,16 @@ void	exit_error(char *cmd, char *err_msg, int exit_code)
 	exit(exit_code);
 }
 
-// QUESTION: is this the best way to initialize fd_io[]?
-int	main(t_data *data)
+int	main(void)
 {
-	int		*fd_io;
 	int		size;
+	t_data	*data;
 
-	fd_io = malloc(sizeof(int) * 2);
-	if (!fd_io)
-		exit_error(NULL, NULL, 1);
-	fd_io[0] = STDIN_FILENO;
-	fd_io[1] = STDOUT_FILENO;
+	data = NULL;
 	size = cmds_size(data->cmds);
 	if (size == 1)
-		single_cmd(data, fd_io);
+		single_cmd(data);
 	else
-		pipex(data, size, fd_io);
-	free(fd_io);
+		pipex(data, size);
 	return (0);
 }

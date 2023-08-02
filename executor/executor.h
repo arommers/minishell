@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:46:58 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 14:06:58 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 14:02:41 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ int		len_till_quote(char *str, char quote);
 int		len_till_var(char *str);
 void	middle_child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
 void	only_child(t_data *data, t_cmd *cmd);
-int		pipex(t_data *data, int size, int fd_io[]);
+int		pipex(t_data *data, int size);
 char	*quote_strchr(char *str);
-int		*redirects(t_cmd *cmd, int fd_io[]);
+int		*redirects(t_cmd *cmd);
 void	run_cmd(t_data *data, char **cmd_argv);
-int		single_cmd(t_data *data, int fd_io[]);
+int		single_cmd(t_data *data);
 
 #endif

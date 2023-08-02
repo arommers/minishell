@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/01 14:07:28 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/02 14:00:57 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	redirect_output(t_lexer *tmp, int fd_out)
 
 // loops through redirects, separates input- from output-tokens,
 // checks if last input-token was a heredoc
-int	*redirects(t_cmd *cmd, int fd_io[])
+static int	*handle_redir(t_cmd *cmd, int fd_io[])
 {
 	t_lexer	*tmp;
 
@@ -72,5 +72,20 @@ int	*redirects(t_cmd *cmd, int fd_io[])
 		if (fd_io[0] == -1)
 			exit_error(cmd->hd_filename, NULL, 1);
 	}
+	return (fd_io);
+}
+
+// QUESTION: is this the best way to initialize fd_io[]?
+int	*redirects(t_cmd *cmd)
+{
+	int		*fd_io;
+
+	fd_io = malloc(sizeof(int) * 2);
+	if (!fd_io)
+		exit_error(NULL, NULL, 1);
+	fd_io[0] = STDIN_FILENO;
+	fd_io[1] = STDOUT_FILENO;
+	if (cmd->re_dir)
+		fd_io = handle_redir(cmd, fd_io);
 	return (fd_io);
 }
