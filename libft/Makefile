@@ -6,7 +6,7 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/10 15:11:23 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/05/09 16:38:25 by mgoedkoo      ########   odam.nl          #
+#    Updated: 2023/08/03 17:30:29 by mgoedkoo      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,8 +66,7 @@ CFLAGS +=	-Wall -Wextra -Werror
 all: $(NAME)
 
 clean:
-	rm -f $(OBJS) $(PF_OBJS)
-	rm -df build
+	rm -rf build
 	@echo "$(NAME) cleaned up nicely"
 
 fclean:

@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/02 15:58:40 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/03 17:27:17 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*generate_filename(void)
 
 	i++;
 	number = ft_itoa(i);
-	filename = ft_strjoin("build/.tmp_hd_file_", number);
+	filename = ft_strjoin("obj/.tmp_hd_file_", number);
 	if (!filename)
 		exit_error(NULL, NULL, 1);
 	return (filename);
