@@ -6,15 +6,50 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/02 16:50:13 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/05 14:44:09 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Intializes a new cmd node.
-	sets all it's members to NULL.
-*/
+void	clear_array(char **array)
+{
+	int		i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		array[i] = NULL;
+		i++;
+	}
+	free(array);
+}
+
+/*	Cleans a cmd list and each re_dir list associated with each specific node */
+
+void	free_cmd_list(t_cmd **head)
+{
+	t_cmd	*current;
+	t_cmd	*tmp;
+
+	if (!head || !*head)
+		return ;
+	current = *head;
+	while (current)
+	{
+		free_lexer(&current->re_dir);
+		clear_array(current->args);
+		tmp = current;
+		current = current->next;
+		free(tmp);
+	}
+	*head = NULL;
+}
+
+/*	Intializes a new cmd node; sets all members to NULL. */
 
 t_cmd	*make_cmd_node(t_cmd *new)
 {
@@ -30,8 +65,7 @@ t_cmd	*make_cmd_node(t_cmd *new)
 }
 
 /*	Adds a new node to the cmd linked list.
-	If the list points to NULL it creates a new head node .
-*/
+	If the list points to NULL it creates a new head node. */
 
 t_cmd	*add_cmd_node(t_cmd **head)
 {
@@ -56,7 +90,7 @@ t_cmd	*add_cmd_node(t_cmd **head)
 }
 
 /*	Go over the lex list and store any encountered tokens
-	and subsequent filenames iin a new linked list.
+	and subsequent filenames in a new linked list.
 	The list itself will be stored in the cmd node.
 	The original nodes are deleted from the lext list
 	and the pointer moved up. */
@@ -87,44 +121,3 @@ void	store_redir(t_lexer **head, t_cmd *cmd)
 	}
 	store_redir(&current, cmd);
 }
-
-// void	store_redir(t_lexer **head, t_cmd *cmd)
-// {
-// 	t_lexer	*current;
-// 	t_lexer	*second;
-// 	t_cmd	*tmp;
-
-// 	current = *head;
-// 	tmp = cmd;
-// 	while (tmp->next)
-// 		tmp = tmp->next;
-// 	while (current && current->token == WORDS)
-// 	{
-// 		if (current->next->token > 1 && current->next->token < 6)
-// 			second = current;
-// 		current = current->next;
-// 	}
-// 	if (!current || current->token == PIPE)
-// 		return ;
-// 	// if (!current->next)
-// 	// 	no filename errors etc
-// 	// if (current->next->token)
-// 	// 	double token errors etc
-// 	if (current->token > 1 && current->token < 6)
-// 	{
-// 		add_lex_node(&(tmp->re_dir), current->token, current->next->chars);
-// 		printf("%s\n", current->chars);
-// 		del_lex_node(&current);
-// 		printf("%s\n", current->chars);
-// 		del_lex_node(&current);
-// 	}
-// 	if (!current)
-// 	{
-// 		printf("test\n");
-// 		printf("%s\n", second->chars);
-// 		*head = second;
-// 	}
-// 	else
-// 		*head = current;
-// 	store_redir(head, cmd);
-// }

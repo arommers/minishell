@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 15:18:45 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/02 16:54:30 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/07 15:41:24 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	store_args(t_data *data, t_cmd *cmd, int i)
 	current = data->lexer;
 	while (tmp->next)
 		tmp = tmp->next;
+	// account for no arguments >>> return NULL
 	tmp->args = ft_calloc (i + 1, sizeof(char *));
 	// if (!tmp->arg)
 		// 	error;
