@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strdup.c                                        :+:    :+:            */
+/*   single_cmd.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/10 13:23:42 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/30 14:53:43 by arommers      ########   odam.nl         */
+/*   Created: 2023/07/14 17:04:08 by mgoedkoo      #+#    #+#                 */
+/*   Updated: 2023/08/02 15:59:12 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "../includes/minishell.h"
 
-char	*ft_strdup(char *src)
+// expands cmd, creates only child process, waits for it and gets exit status
+int	single_cmd(t_data *data)
 {
-	int		x;
-	char	*des;
+	pid_t	pid;
+	int		stat;
 
-	des = malloc(sizeof(char) * (ft_strlen(src) + 1));
-	x = 0;
-	if (!des)
+	expand_cmd(data->cmds->args);
+	data->cmds->fd_io = redirects(data->cmds);
+	if (!data->cmds->args)
 		return (0);
-	while (src[x] != '\0')
-	{
-		des[x] = src[x];
-		x++;
-	}
-	des[x] = '\0';
-	return (des);
+	pid = fork();
+	if (pid == -1)
+		exit_error(NULL, NULL, 1);
+	if (pid == 0)
+		only_child(data, data->cmds);
+	waitpid(pid, &stat, 0);
+	return (WEXITSTATUS(stat));
 }

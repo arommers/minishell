@@ -3,48 +3,84 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
+#    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2023/05/09 17:38:57 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/07/10 17:23:05 by mgoedkoo      ########   odam.nl          #
+#    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
+#    Updated: 2023/08/07 16:08:28 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =		minishell
-SRCS =		children.c\
-			main.c\
-			pipex.c\
-			run_cmd.c\
-			utils.c
-OBJS =		$(SRCS:%.c=build/%.o)
-LIBFT =		libft/
-# RL_DIR =	$(shell brew --prefix readline)
-# RL_LIB =	-L $(RL_DIR)/lib -lreadline -lhistory 
-CFLAGS +=	-Wall -Wextra -Werror
+CC		=	gcc
+CFLAGS	=	-Wall -Wextra -Werror -g
+NAME	=	minishell
+LIBFT	=	./libft/libft.a
+INCLUDE =	-I./includes
+SRC 	=	./lexer/main.c ./lexer/print.c						\
+			./lexer/lexer.c ./lexer/lex_list.c					\
+			./lexer/lex_util.c ./lexer/lex_del.c				\
+			./parser/pars_list.c ./parser/pars_util.c			\
+			./parser/parser.c ./expander/var_util.c				\
+			./expander/expand_str.c ./expander/expand_util.c	\
+			./expander/expand_var.c	./expander/quote_util.c		\
+			./executor/children.c ./executor/cmds_util.c		\
+			./executor/executor.c ./executor/heredoc.c			\
+			./executor/pipex.c ./executor/redirects.c			\
+			./executor/run_cmd.c ./executor/single_cmd.c		
+
+OBJ_DIR =	obj
+OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
+
+BOLD    := \033[1m./SRC/
+RED     := \033[31;1m
+GREEN   := \033[32;1m
+YELLOW  := \033[33;1m
+BLUE    := \033[34;1m
+MAGENTA := \033[35;1m
+CYAN    := \033[36;1m
+WHITE   := \033[37;1m
+RESET	= \x1b[0m
+
+START_M = 0
 
 all: $(NAME)
 
+$(NAME): $(LIBFT) $(OBJ)
+	@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -lreadline
+	@echo "$(CYAN)------------------------------------------"
+	@echo "      $(NAME) = NOW READY FOR USE!"
+	@echo "------------------------------------------$(RESET)"
+
+$(LIBFT):
+	@$(MAKE) -C ./libft
+
+$(OBJ_DIR)/%.o: ./lexer/%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+
+$(OBJ_DIR)/%.o: ./parser/%.c
+	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+
+$(OBJ_DIR)/%.o: ./expander/%.c
+	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+
+$(OBJ_DIR)/%.o: ./executor/%.c
+	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+
 clean:
-	@make clean -C $(LIBFT)
-	rm -f $(OBJS)
-	rm -df build
-	@echo "$(NAME) cleaned up nicely"
+	@$(MAKE) clean -C ./libft
+	@rm -rf $(OBJ_DIR)
+	@echo "Cleaned ✅ $(GREEN)object Files $(RESET)"
 
 fclean: clean
-	@make fclean -C $(LIBFT)
-	rm -f $(NAME)
-	@echo "$(NAME) fcleaned up nicely"
+	@$(MAKE) fclean -C ./libft
+	@rm -f $(NAME)
+	@echo "Cleaned ✅ $(GREEN)$(NAME) $(RESET)"
 
 re: fclean all
-
-$(NAME): $(OBJS)
-	@echo "the $(NAME) o-files are ready"
-	@make all -C $(LIBFT)
-	cc $(C-FlAGS) -o $(NAME) $^ -L $(LIBFT) -lft
-	@echo "$(NAME) is ready"
-
-$(OBJS): build/%.o : %.c
-	@mkdir -p build
-	cc $(CFLAGS) -c $< -o $@
 
 .PHONY: all clean fclean re

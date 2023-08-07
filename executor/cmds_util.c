@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strdup.c                                        :+:    :+:            */
+/*   cmds_utils.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/10 13:23:42 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/07/30 14:53:43 by arommers      ########   odam.nl         */
+/*   Created: 2023/07/10 17:22:01 by mgoedkoo      #+#    #+#                 */
+/*   Updated: 2023/08/02 15:58:31 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "../includes/minishell.h"
 
-char	*ft_strdup(char *src)
+// gets size of commands list
+int	cmds_size(t_cmd *cmds)
 {
-	int		x;
-	char	*des;
+	int	i;
 
-	des = malloc(sizeof(char) * (ft_strlen(src) + 1));
-	x = 0;
-	if (!des)
-		return (0);
-	while (src[x] != '\0')
+	i = 0;
+	while (cmds)
 	{
-		des[x] = src[x];
-		x++;
+		cmds = cmds->next;
+		i++;
 	}
-	des[x] = '\0';
-	return (des);
+	return (i);
+}
+
+// finds last command in list
+t_cmd	*find_last_cmd(t_cmd *cmds)
+{
+	while (cmds)
+	{
+		if (!cmds->next)
+			return (cmds);
+		cmds = cmds->next;
+	}
+	return (NULL);
 }
