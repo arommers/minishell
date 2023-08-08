@@ -50,7 +50,7 @@ static int	multi_pipes(t_data *data, int pipe_in[], pid_t *pid, int i)
 			if (pid[i] == -1)
 				exit_error(NULL, NULL, 1);
 			if (pid[i] == 0)
-				middle_child(data, cmd, pipe_in, pipe_out);
+				child(data, cmd, pipe_in, pipe_out);
 		}
 		close(pipe_out[1]);
 		cmd = cmd->next;

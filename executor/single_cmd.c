@@ -26,7 +26,7 @@ int	single_cmd(t_data *data)
 	if (pid == -1)
 		exit_error(NULL, NULL, 1);
 	if (pid == 0)
-		only_child(data, data->cmds);
+		child(data, data->cmds, NULL, NULL);
 	waitpid(pid, &stat, 0);
 	return (WEXITSTATUS(stat));
 }
