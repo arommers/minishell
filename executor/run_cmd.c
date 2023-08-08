@@ -26,13 +26,16 @@ static char	*try_all_paths(char *cmd, char **all_paths, char *cmd_path)
 		if (!full_path)
 			exit_error(NULL, NULL, 1);
 		if (access(full_path, F_OK | X_OK) == 0)
-			return (full_path);
+			break ;
 		free(full_path);
 		full_path = NULL;
 		i++;
 	}
-	exit_error(cmd, "command not found", 127);
-	return (NULL);
+	if (!all_paths[i])
+		exit_error(cmd, "command not found", 127);
+	free_chrarray(all_paths);
+	free(cmd_path);
+	return (full_path);
 }
 
 // tries all paths to command that are not paths from the env variable
@@ -51,6 +54,7 @@ static char	*get_path(char *cmd, char *envp_paths)
 	all_paths = ft_split(envp_paths, ':');
 	if (!all_paths)
 		exit_error(NULL, NULL, 1);
+	free(envp_paths);
 	return (try_all_paths(cmd, all_paths, cmd_path));
 }
 
@@ -62,7 +66,6 @@ void	run_cmd(t_data *data, char **cmd_argv)
 	char	*work_path;
 
 	work_path = cmd_argv[0];
-	envp_paths = NULL;
 	if (getenv("PATH"))
 	{
 		envp_paths = ft_strdup(getenv("PATH"));

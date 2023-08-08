@@ -136,6 +136,7 @@ void		last_child(t_data *data, t_cmd *cmd, int pipe_in[]);
 void		last_cmd(t_data *data, int orig_pipe[], pid_t last_pid);
 void		first_child(t_data *data, t_cmd *cmd, int pipe_out[]);
 void		first_cmd(t_data *data, int orig_pipe[], pid_t first_pid);
+void		free_chrarray(char **array);
 void		middle_child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
 
 #endif
