@@ -80,7 +80,7 @@ int	*redirects(t_cmd *cmd)
 {
 	int		*fd_io;
 
-	fd_io = malloc(sizeof(int) * 2);
+	fd_io = ft_calloc(2, sizeof(int));
 	if (!fd_io)
 		exit_error(NULL, NULL, 1);
 	fd_io[0] = STDIN_FILENO;

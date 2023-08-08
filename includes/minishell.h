@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/07 15:45:54 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/07 16:46:14 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,18 +124,16 @@ char		*expand_str(char *str, int isheredoc);
 
 // Executor functions
 
-int			cmds_size(t_cmd *cmds);
+void		child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
 void		executor(t_data *data);
 int			*redirects(t_cmd *cmd);
 int			single_cmd(t_data *data);
-t_cmd		*find_last_cmd(t_cmd *cmds);
-int			pipex(t_data *data, int size);
-void		only_child(t_data *data, t_cmd *cmd);
+int			pipex(t_data *data);
 void		run_cmd(t_data *data, char **cmd_argv);
 void		heredoc(t_cmd *cmds, t_lexer *heredoc);
 void		exit_error(char *cmd, char *err_msg, int exit_code);
-void		last_child(t_data *data, t_cmd *cmd, int pipe_in[]);
-void		first_child(t_data *data, t_cmd *cmd, int pipe_out[]);
-void		middle_child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
+void		last_cmd(t_data *data, int pipe_in[], pid_t last_pid);
+void		first_cmd(t_data *data, int pipe_out[], pid_t first_pid);
+void		free_chrarray(char **array);
 
 #endif

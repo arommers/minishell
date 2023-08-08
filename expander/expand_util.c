@@ -12,17 +12,17 @@
 
 #include "../includes/minishell.h"
 
-static void	free_array(char **tmp_array)
+void	free_chrarray(char **array)
 {
 	int	i;
 
 	i = 0;
-	while (tmp_array[i])
+	while (array[i])
 	{
-		free(tmp_array[i]);
+		free(array[i]);
 		i++;
 	}
-	free(tmp_array);
+	free(array);
 }
 
 // takes temporary array and joins it in new string
@@ -43,7 +43,7 @@ char	*join_new_str(char **tmp_array)
 		new_str = tmp_str;
 		i++;
 	}
-	free_array(tmp_array);
+	free_chrarray(tmp_array);
 	return (new_str);
 }
 

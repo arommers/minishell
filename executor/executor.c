@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/02 16:07:41 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/07 16:00:56 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ void	exit_error(char *cmd, char *err_msg, int exit_code)
 
 void	executor(t_data *data)
 {
-	int		size;
-
-	size = cmds_size(data->cmds);
-	if (size == 1)
+	if (data->nr_pipes == 0)
 		single_cmd(data);
 	else
-		pipex(data, size);
+		pipex(data);
 }
