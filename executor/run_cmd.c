@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/02 16:44:14 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/09 16:38:36 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,41 @@ static char	*get_path(char *cmd, char *envp_paths)
 	return (try_all_paths(cmd, all_paths, cmd_path));
 }
 
+static char	**make_envp(t_lexer *env)
+{
+	char	**envp;
+	t_lexer	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	envp = ft_calloc(i + 1, sizeof(char *));
+	if (!envp)
+		exit_error(NULL, NULL, 1);
+	i = 0;
+	while (env)
+	{
+		envp[i] = env->chars;
+		i++;
+		env = env->next;
+	}
+	envp[i] = NULL;
+	return (envp);
+}
+
 // looks for working path to command before executing command
-// (CHANGE TO FIT LINKED LIST ENV)
 void	run_cmd(t_data *data, char **cmd_argv)
 {
+	char	**envp;
 	char	*envp_paths;
 	char	*work_path;
 
+	envp = make_envp(data->env);
 	work_path = cmd_argv[0];
 	if (getenv("PATH"))
 	{
@@ -73,6 +101,6 @@ void	run_cmd(t_data *data, char **cmd_argv)
 			exit_error(NULL, NULL, 1);
 		work_path = get_path(cmd_argv[0], envp_paths);
 	}
-	if (execve(work_path, cmd_argv, data->env) == -1)
+	if (execve(work_path, cmd_argv, envp) == -1)
 		exit_error(work_path, NULL, 126);
 }
