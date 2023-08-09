@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/07 16:00:56 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/09 14:27:37 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,17 @@ void	exit_error(char *cmd, char *err_msg, int exit_code)
 	exit(exit_code);
 }
 
-void	executor(t_data *data)
+int	open_error(char *file)
+{
+	ft_printf(2, "minishell: %s: ", file);
+	perror(NULL);
+	return (-1);
+}
+
+int	executor(t_data *data)
 {
 	if (data->nr_pipes == 0)
-		single_cmd(data);
+		return (single_cmd(data));
 	else
-		pipex(data);
+		return (pipex(data));
 }

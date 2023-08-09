@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 16:06:34 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/02 15:59:39 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/09 16:09:14 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	**make_tmp_array(char *str, char **tmp_array)
 			ft_len = len_till_var;
 		tmp_array[j] = ft_substr(str, i, ft_len(&str[i]));
 		if (!tmp_array[j])
-			exit_error(NULL, NULL, 1);
+			return (free_chrarray(tmp_array));
 		j++;
 		i += ft_len(&str[i]);
 	}
@@ -73,7 +73,7 @@ char	*get_var(char *str)
 	else
 		tmp_str = ft_strdup(getenv(str + 1));
 	if (!tmp_str)
-		exit_error(NULL, NULL, 1);
+		return (free(str), NULL);
 	free(str);
 	return (tmp_str);
 }
@@ -83,7 +83,6 @@ char	*get_var(char *str)
 char	*expand_var(char *str)
 {
 	char	**tmp_array;
-	char	*new_str;
 	int		parts;
 	int		i;
 
@@ -91,16 +90,19 @@ char	*expand_var(char *str)
 	parts = count_parts(str, parts);
 	tmp_array = ft_calloc(parts + 1, sizeof(char *));
 	if (!tmp_array)
-		exit_error(NULL, NULL, 1);
+		return (free(str), NULL);
 	tmp_array = make_tmp_array(str, tmp_array);
+	if (!tmp_array)
+		return (free(str), NULL);
 	free(str);
 	i = 0;
 	while (tmp_array[i])
 	{
 		if (tmp_array[i][0] == '$' && isvarchr(tmp_array[i][1]))
 			tmp_array[i] = get_var(tmp_array[i]);
+		if (!tmp_array[i])
+			return (free_chrarray(tmp_array));
 		i++;
 	}
-	new_str = join_new_str(tmp_array);
-	return (new_str);
+	return (join_new_str(tmp_array));
 }
