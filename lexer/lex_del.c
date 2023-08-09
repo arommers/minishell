@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:43:31 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/02 16:51:38 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/09 12:36:42 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@ void	free_lexer(t_lexer **head)
 
 	current = *head;
 	while (current)
-	{
-		tmp = current;
+	{		tmp = current;
 		if (current->chars)
 			free(current->chars);
 		current = current->next;
 		free (tmp);
 	}
-	head = NULL;
+	*head = NULL;
 }
 
-// Delete a node with a matching value from the list
+// Delete a node from the list and move the pointer to next
 
 void	del_lex_node(t_lexer **head)
 {

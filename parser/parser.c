@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 15:18:45 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/07 15:41:24 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/09 11:16:25 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	group_tokens(t_data *data)
 {
 	data->cmds = add_cmd_node(&data->cmds);
 	// printf("starting node: %s\n", data->lexer->chars);
-	store_redir(&data->lexer, data->cmds);
+	store_redir(data, &data->lexer, data->cmds);
 	store_args(data, data->cmds, count_args(data->lexer));
 	while (data->lexer && data->lexer->token != PIPE)
 		del_lex_node(&data->lexer);

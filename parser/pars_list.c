@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/08 15:22:40 by adri          ########   odam.nl         */
+/*   Updated: 2023/08/09 11:48:40 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	clear_array(char **array)
 {
 	int		i;
 
-	if (!array)
+	if (!array || !*array)
 		return ;
 	i = 0;
 	while (array[i])
@@ -95,7 +95,7 @@ t_cmd	*add_cmd_node(t_cmd **head)
 	The original nodes are deleted from the lext list
 	and the pointer moved up. */
 
-void	store_redir(t_lexer **head, t_cmd *cmd)
+void	store_redir(t_data *data, t_lexer **head, t_cmd *cmd)
 {
 	t_lexer	*current;
 	t_cmd	*tmp;
@@ -110,8 +110,8 @@ void	store_redir(t_lexer **head, t_cmd *cmd)
 		return ;
 	// if (!current->next)
 	// 	// file error
-	// if (current->next->token)
-	// 	double error
+	if (current->next->token)
+		syntax_error(data, current->next->token);
 	if (current->token > 1 && current->token < 6)
 	{
 		current->is_token = 1;
@@ -119,5 +119,5 @@ void	store_redir(t_lexer **head, t_cmd *cmd)
 		add_lex_node(&tmp->re_dir, current->token, current->next->chars);
 		current = current->next->next;
 	}
-	store_redir(&current, cmd);
+	store_redir(data, &current, cmd);
 }
