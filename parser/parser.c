@@ -6,14 +6,13 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 15:18:45 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/07 15:41:24 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/09 16:05:45 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Store the arguments in the cmd struct 
-	and delete the nodes from the original list */
+/*	Store the arguments in the cmd struct */
 
 void	store_args(t_data *data, t_cmd *cmd, int i)
 {
@@ -26,7 +25,11 @@ void	store_args(t_data *data, t_cmd *cmd, int i)
 	current = data->lexer;
 	while (tmp->next)
 		tmp = tmp->next;
-	// account for no arguments >>> return NULL
+	if (i == 0)
+	{
+		tmp->args = NULL;
+		return ;
+	}
 	tmp->args = ft_calloc (i + 1, sizeof(char *));
 	// if (!tmp->arg)
 		// 	error;
@@ -47,7 +50,7 @@ void	group_tokens(t_data *data)
 {
 	data->cmds = add_cmd_node(&data->cmds);
 	// printf("starting node: %s\n", data->lexer->chars);
-	store_redir(&data->lexer, data->cmds);
+	store_redir(data, &data->lexer, data->cmds);
 	store_args(data, data->cmds, count_args(data->lexer));
 	while (data->lexer && data->lexer->token != PIPE)
 		del_lex_node(&data->lexer);

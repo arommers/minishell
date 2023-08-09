@@ -24,6 +24,7 @@
 # include <readline/history.h>
 
 # define PROMPT "\x1B[96;1m[minishell]: \x1B[0m"
+# define E_PROMPT "minishell: "
 
 typedef enum s_tokens {
 	WORDS,
@@ -59,6 +60,7 @@ typedef struct s_data {
 
 void		init_data(t_data *data);
 void		reset_data(t_data *data);
+void		maintain_prompt(t_data *data);
 
 // Lexer Functions
 
@@ -86,8 +88,8 @@ int			add_lex_node(t_lexer **head, t_tokens token, char *str);
 
 int			parser(t_data *data);
 void		group_tokens(t_data *data);
-void		store_redir(t_lexer **lexer, t_cmd *cmd);
 void		store_args(t_data *data, t_cmd *cmd, int i);
+void		store_redir(t_data *data, t_lexer **lexer, t_cmd *cmd);
 
 // Parser Utilities
 
@@ -101,6 +103,9 @@ t_cmd		*make_cmd_node(t_cmd *new);
 t_cmd		*add_cmd_node(t_cmd **head);
 void		free_cmd_list(t_cmd **head);
 
+//	Error Functions
+
+void		syntax_error(t_data *data, t_tokens token);
 
 //	Print Functions
 

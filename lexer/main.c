@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/07 16:09:11 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/09 16:08:34 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@
 void	init_data(t_data *data)
 {
 	data->input = readline(PROMPT);
+	if (!data->input)
+	{
+		ft_putstr_fd("exit\n", 2);
+		exit (1);
+	}
 	data->lexer = NULL;
 	data->cmds = NULL;
 	// init_env(data, env);
@@ -44,6 +49,26 @@ void	reset_data(t_data *data)
 	data->nr_pipes = 0;
 	free(data->input);
 	data->input = readline(PROMPT);
+	if (!data->input)
+	{
+		ft_putstr_fd("exit\n", 2);
+		exit (1);
+	}
+	maintain_prompt(data);
+}
+
+void	maintain_prompt(t_data *data)
+{
+	add_history(data->input);
+	if (!data->input[0])
+		reset_data(data);
+	tokenizer(data);
+	if (data->lexer && data->lexer->token == PIPE)
+		syntax_error(data, data->lexer->token);
+	parser(data);
+	if (data->cmds)
+		executor(data);
+	reset_data(data);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -54,14 +79,6 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	data.env = env;
 	init_data(&data);
-	while (data.input != NULL)
-	{
-		tokenizer(&data);
-		parser(&data);
-		add_history(data.input);
-		executor(&data);
-		free_lexer(&data.lexer);
-		reset_data(&data);
-	}
+	maintain_prompt(&data);
 	return (0);
 }
