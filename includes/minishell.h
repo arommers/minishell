@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/09 10:12:03 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/09 13:27:52 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <readline/history.h>
 
 # define PROMPT "\x1B[96;1m[minishell]: \x1B[0m"
-# define E_PROMPT "[minishell]: "
+# define E_PROMPT "minishell: "
 
 typedef enum s_tokens {
 	WORDS,

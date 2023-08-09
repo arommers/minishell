@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/09 12:51:18 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/09 16:01:39 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	tokenizer(t_data *data)
 	{
 		j = 0;
 		i += skip_spaces(data->input, i);
+		if (!data->input[i])
+			break ;
 		if (check_index(data->input, i))
 			j = store_token(data, i);
 		else
