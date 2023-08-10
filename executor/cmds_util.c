@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 17:22:01 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 14:15:43 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 16:07:09 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	first_cmd(t_data *data, int pipe_out[], pid_t first_pid)
 	{
 		first_pid = fork();
 		if (first_pid == -1)
-			return (1);
+			return (print_error(NULL, NULL), 1);
 		if (first_pid == 0)
 			child(data, cmd, NULL, pipe_out);
 	}
@@ -62,7 +62,7 @@ int	last_cmd(t_data *data, int pipe_in[], pid_t last_pid)
 	{
 		last_pid = fork();
 		if (last_pid == -1)
-			return (1);
+			return (print_error(NULL, NULL), 1);
 		if (last_pid == 0)
 			child(data, cmd, pipe_in, NULL);
 	}

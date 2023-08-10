@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 14:53:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 15:36:18 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 16:21:52 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	**make_tmp_array(char *str, char c, char **tmp_array)
 		tmp_array[j] = ft_substr(str, i,
 				len_till_quote(&str[i + k], c) + k * 2);
 		if (!tmp_array[j])
-			return (free_chrarray(tmp_array));
+			return (print_error(NULL, NULL), free_chrarray(tmp_array));
 		j++;
 		i += len_till_quote(&str[i + k], c) + k * 2;
 	}
@@ -82,14 +82,14 @@ static char	**expand_tmp_array(char **tmp_array, int isheredoc)
 		{
 			tmp_array[i] = expand_var(tmp_array[i]);
 			if (!tmp_array[i])
-				return (free_chrarray(tmp_array));
+				return (print_error(NULL, NULL), free_chrarray(tmp_array));
 		}
 		if (isquote(tmp_array[i][0]))
 		{
 			tmp_str = ft_substr(tmp_array[i], 1,
 					ft_strlen(tmp_array[i]) - 2);
 			if (!tmp_str)
-				return (free_chrarray(tmp_array));
+				return (print_error(NULL, NULL), free_chrarray(tmp_array));
 			free(tmp_array[i]);
 			tmp_array[i] = tmp_str;
 		}
@@ -110,7 +110,10 @@ char	*expand_str(char *str, int isheredoc)
 	parts = count_parts(str, c, parts);
 	tmp_array = ft_calloc(parts + 1, sizeof(char *));
 	if (!tmp_array)
+	{
+		print_error(NULL, NULL);
 		return (free(str), NULL);
+	}
 	tmp_array = make_tmp_array(str, c, tmp_array);
 	if (!tmp_array)
 		return (free(str), NULL);

@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 16:06:34 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 16:09:14 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 16:26:22 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	**make_tmp_array(char *str, char **tmp_array)
 			ft_len = len_till_var;
 		tmp_array[j] = ft_substr(str, i, ft_len(&str[i]));
 		if (!tmp_array[j])
-			return (free_chrarray(tmp_array));
+			return (print_error(NULL, NULL), free_chrarray(tmp_array));
 		j++;
 		i += ft_len(&str[i]);
 	}
@@ -73,7 +73,7 @@ char	*get_var(char *str)
 	else
 		tmp_str = ft_strdup(getenv(str + 1));
 	if (!tmp_str)
-		return (free(str), NULL);
+		print_error(NULL, NULL);
 	free(str);
 	return (tmp_str);
 }
@@ -90,7 +90,10 @@ char	*expand_var(char *str)
 	parts = count_parts(str, parts);
 	tmp_array = ft_calloc(parts + 1, sizeof(char *));
 	if (!tmp_array)
+	{
+		print_error(NULL, NULL);
 		return (free(str), NULL);
+	}
 	tmp_array = make_tmp_array(str, tmp_array);
 	if (!tmp_array)
 		return (free(str), NULL);

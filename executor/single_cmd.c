@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 17:04:08 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 14:04:27 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 16:18:39 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	single_cmd(t_data *data)
 		return (0);
 	pid = fork();
 	if (pid == -1)
-		exit_error(NULL, NULL, 1);
+		return (print_error(NULL, NULL), 1);
 	if (pid == 0)
 		child(data, data->cmds, NULL, NULL);
 	waitpid(pid, &stat, 0);

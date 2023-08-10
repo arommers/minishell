@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 15:27:10 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/10 15:57:37 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void		free_cmd_list(t_cmd **head);
 
 void		quote_error(t_data *data, char c);
 void		syntax_error(t_data *data, t_tokens token);
+void		exit_error(char *cmd, char *err_msg, int exit_code);
+void		print_error(char *cmd, char *err_msg);
 
 //	Print Functions
 
@@ -137,11 +139,9 @@ char		*expand_str(char *str, int isheredoc);
 
 void		child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
 int			executor(t_data *data);
-void		exit_error(char *cmd, char *err_msg, int exit_code);
 int			first_cmd(t_data *data, int pipe_out[], pid_t first_pid);
 int			heredoc(t_cmd *cmds, t_lexer *heredoc);
 int			last_cmd(t_data *data, int pipe_in[], pid_t last_pid);
-int			open_error(char *file);
 int			pipex(t_data *data);
 int			*redirects(t_cmd *cmd);
 void		run_cmd(t_data *data, char **cmd_argv);

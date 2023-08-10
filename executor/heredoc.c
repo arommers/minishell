@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 15:50:11 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 16:25:43 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	create_heredoc(t_lexer *heredoc, char *filename, int isquoted)
 
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
-		return (open_error(filename), 1);
+		return (print_error(filename, NULL), 1);
 	line = readline("> ");
 	while (line && ft_strncmp(heredoc->chars, line, 
 			ft_strlen(heredoc->chars)) != 0)
@@ -54,7 +54,7 @@ static char	*generate_filename(void)
 		return (NULL);
 	filename = ft_strjoin("obj/.tmp_hd_file_", number);
 	if (!filename)
-		return (free(number), NULL);
+		print_error(NULL, NULL);
 	free(number);
 	return (filename);
 }

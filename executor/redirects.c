@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 15:00:09 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 16:02:03 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	redirect_input(t_cmd *cmd, t_lexer *tmp, int fd_in)
 		infile = tmp->chars;
 		fd_in = open(infile, O_RDONLY);
 		if (fd_in == -1)
-			return (open_error(infile));
+			return (print_error(infile, NULL), -1);
 	}
 	else
 	{
@@ -56,7 +56,7 @@ static int	redirect_output(t_lexer *tmp, int fd_out)
 	else
 		fd_out = open(outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd_out == -1)
-		return (open_error(outfile));
+		return (print_error(outfile, NULL), -1);
 	return (fd_out);
 }
 
@@ -82,7 +82,7 @@ static int	*handle_redir(t_cmd *cmd, int fd_io[])
 		fd_io[0] = open(cmd->hd_filename, O_RDONLY);
 		if (fd_io[0] == -1)
 		{
-			open_error(cmd->hd_filename);
+			print_error(cmd->hd_filename, NULL);
 			return (free(fd_io), NULL);
 		}
 	}
@@ -96,7 +96,7 @@ int	*redirects(t_cmd *cmd)
 
 	fd_io = ft_calloc(2, sizeof(int));
 	if (!fd_io)
-		return (NULL);
+		return (print_error(NULL, NULL), NULL);
 	fd_io[0] = STDIN_FILENO;
 	fd_io[1] = STDOUT_FILENO;
 	if (cmd->re_dir)

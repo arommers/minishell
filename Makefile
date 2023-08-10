@@ -6,7 +6,7 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/08/10 10:56:05 by arommers      ########   odam.nl          #
+#    Updated: 2023/08/10 15:50:18 by mgoedkoo      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC 	=	./lexer/main.c ./lexer/print.c						\
 			./executor/executor.c ./executor/heredoc.c			\
 			./executor/pipex.c ./executor/redirects.c			\
 			./executor/run_cmd.c ./executor/single_cmd.c		\
-			./error/errors.c	./lexer/in_check.c
+			./error/errors.c	./lexer/in_check.c				\
+			./error/exec_errors.c
 
 OBJ_DIR =	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))

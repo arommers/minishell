@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 21:13:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 14:20:36 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 16:14:35 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ static int	multi_pipes(t_data *data, int pipe_in[], pid_t *pid, int i)
 		if (i != 1)
 			pipe_in[0] = pipe_out[0];
 		if (pipe(pipe_out) == -1)
-			return (-1);
+			return (print_error(NULL, NULL), -1);
 		if (cmd->args)
 		{
 			pid[i] = fork();
 			if (pid[i] == -1)
-				return (-1);
+				return (print_error(NULL, NULL), -1);
 			if (pid[i] == 0)
 				child(data, cmd, pipe_in, pipe_out);
 		}
@@ -71,9 +71,12 @@ int	pipex(t_data *data)
 
 	pid = ft_calloc(data->nr_pipes + 1, sizeof(pid_t));
 	if (!pid)
-		return (1);
+		return (print_error(NULL, NULL), 1);
 	if (pipe(orig_pipe) == -1)
+	{
+		print_error(NULL, NULL);
 		return (free(pid), 1);
+	}
 	i = 0;
 	while (i < data->nr_pipes + 1)
 	{

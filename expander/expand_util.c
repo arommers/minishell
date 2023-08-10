@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/24 15:07:25 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 15:38:55 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 16:22:52 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*join_new_str(char **tmp_array)
 		tmp_str = ft_strjoin(new_str, tmp_array[i]);
 		if (!tmp_str)
 		{
+			print_error(NULL, NULL);
 			if (new_str)
 				free(new_str);
 			return (free_chrarray(tmp_array));
