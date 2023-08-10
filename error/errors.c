@@ -6,11 +6,20 @@
 /*   By: adri <adri@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/08 15:23:01 by adri          #+#    #+#                 */
-/*   Updated: 2023/08/09 14:19:46 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/10 12:38:24 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	quote_error(t_data *data, char c)
+{
+	if (c == '\"') 
+		ft_putendl_fd(E_PROMPT "unexpected EOF while looking for matching `\"'", 2);
+	else if (c == '\'') 
+		ft_putendl_fd(E_PROMPT "unexpected EOF while looking for matching `\''", 2);
+	reset_data(data);
+}
 
 void	syntax_error(t_data *data, t_tokens token)
 {
@@ -27,6 +36,8 @@ void	syntax_error(t_data *data, t_tokens token)
 		ft_putendl_fd("`>'", 2);
 	else if (token == GREATGREAT)
 		ft_putendl_fd("`>>'", 2);
+	else if (token == AND)
+		ft_putendl_fd("`&'", 2);
 	free_lexer(&data->lexer);
 	reset_data(data);
 }
