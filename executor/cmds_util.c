@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 17:22:01 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 16:07:09 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 19:01:57 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	first_cmd(t_data *data, int pipe_out[], pid_t first_pid)
 	t_cmd	*cmd;
 
 	cmd = data->cmds;
-	if (expand_cmd(cmd->args) == 1)
+	if (expand_cmd(data, cmd->args) == 1)
 		return (1);
-	cmd->fd_io = redirects(cmd);
+	cmd->fd_io = redirects(data, cmd);
 	if (!cmd->fd_io)
 		return (1);
 	if (cmd->args)
@@ -53,9 +53,9 @@ int	last_cmd(t_data *data, int pipe_in[], pid_t last_pid)
 	t_cmd	*cmd;
 
 	cmd = find_last_cmd(data->cmds);
-	if (expand_cmd(cmd->args))
+	if (expand_cmd(data, cmd->args))
 		return (1);
-	cmd->fd_io = redirects(cmd);
+	cmd->fd_io = redirects(data, cmd);
 	if (!cmd->fd_io)
 		return (1);
 	if (cmd->args)

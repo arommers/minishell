@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 14:53:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 16:21:52 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 19:07:11 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	**make_tmp_array(char *str, char c, char **tmp_array)
 }
 
 // loops through array, removes quotes, expands variables if necessary
-static char	**expand_tmp_array(char **tmp_array, int isheredoc)
+static char	**expand_tmp_array(t_data *data, char **tmp_array, int isheredoc)
 {
 	char	*tmp_str;
 	int		i;
@@ -80,7 +80,7 @@ static char	**expand_tmp_array(char **tmp_array, int isheredoc)
 		if (isheredoc == 0 && tmp_array[i][0] != '\''
 			&& ft_strchr(tmp_array[i], '$'))
 		{
-			tmp_array[i] = expand_var(tmp_array[i]);
+			tmp_array[i] = expand_var(data, tmp_array[i]);
 			if (!tmp_array[i])
 				return (print_error(NULL, NULL), free_chrarray(tmp_array));
 		}
@@ -99,7 +99,7 @@ static char	**expand_tmp_array(char **tmp_array, int isheredoc)
 }
 
 // makes temporary array, expands the right parts, and joins it back together
-char	*expand_str(char *str, int isheredoc)
+char	*expand_str(t_data *data, char *str, int isheredoc)
 {
 	char	**tmp_array;
 	char	c;
@@ -118,7 +118,7 @@ char	*expand_str(char *str, int isheredoc)
 	if (!tmp_array)
 		return (free(str), NULL);
 	free(str);
-	tmp_array = expand_tmp_array(tmp_array, isheredoc);
+	tmp_array = expand_tmp_array(data, tmp_array, isheredoc);
 	if (!tmp_array)
 		return (NULL);
 	return (join_new_str(tmp_array));

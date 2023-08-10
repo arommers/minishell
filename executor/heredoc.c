@@ -6,14 +6,15 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 16:25:43 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 19:10:26 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // opens new hd file, reads and expands input, stores it in file
-static int	create_heredoc(t_lexer *heredoc, char *filename, int isquoted)
+static int	create_heredoc(t_data *data, t_lexer *heredoc,
+						char *filename, int isquoted)
 {
 	int		fd;
 	char	*line;
@@ -27,7 +28,7 @@ static int	create_heredoc(t_lexer *heredoc, char *filename, int isquoted)
 	{
 		if (isquoted == 0 && ft_strchr(line, '$'))
 		{
-			line = expand_var(line);
+			line = expand_var(data, line);
 			if (!line)
 				return (1);
 		}
@@ -60,7 +61,7 @@ static char	*generate_filename(void)
 }
 
 // replaces old heredoc, checks for quotes and makes new one
-int	heredoc(t_cmd *cmd, t_lexer *heredoc)
+int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 {
 	int		isquoted;
 
@@ -72,10 +73,10 @@ int	heredoc(t_cmd *cmd, t_lexer *heredoc)
 	isquoted = 0;
 	if (quote_strchr(heredoc->chars))
 	{
-		heredoc->chars = expand_str(heredoc->chars, 1);
+		heredoc->chars = expand_str(data, heredoc->chars, 1);
 		if (!heredoc->chars)
 			return (1);
 		isquoted = 1;
 	}
-	return (create_heredoc(heredoc, cmd->hd_filename, isquoted));
+	return (create_heredoc(data, heredoc, cmd->hd_filename, isquoted));
 }

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 15:25:46 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/10 18:00:22 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_data(t_data *data, char **env)
 	}
 	data->lexer = NULL;
 	data->cmds = NULL;
+	data->exit_stat = 0;
 	init_env(data, env);
 }
 

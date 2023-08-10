@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/24 15:07:25 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 16:22:52 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 19:06:31 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*join_new_str(char **tmp_array)
 }
 
 // loops through cmd_argv and expands each string
-int	expand_cmd(char **cmd_argv)
+int	expand_cmd(t_data *data, char **cmd_argv)
 {
 	int		i;
 
@@ -67,7 +67,7 @@ int	expand_cmd(char **cmd_argv)
 	{
 		if (quote_strchr(cmd_argv[i]) || ft_strchr(cmd_argv[i], '$'))
 		{
-			cmd_argv[i] = expand_str(cmd_argv[i], 0);
+			cmd_argv[i] = expand_str(data, cmd_argv[i], 0);
 			if (!cmd_argv[i])
 				return (1);
 		}
