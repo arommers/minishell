@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 11:24:39 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/10 15:27:10 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ typedef struct s_cmd {
 
 typedef struct s_data {
 	char			*input;
-	char			**env;
+	t_lexer			*env;
 	t_lexer			*lexer;
 	t_cmd			*cmds;
 	int				nr_pipes;
 }	t_data;
 
 void		check_dup(t_data *data);
-void		init_data(t_data *data);
+void		init_data(t_data *data, char **env);
 void		reset_data(t_data *data);
 void		input_check(t_data *data);
 void		check_u_quotes(t_data *data);
@@ -127,23 +127,24 @@ int			len_of_var(char *str);
 char		*expand_var(char *str);
 int			len_till_var(char *str);
 char		*quote_strchr(char *str);
-void		expand_cmd(char **cmd_argv);
+int			expand_cmd(char **cmd_argv);
 char		*join_new_str(char **tmp_array);
+void		*free_chrarray(char **array);
 int			len_till_quote(char *str, char quote);
 char		*expand_str(char *str, int isheredoc);
 
 // Executor functions
 
 void		child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
-void		executor(t_data *data);
-int			*redirects(t_cmd *cmd);
-int			single_cmd(t_data *data);
-int			pipex(t_data *data);
-void		run_cmd(t_data *data, char **cmd_argv);
-void		heredoc(t_cmd *cmds, t_lexer *heredoc);
+int			executor(t_data *data);
 void		exit_error(char *cmd, char *err_msg, int exit_code);
-void		last_cmd(t_data *data, int pipe_in[], pid_t last_pid);
-void		first_cmd(t_data *data, int pipe_out[], pid_t first_pid);
-void		free_chrarray(char **array);
+int			first_cmd(t_data *data, int pipe_out[], pid_t first_pid);
+int			heredoc(t_cmd *cmds, t_lexer *heredoc);
+int			last_cmd(t_data *data, int pipe_in[], pid_t last_pid);
+int			open_error(char *file);
+int			pipex(t_data *data);
+int			*redirects(t_cmd *cmd);
+void		run_cmd(t_data *data, char **cmd_argv);
+int			single_cmd(t_data *data);
 
 #endif

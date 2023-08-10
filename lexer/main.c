@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 15:16:39 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/10 15:25:46 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 /*	store the env variables in a linked list
 	each node contains one variable */
 
-// void	init_env(t_data *data, char **env)
-// {
-// 	int	i;
+void	init_env(t_data *data, char **env)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (env[i])
-// 		add_lex_node(&data->env, 0, ft_strdup(env[i++]));
-// }
+	i = 0;
+	while (env[i])
+		add_lex_node(&data->env, 0, ft_strdup(env[i++]));
+}
 
 /*	store the arguments in the data struct as struct
 	and the env as linked list */
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, char **env)
 {
 	data->input = readline(PROMPT);
 	if (!data->input)
@@ -38,7 +38,7 @@ void	init_data(t_data *data)
 	}
 	data->lexer = NULL;
 	data->cmds = NULL;
-	// init_env(data, env);
+	init_env(data, env);
 }
 
 /*	Reset the data struct for next cmd. Env stays unchanged */
@@ -76,8 +76,7 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 1 || argv [1])
 		return (1);
-	data.env = env;
-	init_data(&data);
+	init_data(&data, env);
 	maintain_prompt(&data);
 	return (0);
 }
