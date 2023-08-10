@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/09 16:28:37 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 15:27:10 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum s_tokens {
 	LESSLESS,
 	GREAT,
 	GREATGREAT,
+	AND,
 }	t_tokens;
 
 typedef struct s_lexer {
@@ -58,8 +59,11 @@ typedef struct s_data {
 	int				nr_pipes;
 }	t_data;
 
+void		check_dup(t_data *data);
 void		init_data(t_data *data, char **env);
 void		reset_data(t_data *data);
+void		input_check(t_data *data);
+void		check_u_quotes(t_data *data);
 void		maintain_prompt(t_data *data);
 
 // Lexer Functions
@@ -105,6 +109,7 @@ void		free_cmd_list(t_cmd **head);
 
 //	Error Functions
 
+void		quote_error(t_data *data, char c);
 void		syntax_error(t_data *data, t_tokens token);
 
 //	Print Functions
