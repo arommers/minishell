@@ -15,17 +15,15 @@
 
 /*	store the env variables in a linked list
 	each node contains one variable */
-// Mirjam: segfaults on my laptop for some reason, not sure why
 void	init_env(t_data *data, char **env)
 {
 	int	i;
-	int	ret;
 
+	data->env = ft_calloc(1, sizeof(t_lexer *));
 	i = 0;
-	ret = 1;
-	while (env[i] && ret == 1)
+	while (env[i])
 	{
-		ret = add_lex_node(&(data->env), 0, ft_strdup(env[i]));
+		add_lex_node(data->env, 0, ft_strdup(env[i]));
 		i++;
 	}
 }

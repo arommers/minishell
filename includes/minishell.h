@@ -53,7 +53,7 @@ typedef struct s_cmd {
 
 typedef struct s_data {
 	char			*input;
-	t_lexer			*env;
+	t_lexer			**env;
 	t_lexer			*lexer;
 	t_cmd			*cmds;
 	int				*pipe_1;
