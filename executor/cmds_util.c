@@ -25,7 +25,7 @@ static t_cmd	*find_last_cmd(t_cmd *cmds)
 }
 
 // expands cmd, creates 1st child process
-int	first_cmd(t_data *data, int pipe_out[], pid_t first_pid)
+int	first_cmd(t_data *data, pid_t *pid)
 {
 	t_cmd	*cmd;
 
@@ -37,18 +37,19 @@ int	first_cmd(t_data *data, int pipe_out[], pid_t first_pid)
 		return (1);
 	if (cmd->args)
 	{
-		first_pid = fork();
-		if (first_pid == -1)
+		pid[0] = fork();
+		if (pid[0] == -1)
 			return (print_error(NULL, NULL), 1);
-		if (first_pid == 0)
-			child(data, cmd, NULL, pipe_out);
+		if (pid[0] == 0)
+			child(data, cmd, NULL, data->pipe_1);
 	}
-	close(pipe_out[1]);
+	close(data->pipe_1[1]);
+	data->pipe_1[1] = -1;
 	return (0);
 }
 
 // expands cmd, creates last child process
-int	last_cmd(t_data *data, int pipe_in[], pid_t last_pid)
+int	last_cmd(t_data *data, pid_t *pid)
 {
 	t_cmd	*cmd;
 
@@ -60,12 +61,13 @@ int	last_cmd(t_data *data, int pipe_in[], pid_t last_pid)
 		return (1);
 	if (cmd->args)
 	{
-		last_pid = fork();
-		if (last_pid == -1)
+		pid[data->nr_pipes] = fork();
+		if (pid[data->nr_pipes] == -1)
 			return (print_error(NULL, NULL), 1);
-		if (last_pid == 0)
-			child(data, cmd, pipe_in, NULL);
+		if (pid[data->nr_pipes] == 0)
+			child(data, cmd, data->pipe_1, NULL);
 	}
-	close(pipe_in[0]);
+	close(data->pipe_1[0]);
+	data->pipe_1[0] = -1;
 	return (0);
 }

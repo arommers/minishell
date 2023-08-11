@@ -58,3 +58,22 @@ void	print_error(char *cmd, char *err_msg)
 		perror(NULL);
 	}
 }
+
+// frees process ids and closes pipes in case of pipex error
+int	pipex_error(t_data *data, pid_t *pid)
+{
+	if (pid)
+		free(pid);
+	if (data->pipe_1[0] != -1)
+		close(data->pipe_1[0]);
+	if (data->pipe_1[1] != -1)
+		close(data->pipe_1[1]);
+	if (data->pipe_2)
+	{
+		if (data->pipe_2[0] != -1)
+			close(data->pipe_2[0]);
+		if (data->pipe_2[1] != -1)
+			close(data->pipe_2[1]);
+	}
+	return (1);
+}

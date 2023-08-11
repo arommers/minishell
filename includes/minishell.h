@@ -56,6 +56,8 @@ typedef struct s_data {
 	t_lexer			*env;
 	t_lexer			*lexer;
 	t_cmd			*cmds;
+	int				*pipe_1;
+	int				*pipe_2;
 	int				nr_pipes;
 	int				exit_stat;
 }	t_data;
@@ -113,6 +115,7 @@ void		free_cmd_list(t_cmd **head);
 void		quote_error(t_data *data, char c);
 void		syntax_error(t_data *data, t_tokens token);
 void		exit_error(char *cmd, char *err_msg, int exit_code);
+int			pipex_error(t_data *data, pid_t *pid);
 void		print_error(char *cmd, char *err_msg);
 
 //	Print Functions
@@ -140,9 +143,9 @@ char		*expand_str(t_data *data, char *str, int isheredoc);
 
 void		child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
 void		executor(t_data *data);
-int			first_cmd(t_data *data, int pipe_out[], pid_t first_pid);
+int			first_cmd(t_data *data, pid_t *pid);
 int			heredoc(t_data *data, t_cmd *cmds, t_lexer *heredoc);
-int			last_cmd(t_data *data, int pipe_in[], pid_t last_pid);
+int			last_cmd(t_data *data, pid_t *pid);
 int			pipex(t_data *data);
 int			*redirects(t_data *data, t_cmd *cmd);
 void		run_cmd(t_data *data, char **cmd_argv);

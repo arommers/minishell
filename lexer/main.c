@@ -15,14 +15,19 @@
 
 /*	store the env variables in a linked list
 	each node contains one variable */
-
+// Mirjam: segfaults on my laptop for some reason, not sure why
 void	init_env(t_data *data, char **env)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
-	while (env[i])
-		add_lex_node(&data->env, 0, ft_strdup(env[i++]));
+	ret = 1;
+	while (env[i] && ret == 1)
+	{
+		ret = add_lex_node(&(data->env), 0, ft_strdup(env[i]));
+		i++;
+	}
 }
 
 /*	store the arguments in the data struct as struct
@@ -38,6 +43,8 @@ void	init_data(t_data *data, char **env)
 	}
 	data->lexer = NULL;
 	data->cmds = NULL;
+	data->pipe_1 = NULL;
+	data->pipe_2 = NULL;
 	data->exit_stat = 0;
 	init_env(data, env);
 }
@@ -47,6 +54,12 @@ void	init_data(t_data *data, char **env)
 void	reset_data(t_data *data)
 {
 	free_cmd_list(&data->cmds);
+	if (data->pipe_1)
+		free(data->pipe_1);
+	if (data->pipe_2)
+		free(data->pipe_2);
+	data->pipe_1 = NULL;
+	data->pipe_2 = NULL;
 	data->nr_pipes = 0;
 	free(data->input);
 	data->input = readline(PROMPT);
