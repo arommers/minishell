@@ -6,28 +6,29 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/09 15:50:11 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/10 19:10:26 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // opens new hd file, reads and expands input, stores it in file
-static int	create_heredoc(t_lexer *heredoc, char *filename, int isquoted)
+static int	create_heredoc(t_data *data, t_lexer *heredoc,
+						char *filename, int isquoted)
 {
 	int		fd;
 	char	*line;
 
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
-		return (open_error(filename), 1);
+		return (print_error(filename, NULL), 1);
 	line = readline("> ");
 	while (line && ft_strncmp(heredoc->chars, line, 
 			ft_strlen(heredoc->chars)) != 0)
 	{
 		if (isquoted == 0 && ft_strchr(line, '$'))
 		{
-			line = expand_var(line);
+			line = expand_var(data, line);
 			if (!line)
 				return (1);
 		}
@@ -54,13 +55,13 @@ static char	*generate_filename(void)
 		return (NULL);
 	filename = ft_strjoin("obj/.tmp_hd_file_", number);
 	if (!filename)
-		return (free(number), NULL);
+		print_error(NULL, NULL);
 	free(number);
 	return (filename);
 }
 
 // replaces old heredoc, checks for quotes and makes new one
-int	heredoc(t_cmd *cmd, t_lexer *heredoc)
+int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 {
 	int		isquoted;
 
@@ -72,10 +73,10 @@ int	heredoc(t_cmd *cmd, t_lexer *heredoc)
 	isquoted = 0;
 	if (quote_strchr(heredoc->chars))
 	{
-		heredoc->chars = expand_str(heredoc->chars, 1);
+		heredoc->chars = expand_str(data, heredoc->chars, 1);
 		if (!heredoc->chars)
 			return (1);
 		isquoted = 1;
 	}
-	return (create_heredoc(heredoc, cmd->hd_filename, isquoted));
+	return (create_heredoc(data, heredoc, cmd->hd_filename, isquoted));
 }

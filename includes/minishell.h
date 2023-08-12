@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 15:27:10 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/10 19:01:19 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,13 @@ typedef struct s_cmd {
 
 typedef struct s_data {
 	char			*input;
-	t_lexer			*env;
+	t_lexer			**env;
 	t_lexer			*lexer;
 	t_cmd			*cmds;
+	int				*pipe_1;
+	int				*pipe_2;
 	int				nr_pipes;
+	int				exit_stat;
 }	t_data;
 
 void		check_dup(t_data *data);
@@ -111,6 +114,9 @@ void		free_cmd_list(t_cmd **head);
 
 void		quote_error(t_data *data, char c);
 void		syntax_error(t_data *data, t_tokens token);
+void		exit_error(char *cmd, char *err_msg, int exit_code);
+int			pipex_error(t_data *data, pid_t *pid);
+void		print_error(char *cmd, char *err_msg);
 
 //	Print Functions
 
@@ -122,28 +128,26 @@ void		print_lex_list(t_lexer *head);
 // Expander functions
 
 int			isquote(char c);
-int			isvarchr(char c);
-int			len_of_var(char *str);
-char		*expand_var(char *str);
-int			len_till_var(char *str);
+int			isvarchr(char *str, int i);
+int			len_of_var(char *str, int i);
+char		*expand_var(t_data *data, char *str);
+int			len_till_var(char *str, int i);
 char		*quote_strchr(char *str);
-int			expand_cmd(char **cmd_argv);
+int			expand_cmd(t_data *data, char **cmd_argv);
 char		*join_new_str(char **tmp_array);
 void		*free_chrarray(char **array);
 int			len_till_quote(char *str, char quote);
-char		*expand_str(char *str, int isheredoc);
+char		*expand_str(t_data *data, char *str, int isheredoc);
 
 // Executor functions
 
 void		child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
-int			executor(t_data *data);
-void		exit_error(char *cmd, char *err_msg, int exit_code);
-int			first_cmd(t_data *data, int pipe_out[], pid_t first_pid);
-int			heredoc(t_cmd *cmds, t_lexer *heredoc);
-int			last_cmd(t_data *data, int pipe_in[], pid_t last_pid);
-int			open_error(char *file);
+void		executor(t_data *data);
+int			first_cmd(t_data *data, pid_t *pid);
+int			heredoc(t_data *data, t_cmd *cmds, t_lexer *heredoc);
+int			last_cmd(t_data *data, pid_t *pid);
 int			pipex(t_data *data);
-int			*redirects(t_cmd *cmd);
+int			*redirects(t_data *data, t_cmd *cmd);
 void		run_cmd(t_data *data, char **cmd_argv);
 int			single_cmd(t_data *data);
 

@@ -75,11 +75,12 @@ static char	**make_envp(t_lexer *env)
 	if (!envp)
 		exit_error(NULL, NULL, 1);
 	i = 0;
-	while (env)
+	tmp = env;
+	while (tmp)
 	{
-		envp[i] = env->chars;
+		envp[i] = tmp->chars;
 		i++;
-		env = env->next;
+		tmp = tmp->next;
 	}
 	envp[i] = NULL;
 	return (envp);
@@ -92,7 +93,7 @@ void	run_cmd(t_data *data, char **cmd_argv)
 	char	*envp_paths;
 	char	*work_path;
 
-	envp = make_envp(data->env);
+	envp = make_envp(*(data->env));
 	work_path = cmd_argv[0];
 	if (getenv("PATH"))
 	{
