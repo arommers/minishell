@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 10:46:28 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 16:55:33 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/12 12:05:03 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	check_u_quotes(t_data *data)
 		{
 			c = data->input[i];
 			i += store_quoted(data->input, i + 1, c);
-			printf("%c\n", data->input[i]);
-			if (data->input[i + 1])
+			if (data->input[i] == c)
+				i++;
+			else if (!data->input[i + 1])
 				quote_error(data, c);
 		}
 		else

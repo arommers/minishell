@@ -6,7 +6,7 @@
 /*   By: adri <adri@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/08 15:23:01 by adri          #+#    #+#                 */
-/*   Updated: 2023/08/10 16:25:43 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/12 11:33:55 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,9 @@ void	quote_error(t_data *data, char c)
 	else if (c == '\'') 
 		ft_putendl_fd(E_PROMPT "unexpected EOF while looking for matching `\''", 2);
 	else if (c == ';')
-	{
-		ft_putstr_fd(E_PROMPT "syntax error near unexpected token ", 2);
-		ft_putendl_fd("`;'", 2);
-	}
+		ft_putendl_fd(E_PROMPT "syntax error near unexpected token `;'", 2);
 	else if (c == '\\')
-	{
-		ft_putstr_fd(E_PROMPT "syntax error near unexpected token ", 2);
-		ft_putendl_fd("`\\'", 2);
-	}
+		ft_putstr_fd(E_PROMPT "syntax error near unexpected token `\\'", 2);
 	reset_data(data);
 }
 
