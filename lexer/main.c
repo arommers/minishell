@@ -6,11 +6,10 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 18:00:22 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/14 18:46:04 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
 #include "../includes/minishell.h"
 
 /*	store the env variables in a linked list
@@ -33,6 +32,9 @@ void	init_env(t_data *data, char **env)
 
 void	init_data(t_data *data, char **env)
 {
+	g_exit_status = 0;
+	data->ia_mode = 1;
+	init_signals(data, 1);
 	data->input = readline(PROMPT);
 	if (!data->input)
 	{
@@ -60,6 +62,7 @@ void	reset_data(t_data *data)
 	data->pipe_2 = NULL;
 	data->nr_pipes = 0;
 	free(data->input);
+	init_signals(data, 1);
 	data->input = readline(PROMPT);
 	if (!data->input)
 	{

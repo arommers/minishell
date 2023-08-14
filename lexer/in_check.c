@@ -6,11 +6,14 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 10:46:28 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/12 12:05:03 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/14 18:49:15 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*	Checks the input for invalid characters according to the subject 
+	Checks for unclosed single and double quotes */
 
 void	check_u_quotes(t_data *data)
 {
