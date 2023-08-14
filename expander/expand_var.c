@@ -70,10 +70,10 @@ static char	*get_var(t_data *data, char *str)
 
 	if (str[1] == '?')
 		tmp_str = ft_itoa(data->exit_stat);
-	else if (!getenv(str + 1))
+	else if (!ft_getenv(data, str + 1))
 		tmp_str = ft_strdup("");
 	else
-		tmp_str = ft_strdup(getenv(str + 1));
+		tmp_str = ft_strdup(ft_getenv(data, str + 1));
 	if (!tmp_str)
 		print_error(NULL, NULL);
 	free(str);

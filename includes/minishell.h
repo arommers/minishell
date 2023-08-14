@@ -138,6 +138,7 @@ char		*join_new_str(char **tmp_array);
 void		*free_chrarray(char **array);
 int			len_till_quote(char *str, char quote);
 char		*expand_str(t_data *data, char *str, int isheredoc);
+char		*ft_getenv(t_data *data, char *str);
 
 // Executor functions
 
@@ -150,5 +151,10 @@ int			pipex(t_data *data);
 int			*redirects(t_data *data, t_cmd *cmd);
 void		run_cmd(t_data *data, char **cmd_argv);
 int			single_cmd(t_data *data);
+int			(*isbuiltin(char *str))(t_data *, t_cmd *);
+int			ft_env(t_data *data, t_cmd *cmd);
+int			ft_echo(t_data *data, t_cmd *cmd);
+int			ft_pwd(t_data *data, t_cmd *cmd);
+int			run_builtin(t_data *data, t_cmd *cmd, int ischild);
 
 #endif

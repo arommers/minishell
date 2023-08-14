@@ -43,3 +43,20 @@ int	len_of_var(char *str, int i)
 		j++;
 	return (j);
 }
+
+char	*ft_getenv(t_data *data, char *str)
+{
+	t_lexer	*tmp;
+
+	tmp = *(data->env);
+	while (tmp)
+	{
+		if (ft_strncmp(str, tmp->chars, ft_strlen(str)) == 0
+			&& tmp->chars[ft_strlen(str)] == '=')
+		{
+			return (ft_strchr(tmp->chars, '=') + 1);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}

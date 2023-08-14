@@ -27,7 +27,7 @@ SRC 	=	./lexer/main.c ./lexer/print.c						\
 			./executor/pipex.c ./executor/redirects.c			\
 			./executor/run_cmd.c ./executor/single_cmd.c		\
 			./error/errors.c	./lexer/in_check.c				\
-			./error/exec_errors.c
+			./error/exec_errors.c ./executor/builtins.c
 
 OBJ_DIR =	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
