@@ -6,11 +6,13 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/12 14:45:38 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/14 18:45:18 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/15 09:51:22 by adri          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*	Sigint handler in interactive mode */
 
 void	handle_sigint_ia(int sig)
 {
@@ -21,6 +23,8 @@ void	handle_sigint_ia(int sig)
 	g_exit_status = 1;
 }
 
+/*	sigint in non interactive mode*/
+
 void	handle_sigint(int sig)
 {
 	ft_putstr_fd("\n", 2);
@@ -28,6 +32,8 @@ void	handle_sigint(int sig)
 	rl_replace_line("", 0);
 	g_exit_status = 128 + sig;
 }
+
+/*	sigquit in non interactive mode */
 
 void	handle_sigquit(int sig)
 {
@@ -37,7 +43,9 @@ void	handle_sigquit(int sig)
 	g_exit_status = 128 + sig;
 }
 
-/* unset echo function, child process does not print, does not*/
+/*	Initialize the signal function with their specific ctrl input
+	- If the signals are received in interactive mode ctrl messages are supressed
+	- If not in interactive mode the echo settings are restored */
 
 void	init_signals(t_data *data, int i)
 {
