@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 17:11:19 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 18:45:05 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/15 16:53:03 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	isvarchr(char *str, int i)
 {
 	if (isalnum(str[i]) == 1 || str[i] == '_')
 		return (1);
-	if (str[i - 1] == '$' && str[i] == '?')
+	if (i != 0 && str[i - 1] == '$' && str[i] == '?')
 		return (1);
 	return (0);
 }

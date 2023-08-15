@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 19:01:19 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/15 17:11:59 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,10 +151,14 @@ int			pipex(t_data *data);
 int			*redirects(t_data *data, t_cmd *cmd);
 void		run_cmd(t_data *data, char **cmd_argv);
 int			single_cmd(t_data *data);
-int			(*isbuiltin(char *str))(t_data *, t_cmd *);
+
+// Builtin functions
+
 int			ft_env(t_data *data, t_cmd *cmd);
 int			ft_echo(t_data *data, t_cmd *cmd);
 int			ft_pwd(t_data *data, t_cmd *cmd);
+int			ft_export(t_data *data, t_cmd *cmd);
 int			run_builtin(t_data *data, t_cmd *cmd, int ischild);
+int			(*isbuiltin(char *str))(t_data *data, t_cmd *cmd);
 
 #endif
