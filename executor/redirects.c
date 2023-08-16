@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 19:05:25 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 16:54:21 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ static int	redirect_input(t_data *data, t_cmd *cmd, t_lexer *tmp, int fd_in)
 			return (print_error(infile, NULL), -1);
 	}
 	else
-	{
-		if (heredoc(data, cmd, tmp) == 1)
-			return (-1);
 		fd_in = -2;
-	}
 	return (fd_in);
 }
 

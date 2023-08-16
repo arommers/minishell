@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/16 16:42:47 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 16:59:59 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ char		*ft_getenv(t_data *data, char *str);
 void		child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[]);
 void		executor(t_data *data);
 int			first_cmd(t_data *data, pid_t *pid);
-int			heredoc(t_data *data, t_cmd *cmds, t_lexer *heredoc);
 int			last_cmd(t_data *data, pid_t *pid);
+int			make_heredocs(t_data *data);
 int			pipex(t_data *data);
 int			*redirects(t_data *data, t_cmd *cmd);
 void		run_cmd(t_data *data, char **cmd_argv);

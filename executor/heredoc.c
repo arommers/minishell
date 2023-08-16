@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 16:36:50 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 17:11:46 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static char	*generate_filename(void)
 	return (filename);
 }
 
-// replaces old heredoc, checks for quotes and makes new one
-int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
+// replaces old heredoc filename, checks for quotes and makes new one
+static int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 {
 	int		isquoted;
 
@@ -79,4 +79,28 @@ int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 		isquoted = 1;
 	}
 	return (create_heredoc(data, heredoc, cmd->hd_filename, isquoted));
+}
+
+// loops through commands and redirects, makes heredocs if encountered
+int	make_heredocs(t_data *data)
+{
+	t_cmd	*tmp_cmd;
+	t_lexer	*tmp_re_dir;
+
+	tmp_cmd = data->cmds;
+	while (tmp_cmd)
+	{
+		tmp_re_dir = tmp_cmd->re_dir;
+		while (tmp_re_dir)
+		{
+			if (tmp_re_dir->token == LESSLESS)
+			{
+				if (heredoc(data, tmp_cmd, tmp_re_dir) == 1)
+					return (1);
+			}
+			tmp_re_dir = tmp_re_dir->next;
+		}
+		tmp_cmd = tmp_cmd->next;
+	}
+	return (0);
 }
