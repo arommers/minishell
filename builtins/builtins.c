@@ -22,8 +22,8 @@ int	(*isbuiltin(char *str))(t_data *data, t_cmd *cmd)
 		return (ft_pwd);
 	if (ft_strncmp(str, "export", ft_strlen(str) + 1) == 0)
 		return (ft_export);
-	// if (ft_strncmp(str, "unset", ft_strlen(str) + 1) == 0)
-	// 	return (ft_unset);
+	if (ft_strncmp(str, "unset", ft_strlen(str) + 1) == 0)
+		return (ft_unset);
 	if (ft_strncmp(str, "env", ft_strlen(str) + 1) == 0)
 		return (ft_env);
 	// if (ft_strncmp(str, "exit", ft_strlen(str) + 1) == 0)

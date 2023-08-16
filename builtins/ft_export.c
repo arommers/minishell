@@ -54,13 +54,13 @@ static int	check_var(char *var)
 {
 	int		i;
 
-	if (var[0] == '=')
-		return (print_error(var, "not a valid identifier"), 1);
+	if (!var[0] || var[0] == '=')
+		return (var_error("export", var), 1);
 	i = 0;
 	while (var[i])
 	{
 		if (isvarchr(&var[i], 0) == 0)
-			return (print_error(var, "not a valid identifier"), 1);
+			return (var_error("export", var), 1);
 		i++;
 	}
 	return (0);
@@ -71,7 +71,7 @@ static char	*find_var(char *str)
 	char	*var;
 	int		len;
 
-	if (str[0] == '=' || !ft_strchr(str, '='))
+	if (!str[0] || str[0] == '=' || !ft_strchr(str, '='))
 		var = ft_strdup(str);
 	else
 	{

@@ -42,11 +42,7 @@ void	exit_error(char *cmd, char *err_msg, int exit_code)
 //				(so can't use perror)
 void	print_error(char *cmd, char *err_msg)
 {
-	if (ft_strncmp(err_msg, "not a valid identifier", 23) == 0)
-	{
-		ft_printf(2, "minishell: export: `%s': %s\n", cmd, err_msg);
-	}
-	else if (err_msg)
+	if (err_msg)
 	{
 		if (cmd)
 			ft_printf(2, "minishell: %s: %s\n", cmd, err_msg);
@@ -61,6 +57,12 @@ void	print_error(char *cmd, char *err_msg)
 			ft_printf(2, "minishell:");
 		perror(NULL);
 	}
+}
+
+void	var_error(char *cmd, char *var)
+{
+	ft_printf(2, "minishell: %s: `%s': ", cmd, var);
+	ft_printf(2, "not a valid identifier\n");
 }
 
 // frees process ids and closes pipes in case of pipex error
