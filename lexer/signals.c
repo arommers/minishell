@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/12 14:45:38 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/15 09:51:22 by adri          ########   odam.nl         */
+/*   Updated: 2023/08/16 16:43:35 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,4 @@ void	init_signals(t_data *data, int i)
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, handle_sigquit);
 	}
-	data->exit_stat = g_exit_status;
 }

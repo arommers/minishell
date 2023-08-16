@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 16:06:34 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 19:09:50 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 16:47:06 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*get_var(t_data *data, char *str)
 	char	*tmp_str;
 
 	if (str[1] == '?')
-		tmp_str = ft_itoa(data->exit_stat);
+		tmp_str = ft_itoa(data->old_exit_stat);
 	else if (!ft_getenv(data, str + 1))
 		tmp_str = ft_strdup("");
 	else

@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 14:06:42 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/16 16:45:34 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 void	executor(t_data *data)
 {
+	int	ret;
+
+	data->old_exit_stat = g_exit_status;
+	g_exit_status = 0;
 	init_signals(data, 2);
 	if (data->nr_pipes == 0)
-		data->exit_stat = single_cmd(data);
+		ret = single_cmd(data);
 	else
-		data->exit_stat = pipex(data);
+		ret = pipex(data);
+	if (g_exit_status == 0)
+		g_exit_status = ret;
 }

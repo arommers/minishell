@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 15:08:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/15 18:32:21 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 15:33:45 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,14 @@ int	ft_pwd(t_data *data, t_cmd *cmd)
 	char	*buffer;
 
 	(void)cmd;
-	if (ft_getenv(data, "PWD"))
-		ft_putendl_fd(ft_getenv(data, "PWD"), 1);
-	else
-	{
-		buffer = ft_calloc(200, sizeof(char));
-		buffer = getcwd(buffer, 200);
-		if (!buffer)
-			return (print_error(NULL, NULL), 1);
-		ft_putendl_fd(buffer, 1);
-		free(buffer);
-		buffer = NULL;
-	}
+	(void)data;
+	buffer = ft_calloc(200, sizeof(char));
+	buffer = getcwd(buffer, 200);
+	if (!buffer)
+		return (print_error(NULL, NULL), 1);
+	ft_putendl_fd(buffer, 1);
+	free(buffer);
+	buffer = NULL;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 17:11:19 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/15 16:53:03 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 14:54:59 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,16 @@ int	len_of_var(char *str, int i)
 	return (j);
 }
 
-char	*ft_getenv(t_data *data, char *str)
+// our version of getenv(), searches environment for variable value
+char	*ft_getenv(t_data *data, char *var)
 {
 	t_lexer	*tmp;
 
 	tmp = *(data->env);
 	while (tmp)
 	{
-		if (ft_strncmp(str, tmp->chars, ft_strlen(str)) == 0
-			&& tmp->chars[ft_strlen(str)] == '=')
+		if (ft_strncmp(var, tmp->chars, ft_strlen(var)) == 0
+			&& tmp->chars[ft_strlen(var)] == '=')
 		{
 			return (ft_strchr(tmp->chars, '=') + 1);
 		}

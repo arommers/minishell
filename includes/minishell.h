@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/16 14:12:53 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/16 16:42:47 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_data {
 	int				*pipe_1;
 	int				*pipe_2;
 	int				nr_pipes;
-	int				exit_stat;
+	int				old_exit_stat;
 }	t_data;
 
 void		check_dup(t_data *data);
@@ -170,6 +170,7 @@ int			ft_env(t_data *data, t_cmd *cmd);
 int			ft_echo(t_data *data, t_cmd *cmd);
 int			ft_pwd(t_data *data, t_cmd *cmd);
 int			ft_export(t_data *data, t_cmd *cmd);
+int			ft_unset(t_data *data, t_cmd *cmd);
 int			run_builtin(t_data *data, t_cmd *cmd, int ischild);
 int			(*isbuiltin(char *str))(t_data *data, t_cmd *cmd);
 

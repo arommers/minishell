@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/14 18:46:04 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/16 16:43:25 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	init_env(t_data *data, char **env)
 void	init_data(t_data *data, char **env)
 {
 	g_exit_status = 0;
-	data->ia_mode = 1;
 	init_signals(data, 1);
 	data->input = readline(PROMPT);
 	if (!data->input)
@@ -45,7 +44,6 @@ void	init_data(t_data *data, char **env)
 	data->cmds = NULL;
 	data->pipe_1 = NULL;
 	data->pipe_2 = NULL;
-	data->exit_stat = 0;
 	init_env(data, env);
 }
 

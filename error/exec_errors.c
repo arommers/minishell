@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 15:44:43 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/15 17:11:53 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 14:53:10 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	print_error(char *cmd, char *err_msg)
 	}
 }
 
+// prints error message in case of variable identifier error
+// cmd =		either "export" or "unset"
+// var =		variable identifier that is not valid
 void	var_error(char *cmd, char *var)
 {
 	ft_printf(2, "minishell: %s: `%s': ", cmd, var);

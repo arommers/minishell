@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   ft_unset.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/08/16 15:01:38 by mgoedkoo      #+#    #+#                 */
+/*   Updated: 2023/08/16 15:01:58 by mgoedkoo      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 static void	del_var(t_data *data, char *var)
 {
 	t_lexer	*tmp;
-	t_lexer *ex_node;
+	t_lexer	*ex_node;
 	int		len;
-	
+
 	if (!ft_getenv(data, var))
 		return ;
 	len = ft_strlen(var);
@@ -29,7 +41,7 @@ static int	check_arg(char *var)
 {
 	int	i;
 
-	if (!var[0])
+	if (!var[0] || ft_isdigit(var[0]))
 		return (var_error("unset", var), 1);
 	i = 0;
 	while (var[i])

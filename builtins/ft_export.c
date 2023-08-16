@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 16:00:55 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/15 18:36:00 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 15:00:13 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	check_var(char *var)
 {
 	int		i;
 
-	if (!var[0] || var[0] == '=')
+	if (!var[0] || ft_isdigit(var[0]))
 		return (var_error("export", var), 1);
 	i = 0;
 	while (var[i])
@@ -71,7 +71,7 @@ static char	*find_var(char *str)
 	char	*var;
 	int		len;
 
-	if (!str[0] || str[0] == '=' || !ft_strchr(str, '='))
+	if (!str[0] || ft_isdigit(str[0]) || str[0] == '=' || !ft_strchr(str, '='))
 		var = ft_strdup(str);
 	else
 	{
