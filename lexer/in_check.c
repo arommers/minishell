@@ -6,11 +6,14 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 10:46:28 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 14:39:44 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/14 18:49:15 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*	Checks the input for invalid characters according to the subject 
+	Checks for unclosed single and double quotes */
 
 void	check_u_quotes(t_data *data)
 {
@@ -23,11 +26,15 @@ void	check_u_quotes(t_data *data)
 		i += skip_spaces(data->input, i);
 		if (!data->input[i])
 			return ;
+		if (data->input[i] == ';' || data->input[i] == '\\')
+			quote_error(data, data->input[i]);
 		if (check_quotes(data->input[i]))
 		{
 			c = data->input[i];
 			i += store_quoted(data->input, i + 1, c);
-			if (!data->input[i + 1])
+			if (data->input[i] == c)
+				i++;
+			else if (!data->input[i + 1])
 				quote_error(data, c);
 		}
 		else
