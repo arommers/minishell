@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/16 14:06:50 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/16 14:12:53 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ char		*join_new_str(char **tmp_array);
 void		*free_chrarray(char **array);
 int			len_till_quote(char *str, char quote);
 char		*expand_str(t_data *data, char *str, int isheredoc);
+char		*ft_getenv(t_data *data, char *str);
 
 // Executor functions
 
@@ -162,5 +163,14 @@ int			single_cmd(t_data *data);
 void		handle_sigint(int sig);
 void		handle_sigquit(int sig);
 void		handle_sigint_ia(int sig);
+
+// Builtin functions
+
+int			ft_env(t_data *data, t_cmd *cmd);
+int			ft_echo(t_data *data, t_cmd *cmd);
+int			ft_pwd(t_data *data, t_cmd *cmd);
+int			ft_export(t_data *data, t_cmd *cmd);
+int			run_builtin(t_data *data, t_cmd *cmd, int ischild);
+int			(*isbuiltin(char *str))(t_data *data, t_cmd *cmd);
 
 #endif

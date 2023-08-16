@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-// expands cmd, creates only child process, waits for it and gets exit status
+// expands cmd, creates child process, waits for it and gets exit status
 int	single_cmd(t_data *data)
 {
 	pid_t	pid;
@@ -25,6 +25,8 @@ int	single_cmd(t_data *data)
 		return (1);
 	if (!data->cmds->args)
 		return (0);
+	if (isbuiltin(data->cmds->args[0]))
+		return (run_builtin(data, data->cmds, 0));
 	pid = fork();
 	if (pid == -1)
 		return (print_error(NULL, NULL), 1);

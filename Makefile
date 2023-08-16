@@ -6,7 +6,7 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/08/14 12:04:24 by arommers      ########   odam.nl          #
+#    Updated: 2023/08/16 14:12:14 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,16 @@ SRC 	=	./lexer/main.c ./lexer/print.c						\
 			./parser/pars_list.c ./parser/pars_util.c			\
 			./parser/parser.c ./expander/var_util.c				\
 			./expander/expand_str.c ./expander/expand_util.c	\
-			./expander/expand_var.c	./expander/quote_util.c		\
+			./expander/expand_var.c ./expander/quote_util.c		\
 			./executor/children.c ./executor/cmds_util.c		\
 			./executor/executor.c ./executor/heredoc.c			\
 			./executor/pipex.c ./executor/redirects.c			\
 			./executor/run_cmd.c ./executor/single_cmd.c		\
-			./error/errors.c	./lexer/in_check.c				\
-			./error/exec_errors.c ./lexer/signals.c
+			./error/errors.c ./lexer/in_check.c					\
+			./error/exec_errors.c ./builtins/builtins.c			\
+			./builtins/ft_echo.c ./builtins/ft_pwd_env.c		\
+			./builtins/ft_export.c ./lexer/signals.c
+
 
 OBJ_DIR =	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
@@ -78,6 +81,10 @@ $(OBJ_DIR)/%.o: ./executor/%.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 
 $(OBJ_DIR)/%.o: ./error/%.c
+	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
+
+$(OBJ_DIR)/%.o: ./builtins/%.c
 	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 

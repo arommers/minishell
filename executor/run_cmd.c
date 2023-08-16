@@ -95,9 +95,9 @@ void	run_cmd(t_data *data, char **cmd_argv)
 
 	envp = make_envp(*(data->env));
 	work_path = cmd_argv[0];
-	if (getenv("PATH"))
+	if (ft_getenv(data, "PATH"))
 	{
-		envp_paths = ft_strdup(getenv("PATH"));
+		envp_paths = ft_strdup(ft_getenv(data, "PATH"));
 		if (!envp_paths)
 			exit_error(NULL, NULL, 1);
 		work_path = get_path(cmd_argv[0], envp_paths);

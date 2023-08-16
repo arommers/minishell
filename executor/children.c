@@ -42,5 +42,7 @@ void	child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[])
 		dup_fds(cmd->fd_io[1], STDOUT_FILENO);
 		close(cmd->fd_io[1]);
 	}
+	if (isbuiltin(cmd->args[0]))
+		run_builtin(data, cmd, 1);
 	run_cmd(data, cmd->args);
 }
