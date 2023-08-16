@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/14 18:45:57 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/16 14:06:50 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_data {
 	t_lexer			**env;
 	t_lexer			*lexer;
 	t_cmd			*cmds;
-	int				ia_mode;
 	int				*pipe_1;
 	int				*pipe_2;
 	int				nr_pipes;
