@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 14:47:38 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/15 16:00:40 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 17:20:52 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	(*isbuiltin(char *str))(t_data *data, t_cmd *cmd)
 {
 	if (ft_strncmp(str, "echo", ft_strlen(str) + 1) == 0)
 		return (ft_echo);
-	// if (ft_strncmp(str, "cd", ft_strlen(str) + 1) == 0)
-	// 	return (ft_cd);
+	if (ft_strncmp(str, "cd", ft_strlen(str) + 1) == 0)
+		return (ft_cd);
 	if (ft_strncmp(str, "pwd", ft_strlen(str) + 1) == 0)
 		return (ft_pwd);
 	if (ft_strncmp(str, "export", ft_strlen(str) + 1) == 0)

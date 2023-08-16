@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/16 16:59:59 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/16 17:22:32 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ void		handle_sigint_ia(int sig);
 
 // Builtin functions
 
+int			ft_cd(t_data *data, t_cmd *cmd);
 int			ft_env(t_data *data, t_cmd *cmd);
 int			ft_echo(t_data *data, t_cmd *cmd);
 int			ft_pwd(t_data *data, t_cmd *cmd);
