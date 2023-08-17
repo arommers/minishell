@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 17:11:19 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 14:54:59 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/17 16:18:38 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,4 @@ int	len_of_var(char *str, int i)
 	while (isvarchr(str, i + j))
 		j++;
 	return (j);
-}
-
-// our version of getenv(), searches environment for variable value
-char	*ft_getenv(t_data *data, char *var)
-{
-	t_lexer	*tmp;
-
-	tmp = *(data->env);
-	while (tmp)
-	{
-		if (ft_strncmp(var, tmp->chars, ft_strlen(var)) == 0
-			&& tmp->chars[ft_strlen(var)] == '=')
-		{
-			return (ft_strchr(tmp->chars, '=') + 1);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
 }

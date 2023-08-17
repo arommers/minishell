@@ -6,48 +6,17 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 16:00:55 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 15:00:13 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/17 17:55:13 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	add_var(t_data *data, char *str)
-{
-	char	*tmp_str;
-
-	tmp_str = ft_strdup(str);
-	if (!tmp_str)
-		return (print_error(NULL, NULL), 1);
-	if (add_lex_node(data->env, 0, tmp_str) == 0)
-		return (print_error(NULL, NULL), 1);
-	return (0);
-}
-
 static int	search_env(t_data *data, char *str, char *var)
 {
-	t_lexer	*tmp;
-	char	*tmp_str;
-	int		len;
-
 	if (!ft_strchr(str, '='))
 		return (0);
-	len = ft_strlen(var);
-	tmp = *(data->env);
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->chars, var, len) == 0 && tmp->chars[len] == '=')
-		{
-			tmp_str = ft_strdup(str);
-			if (!tmp_str)
-				return (print_error(NULL, NULL), 1);
-			free(tmp->chars);
-			tmp->chars = tmp_str;
-			return (0);
-		}
-		tmp = tmp->next;
-	}
-	return (add_var(data, str));
+	return (alter_env(data, str, var));
 }
 
 static int	check_var(char *var)
@@ -55,12 +24,12 @@ static int	check_var(char *var)
 	int		i;
 
 	if (!var[0] || ft_isdigit(var[0]))
-		return (var_error("export", var), 1);
+		return (builtin_error("export", var), 1);
 	i = 0;
 	while (var[i])
 	{
 		if (isvarchr(&var[i], 0) == 0)
-			return (var_error("export", var), 1);
+			return (builtin_error("export", var), 1);
 		i++;
 	}
 	return (0);
