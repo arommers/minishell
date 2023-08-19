@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+// adds new variable + value to environment
+// str =	new environment string ("newvar=newvalue")
 static int	add_to_env(t_data *data, char *str)
 {
 	char	*tmp_str;
@@ -24,10 +26,12 @@ static int	add_to_env(t_data *data, char *str)
 	return (0);
 }
 
+// searches environment for variable to replace its value
+// str =	new environment string ("var=newvalue")
+// var =	variable of which the value is to be replaced
 int	alter_env(t_data *data, char *str, char *var)
 {
 	t_lexer	*tmp;
-	char	*tmp_str;
 	int		len;
 
 	len = ft_strlen(var);
@@ -36,11 +40,8 @@ int	alter_env(t_data *data, char *str, char *var)
 	{
 		if (ft_strncmp(tmp->chars, var, len) == 0 && tmp->chars[len] == '=')
 		{
-			tmp_str = ft_strdup(str);
-			if (!tmp_str)
-				return (print_error(NULL, NULL), 1);
 			free(tmp->chars);
-			tmp->chars = tmp_str;
+			tmp->chars = str;
 			return (0);
 		}
 		tmp = tmp->next;
@@ -66,6 +67,8 @@ char	*ft_getenv(t_data *data, char *var)
 	return (NULL);
 }
 
+// uses getcwd to store current working directory in buffer,
+// then uses ft_strdup so all superfluous memory space can be freed
 char	*get_pwd(void)
 {
 	char	*buffer;

@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+// uses ft_strjoin to create new environment strings to replace the old ones
+// or add new variables to the environment
 static int	update_pwds(t_data *data, char *old_pwd, char *new_pwd)
 {
 	char	*oldpwd_str;
@@ -36,7 +38,9 @@ static int	update_pwds(t_data *data, char *old_pwd, char *new_pwd)
 	return (alter_env(data, pwd_str, "PWD"));
 }
 
-// What do I do when HOME is unset??
+// either takes home directory as path if there is no cmd->args[1],
+// or joins home directory with the string after '~'
+// QUESTION: What do I do if HOME is unset??
 static char	*make_home_path(t_data *data, t_cmd *cmd)
 {
 	char	*path;
@@ -52,6 +56,8 @@ static char	*make_home_path(t_data *data, t_cmd *cmd)
 	return (path);
 }
 
+// checks cmd->args[1] to zee if HOME or OLDPWD variables are involved,
+// otherwise dups cmd->args[1] as is
 static char	*make_path(t_data *data, t_cmd *cmd)
 {
 	char	*path;
@@ -72,6 +78,8 @@ static char	*make_path(t_data *data, t_cmd *cmd)
 	return (path);
 }
 
+// makes new path, stores old cwd, uses chdir to change cwd into new path,
+// and stores old and new cwd in the environment
 int	ft_cd(t_data *data, t_cmd *cmd)
 {
 	char	*path;
@@ -89,6 +97,8 @@ int	ft_cd(t_data *data, t_cmd *cmd)
 		builtin_error("cd", path);
 		return (free(path), free(old_pwd), 1);
 	}
+	if (cmd->args[1][0] == '-' && !cmd->args[1][1])
+		ft_putendl_fd(path, cmd->fd_io[1]);
 	free(path);
 	new_pwd = get_pwd();
 	if (!new_pwd)

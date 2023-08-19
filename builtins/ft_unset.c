@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+// loops through the environment, deletes the node that contains
+// the variable to be unset
 static void	del_var(t_data *data, char *var)
 {
 	t_lexer	*tmp;
@@ -37,6 +39,7 @@ static void	del_var(t_data *data, char *var)
 	}
 }
 
+// checks if the argument consists only of valid variable chars
 static int	check_arg(char *var)
 {
 	int	i;
@@ -53,6 +56,8 @@ static int	check_arg(char *var)
 	return (0);
 }
 
+// loops through the arguments, checks them, changes exit stat
+// if there is an error, removes them from environment if not
 int	ft_unset(t_data *data, t_cmd *cmd)
 {
 	int		exit_stat;

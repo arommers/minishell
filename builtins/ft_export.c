@@ -12,16 +12,23 @@
 
 #include "../includes/minishell.h"
 
-static int	search_env(t_data *data, char *str, char *var)
+// returns if variable has no new value, otherwise alters environment
+static int	export_var(t_data *data, char *str, char *var)
 {
+	char	*tmp_str;
+
 	if (!ft_strchr(str, '='))
 		return (0);
+	tmp_str = ft_strdup(str);
+	if (!tmp_str)
+		return (print_error(NULL, NULL), 1);
 	return (alter_env(data, str, var));
 }
 
+// checks if the variable consists only of valid variable chars
 static int	check_var(char *var)
 {
-	int		i;
+	int	i;
 
 	if (!var[0] || ft_isdigit(var[0]))
 		return (builtin_error("export", var), 1);
@@ -35,6 +42,7 @@ static int	check_var(char *var)
 	return (0);
 }
 
+// looks for the variable part of the string and returns it
 static char	*find_var(char *str)
 {
 	char	*var;
@@ -52,6 +60,8 @@ static char	*find_var(char *str)
 	return (var);
 }
 
+// loops through the arguments, takes the variable from each argument, 
+// checks it, changes exit stat if there is an error, exports it if not
 int	ft_export(t_data *data, t_cmd *cmd)
 {
 	char	*var;
@@ -71,7 +81,7 @@ int	ft_export(t_data *data, t_cmd *cmd)
 		ret = check_var(var);
 		if (ret == 1)
 			exit_stat = ret;
-		if (ret == 0 && search_env(data, cmd->args[i], var) == 1)
+		if (ret == 0 && export_var(data, cmd->args[i], var) == 1)
 			return (free(var), 1);
 		free(var);
 		i++;

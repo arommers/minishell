@@ -60,8 +60,8 @@ void	print_error(char *cmd, char *err_msg)
 }
 
 // prints error message in case of error in builtin function
-// cmd =		either "cd", "export" or "unset"
-// arg =		argument that causes the error
+// cmd =	either "cd", "export" or "unset"
+// arg =	argument that causes the error
 void	builtin_error(char *cmd, char *arg)
 {
 	if (cmd[0] == 'c')
