@@ -22,7 +22,7 @@ static int	export_var(t_data *data, char *str, char *var)
 	tmp_str = ft_strdup(str);
 	if (!tmp_str)
 		return (print_error(NULL, NULL), 1);
-	return (alter_env(data, str, var));
+	return (alter_env(data, tmp_str, var));
 }
 
 // checks if the variable consists only of valid variable chars
