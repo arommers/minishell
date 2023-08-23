@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 15:11:44 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 17:16:16 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	create_heredoc(t_data *data, t_lexer *heredoc,
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
 		return (print_error(filename, NULL), exit(EXIT_FAILURE));
+	init_signals(data, 3);
 	line = readline("> ");
 	while (line && ft_strncmp(heredoc->chars, line, 
 			ft_strlen(heredoc->chars)) != 0)
@@ -83,12 +84,14 @@ static int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 			return (1);
 		isquoted = 1;
 	}
+	init_signals(data, 4);
 	pid = fork();
 	if (pid == -1)
 		return (print_error(NULL, NULL), 1);
 	if (pid == 0)
 		create_heredoc(data, heredoc, cmd->hd_filename, isquoted);
 	waitpid(pid, &stat, 0);
+	init_signals(data, 1);
 	return (WEXITSTATUS(stat));
 }
 
@@ -97,6 +100,7 @@ int	make_heredocs(t_data *data)
 {
 	t_cmd	*tmp_cmd;
 	t_lexer	*tmp_re_dir;
+	int		ret;
 
 	tmp_cmd = data->cmds;
 	while (tmp_cmd)
@@ -106,8 +110,9 @@ int	make_heredocs(t_data *data)
 		{
 			if (tmp_re_dir->token == LESSLESS)
 			{
-				if (heredoc(data, tmp_cmd, tmp_re_dir) == 1)
-					return (1);
+				ret = heredoc(data, tmp_cmd, tmp_re_dir);
+				if (ret != 0)
+					return (ret);
 			}
 			tmp_re_dir = tmp_re_dir->next;
 		}

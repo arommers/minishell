@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 15:14:35 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 17:57:03 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	executor(t_data *data)
 
 	data->old_exit_stat = g_exit_status;
 	g_exit_status = 0;
-	if (make_heredocs(data) == 1)
+	ret = make_heredocs(data);
+	if (ret != 0)
 	{
-		g_exit_status = 1;
+		g_exit_status = ret;
 		return ;
 	}
-	init_signals(data, 2);
+	// init_signals(data, 4);
 	if (data->nr_pipes == 0)
 		ret = single_cmd(data);
 	else

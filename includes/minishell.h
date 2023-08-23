@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/23 13:55:51 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 15:44:35 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ int			single_cmd(t_data *data);
 void		handle_sigint(int sig);
 void		handle_sigquit(int sig);
 void		handle_sigint_ia(int sig);
+void		handle_sigint_hd(int sig);
+
 
 // Builtin functions
 

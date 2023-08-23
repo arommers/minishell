@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 17:04:08 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 16:13:31 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 18:00:58 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	single_cmd(t_data *data)
 		return (print_error(NULL, NULL), 1);
 	if (pid == 0)
 		child(data, data->cmds, NULL, NULL);
+	init_signals(data, 4);
 	waitpid(pid, &stat, 0);
 	return (WEXITSTATUS(stat));
 }
