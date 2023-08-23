@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 15:44:43 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/17 18:07:38 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 15:24:53 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,23 @@ void	print_error(char *cmd, char *err_msg)
 
 // prints error message in case of error in builtin function
 // cmd =	either "cd", "export" or "unset"
-// arg =	argument that causes the error
-void	builtin_error(char *cmd, char *arg)
+// var =	if an environment variable causes the error
+// path =	if cmd is cd and a pathname causes the error
+void	builtin_error(char *cmd, char *var, char *path)
 {
 	if (cmd[0] == 'c')
 	{
-		if (arg)
+		if (path)
 		{
-			ft_printf(2, "minishell: %s: %s: ", cmd, arg);
+			ft_printf(2, "minishell: %s: %s: ", cmd, path);
 			perror(NULL);
 		}
 		else
-			ft_printf(2, "minishell: %s: OLDPWD not set\n");
+			ft_printf(2, "minishell: %s: %s not set\n", cmd, var);
 	}
 	else
 	{
-		ft_printf(2, "minishell: %s: `%s': ", cmd, arg);
+		ft_printf(2, "minishell: %s: `%s': ", cmd, var);
 		ft_printf(2, "not a valid identifier\n");
 	}
 }

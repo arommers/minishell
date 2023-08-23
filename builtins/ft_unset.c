@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/16 15:01:38 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/17 15:17:47 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 15:30:38 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static int	check_arg(char *var)
 	int	i;
 
 	if (!var[0] || ft_isdigit(var[0]))
-		return (builtin_error("unset", var), 1);
+		return (builtin_error("unset", var, NULL), 1);
 	i = 0;
 	while (var[i])
 	{
 		if (isvarchr(&var[i], 0) == 0)
-			return (builtin_error("unset", var), 1);
+			return (builtin_error("unset", var, NULL), 1);
 		i++;
 	}
 	return (0);
