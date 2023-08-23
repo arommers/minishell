@@ -6,66 +6,43 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 16:00:55 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 15:00:13 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/17 17:55:13 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	add_var(t_data *data, char *str)
+// returns if variable has no new value, otherwise alters environment
+static int	export_var(t_data *data, char *str, char *var)
 {
 	char	*tmp_str;
-
-	tmp_str = ft_strdup(str);
-	if (!tmp_str)
-		return (print_error(NULL, NULL), 1);
-	if (add_lex_node(data->env, 0, tmp_str) == 0)
-		return (print_error(NULL, NULL), 1);
-	return (0);
-}
-
-static int	search_env(t_data *data, char *str, char *var)
-{
-	t_lexer	*tmp;
-	char	*tmp_str;
-	int		len;
 
 	if (!ft_strchr(str, '='))
 		return (0);
-	len = ft_strlen(var);
-	tmp = *(data->env);
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->chars, var, len) == 0 && tmp->chars[len] == '=')
-		{
-			tmp_str = ft_strdup(str);
-			if (!tmp_str)
-				return (print_error(NULL, NULL), 1);
-			free(tmp->chars);
-			tmp->chars = tmp_str;
-			return (0);
-		}
-		tmp = tmp->next;
-	}
-	return (add_var(data, str));
+	tmp_str = ft_strdup(str);
+	if (!tmp_str)
+		return (print_error(NULL, NULL), 1);
+	return (alter_env(data, tmp_str, var));
 }
 
+// checks if the variable consists only of valid variable chars
 static int	check_var(char *var)
 {
-	int		i;
+	int	i;
 
 	if (!var[0] || ft_isdigit(var[0]))
-		return (var_error("export", var), 1);
+		return (builtin_error("export", var), 1);
 	i = 0;
 	while (var[i])
 	{
 		if (isvarchr(&var[i], 0) == 0)
-			return (var_error("export", var), 1);
+			return (builtin_error("export", var), 1);
 		i++;
 	}
 	return (0);
 }
 
+// looks for the variable part of the string and returns it
 static char	*find_var(char *str)
 {
 	char	*var;
@@ -83,6 +60,8 @@ static char	*find_var(char *str)
 	return (var);
 }
 
+// loops through the arguments, takes the variable from each argument, 
+// checks it, changes exit stat if there is an error, exports it if not
 int	ft_export(t_data *data, t_cmd *cmd)
 {
 	char	*var;
@@ -102,7 +81,7 @@ int	ft_export(t_data *data, t_cmd *cmd)
 		ret = check_var(var);
 		if (ret == 1)
 			exit_stat = ret;
-		if (ret == 0 && search_env(data, cmd->args[i], var) == 1)
+		if (ret == 0 && export_var(data, cmd->args[i], var) == 1)
 			return (free(var), 1);
 		free(var);
 		i++;

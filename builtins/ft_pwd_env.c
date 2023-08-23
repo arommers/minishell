@@ -6,28 +6,28 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 15:08:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 15:33:45 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/17 16:17:15 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+// gets current working directory from get_pwd and prints it
 int	ft_pwd(t_data *data, t_cmd *cmd)
 {
-	char	*buffer;
+	char	*pwd;
 
 	(void)cmd;
 	(void)data;
-	buffer = ft_calloc(200, sizeof(char));
-	buffer = getcwd(buffer, 200);
-	if (!buffer)
-		return (print_error(NULL, NULL), 1);
-	ft_putendl_fd(buffer, 1);
-	free(buffer);
-	buffer = NULL;
+	pwd = get_pwd();
+	if (!pwd)
+		return (1);
+	ft_putendl_fd(pwd, cmd->fd_io[1]);
+	free(pwd);
 	return (0);
 }
 
+// loops through environment and prints each line (unless cmd->args[1])
 int	ft_env(t_data *data, t_cmd *cmd)
 {
 	t_lexer	*tmp;
@@ -40,7 +40,7 @@ int	ft_env(t_data *data, t_cmd *cmd)
 	tmp = *(data->env);
 	while (tmp)
 	{
-		ft_putendl_fd(tmp->chars, 1);
+		ft_putendl_fd(tmp->chars, cmd->fd_io[1]);
 		tmp = tmp->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/23 12:18:38 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/23 13:55:51 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void		syntax_error(t_data *data, t_tokens token);
 void		exit_error(char *cmd, char *err_msg, int exit_code);
 int			pipex_error(t_data *data, pid_t *pid);
 void		print_error(char *cmd, char *err_msg);
+void		builtin_error(char *cmd, char *arg);
 
 //	Print Functions
 
@@ -145,7 +146,6 @@ char		*join_new_str(char **tmp_array);
 void		*free_chrarray(char **array);
 int			len_till_quote(char *str, char quote);
 char		*expand_str(t_data *data, char *str, int isheredoc);
-char		*ft_getenv(t_data *data, char *str);
 
 // Executor functions
 
@@ -167,6 +167,9 @@ void		handle_sigint_ia(int sig);
 
 // Builtin functions
 
+char		*get_pwd(void);
+char		*ft_getenv(t_data *data, char *str);
+int			alter_env(t_data *data, char *str, char *var);
 int			ft_cd(t_data *data, t_cmd *cmd);
 int			ft_env(t_data *data, t_cmd *cmd);
 int			ft_pwd(t_data *data, t_cmd *cmd);

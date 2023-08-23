@@ -6,12 +6,14 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/16 15:01:38 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 15:01:58 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/17 15:17:47 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+// loops through the environment, deletes the node that contains
+// the variable to be unset
 static void	del_var(t_data *data, char *var)
 {
 	t_lexer	*tmp;
@@ -37,22 +39,25 @@ static void	del_var(t_data *data, char *var)
 	}
 }
 
+// checks if the argument consists only of valid variable chars
 static int	check_arg(char *var)
 {
 	int	i;
 
 	if (!var[0] || ft_isdigit(var[0]))
-		return (var_error("unset", var), 1);
+		return (builtin_error("unset", var), 1);
 	i = 0;
 	while (var[i])
 	{
 		if (isvarchr(&var[i], 0) == 0)
-			return (var_error("unset", var), 1);
+			return (builtin_error("unset", var), 1);
 		i++;
 	}
 	return (0);
 }
 
+// loops through the arguments, checks them, changes exit stat
+// if there is an error, removes them from environment if not
 int	ft_unset(t_data *data, t_cmd *cmd)
 {
 	int		exit_stat;

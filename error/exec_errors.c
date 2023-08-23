@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 15:44:43 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 14:53:10 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/17 18:07:38 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	exit_error(char *cmd, char *err_msg, int exit_code)
 		if (cmd)
 			ft_printf(2, "minishell: %s: ", cmd);
 		else
-			ft_printf(2, "minishell:");
+			ft_printf(2, "minishell: ");
 		perror(NULL);
 	}
 	exit(exit_code);
@@ -54,18 +54,31 @@ void	print_error(char *cmd, char *err_msg)
 		if (cmd)
 			ft_printf(2, "minishell: %s: ", cmd);
 		else
-			ft_printf(2, "minishell:");
+			ft_printf(2, "minishell: ");
 		perror(NULL);
 	}
 }
 
-// prints error message in case of variable identifier error
-// cmd =		either "export" or "unset"
-// var =		variable identifier that is not valid
-void	var_error(char *cmd, char *var)
+// prints error message in case of error in builtin function
+// cmd =	either "cd", "export" or "unset"
+// arg =	argument that causes the error
+void	builtin_error(char *cmd, char *arg)
 {
-	ft_printf(2, "minishell: %s: `%s': ", cmd, var);
-	ft_printf(2, "not a valid identifier\n");
+	if (cmd[0] == 'c')
+	{
+		if (arg)
+		{
+			ft_printf(2, "minishell: %s: %s: ", cmd, arg);
+			perror(NULL);
+		}
+		else
+			ft_printf(2, "minishell: %s: OLDPWD not set\n");
+	}
+	else
+	{
+		ft_printf(2, "minishell: %s: `%s': ", cmd, arg);
+		ft_printf(2, "not a valid identifier\n");
+	}
 }
 
 // frees process ids and closes pipes in case of pipex error

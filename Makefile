@@ -6,7 +6,7 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/08/23 11:46:21 by arommers      ########   odam.nl          #
+#    Updated: 2023/08/23 13:55:24 by mgoedkoo      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRC 	=	./lexer/main.c ./lexer/print.c						\
 			./builtins/ft_echo.c ./builtins/ft_pwd_env.c		\
 			./builtins/ft_export.c ./lexer/signals.c			\
 			./builtins/ft_unset.c ./builtins/ft_cd.c			\
-			./builtins/ft_exit.c	
+			./builtins/ft_exit.c ./builtins/env_util.c
 
 
 OBJ_DIR =	obj
