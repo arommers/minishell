@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/23 15:44:35 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/23 18:06:00 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void		syntax_error(t_data *data, t_tokens token);
 void		exit_error(char *cmd, char *err_msg, int exit_code);
 int			pipex_error(t_data *data, pid_t *pid);
 void		print_error(char *cmd, char *err_msg);
-void		builtin_error(char *cmd, char *arg);
+void		builtin_error(char *cmd, char *var, char *path);
 
 //	Print Functions
 

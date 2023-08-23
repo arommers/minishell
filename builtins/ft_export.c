@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 16:00:55 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/17 17:55:13 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 15:28:28 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ static int	check_var(char *var)
 	int	i;
 
 	if (!var[0] || ft_isdigit(var[0]))
-		return (builtin_error("export", var), 1);
+		return (builtin_error("export", var, NULL), 1);
 	i = 0;
 	while (var[i])
 	{
 		if (isvarchr(&var[i], 0) == 0)
-			return (builtin_error("export", var), 1);
+			return (builtin_error("export", var, NULL), 1);
 		i++;
 	}
 	return (0);

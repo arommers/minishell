@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/16 17:20:27 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/17 18:10:32 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 15:53:55 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ static int	update_pwds(t_data *data, char *old_pwd, char *new_pwd)
 
 // either takes home directory as path if there is no cmd->args[1],
 // or joins home directory with the string after '~'
-// QUESTION: What do I do if HOME is unset??
 static char	*make_home_path(t_data *data, t_cmd *cmd)
 {
 	char	*path;
 
 	if (!ft_getenv(data, "HOME"))
-		return (NULL);
+		return (builtin_error("cd", "HOME", NULL), NULL);
 	if (!cmd->args[1])
 		path = ft_strdup(ft_getenv(data, "HOME"));
 	else
@@ -62,14 +61,16 @@ static char	*make_path(t_data *data, t_cmd *cmd)
 {
 	char	*path;
 
-	if (!cmd->args[1] || cmd->args[1][0] == '~')
+	if (!cmd->args[1])
+		return (make_home_path(data, cmd));
+	if (cmd->args[1][0] == '~' && (!cmd->args[1][1] || cmd->args[1][1] == '/'))
 		return (make_home_path(data, cmd));
 	if (cmd->args[1][0] == '-' && !cmd->args[1][1])
 	{
 		if (ft_getenv(data, "OLDPWD"))
 			path = ft_strdup(ft_getenv(data, "OLDPWD"));
 		else
-			return (builtin_error("cd", NULL), NULL);
+			return (builtin_error("cd", "OLDPWD", NULL), NULL);
 	}
 	else
 		path = ft_strdup(cmd->args[1]);
@@ -94,7 +95,7 @@ int	ft_cd(t_data *data, t_cmd *cmd)
 		return (free(path), 1);
 	if (chdir(path) == -1)
 	{
-		builtin_error("cd", path);
+		builtin_error("cd", NULL, path);
 		return (free(path), free(old_pwd), 1);
 	}
 	if (cmd->args[1][0] == '-' && !cmd->args[1][1])
