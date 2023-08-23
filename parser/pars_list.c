@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/10 15:18:04 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/23 15:15:10 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	free_cmd_list(t_cmd **head)
 		free_lexer(&current->re_dir);
 		clear_array(current->args);
 		if (current->hd_filename)
+		{
+			unlink(current->hd_filename);
 			free(current->hd_filename);
+		}
 		if (current->fd_io)
 			free(current->fd_io);
 		tmp = current;

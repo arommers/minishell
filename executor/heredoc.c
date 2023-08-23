@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 14:50:50 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 15:11:44 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ static int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 	int		isquoted;
 
 	if (cmd->hd_filename)
+	{
+		unlink(cmd->hd_filename);
 		free(cmd->hd_filename);
+	}
 	cmd->hd_filename = generate_filename();
 	if (!cmd->hd_filename)
 		return (1);

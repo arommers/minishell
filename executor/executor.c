@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 16:58:28 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 15:14:35 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	executor(t_data *data)
 {
-	int	ret;
+	int		ret;
 
 	data->old_exit_stat = g_exit_status;
 	g_exit_status = 0;
