@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 14:47:38 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 17:20:52 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/23 11:49:40 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	(*isbuiltin(char *str))(t_data *data, t_cmd *cmd)
 		return (ft_unset);
 	if (ft_strncmp(str, "env", ft_strlen(str) + 1) == 0)
 		return (ft_env);
-	// if (ft_strncmp(str, "exit", ft_strlen(str) + 1) == 0)
-	// 	return (ft_exit);
+	if (ft_strncmp(str, "exit", ft_strlen(str) + 1) == 0)
+		return (ft_exit);
 	return (NULL);
 }
 

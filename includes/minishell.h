@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/21 10:27:02 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/23 12:18:38 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <signal.h>
 # include <termios.h>
 # include <sys/wait.h>
@@ -175,5 +176,9 @@ int			ft_unset(t_data *data, t_cmd *cmd);
 int			ft_export(t_data *data, t_cmd *cmd);
 int			run_builtin(t_data *data, t_cmd *cmd, int ischild);
 int			(*isbuiltin(char *str))(t_data *data, t_cmd *cmd);
+
+int			str_isdigit(char *str);
+unsigned long long	ft_atoll(const char *str);
+void		set_exit_status(t_cmd *cmd);
 
 #endif
