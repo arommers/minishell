@@ -6,14 +6,14 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 09:57:37 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/23 14:50:50 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// opens new hd file, reads and expands input, stores it in file
-static int	create_heredoc(t_data *data, t_lexer *heredoc,
+// opens new hd file, reads and expands input, stores it in file, then exits
+static void	create_heredoc(t_data *data, t_lexer *heredoc,
 						char *filename, int isquoted)
 {
 	int		fd;
@@ -21,7 +21,7 @@ static int	create_heredoc(t_data *data, t_lexer *heredoc,
 
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
-		return (print_error(filename, NULL), 1);
+		return (print_error(filename, NULL), exit(EXIT_FAILURE));
 	line = readline("> ");
 	while (line && ft_strncmp(heredoc->chars, line, 
 			ft_strlen(heredoc->chars)) != 0)
@@ -30,7 +30,7 @@ static int	create_heredoc(t_data *data, t_lexer *heredoc,
 		{
 			line = expand_var(data, line);
 			if (!line)
-				return (1);
+				exit(EXIT_FAILURE);
 		}
 		ft_putendl_fd(line, fd);
 		free(line);
@@ -38,8 +38,7 @@ static int	create_heredoc(t_data *data, t_lexer *heredoc,
 	}
 	if (line)
 		free(line);
-	close(fd);
-	return (0);
+	exit(EXIT_SUCCESS);
 }
 
 // generates new filename using a static int
@@ -60,9 +59,12 @@ static char	*generate_filename(void)
 	return (filename);
 }
 
-// replaces old heredoc filename, checks for quotes and makes new one
+// replaces old heredoc filename, checks for quotes and creates child
+// process in which a new heredoc is created
 static int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 {
+	pid_t	pid;
+	int		stat;
 	int		isquoted;
 
 	if (cmd->hd_filename)
@@ -78,7 +80,13 @@ static int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 			return (1);
 		isquoted = 1;
 	}
-	return (create_heredoc(data, heredoc, cmd->hd_filename, isquoted));
+	pid = fork();
+	if (pid == -1)
+		return (print_error(NULL, NULL), 1);
+	if (pid == 0)
+		create_heredoc(data, heredoc, cmd->hd_filename, isquoted);
+	waitpid(pid, &stat, 0);
+	return (WEXITSTATUS(stat));
 }
 
 // loops through commands and redirects, makes heredocs if encountered
