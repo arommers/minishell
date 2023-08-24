@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 17:04:08 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 18:00:58 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 11:11:23 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	single_cmd(t_data *data)
 		return (0);
 	if (isbuiltin(data->cmds->args[0]))
 		return (run_builtin(data, data->cmds, 0));
+	// init_signals(data, 4);
 	pid = fork();
 	if (pid == -1)
 		return (print_error(NULL, NULL), 1);
 	if (pid == 0)
 		child(data, data->cmds, NULL, NULL);
-	init_signals(data, 4);
 	waitpid(pid, &stat, 0);
 	return (WEXITSTATUS(stat));
 }

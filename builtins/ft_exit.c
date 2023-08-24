@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 09:53:11 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/23 13:49:03 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 13:09:30 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	str_isdigit(char *str)
 	i = 0;
 	if (ft_strncmp(str, "", 1) == 0)
 		return (0);
+	if (str[0] == '-')
+		i++;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -56,10 +58,8 @@ unsigned long long	ft_atoll(const char *str)
 	return (a * b);
 }
 
-void	set_exit_status(t_cmd *cmd)
+void	set_exit_status(t_cmd *cmd, unsigned long long value)
 {
-	if (!cmd->args[1])
-		g_exit_status = 0;
 	if (cmd->args[1] && !str_isdigit(cmd->args[1]))
 	{
 		ft_putstr_fd(E_PROMPT, 2);
@@ -68,6 +68,10 @@ void	set_exit_status(t_cmd *cmd)
 		ft_putendl_fd(": numeric argument required", 2);
 		exit (255);
 	}
+	if (cmd->args[1] && value >= 0 && value < 256)
+		g_exit_status = (int)value;
+	else if (value < 0 || value > 255)
+		g_exit_status = value % 256;
 }
 
 int	ft_exit(t_data *data, t_cmd *cmd)
@@ -78,7 +82,7 @@ int	ft_exit(t_data *data, t_cmd *cmd)
 	if (cmd->args[1])
 	{
 		value = ft_atoll(cmd->args[1]);
-		if (value < 0 || value > LLONG_MAX)
+		if (cmd->args[1][0] != '-' && value > LLONG_MAX)
 		{
 			ft_putstr_fd(E_PROMPT, 2);
 			ft_putstr_fd("exit: ", 2);
@@ -87,14 +91,13 @@ int	ft_exit(t_data *data, t_cmd *cmd)
 			exit (255);
 		}
 	}
-	if (cmd->args[1])
+	if (cmd->args[1] && cmd->args[2])
 	{
-		if (cmd->args[2])
-		{
-			ft_putendl_fd(E_PROMPT "exit: too many arguments", 2);
-			return (1);
-		}
+		ft_putendl_fd(E_PROMPT "exit: too many arguments", 2);
+		return (1);
 	}
-	set_exit_status(cmd);
+	set_exit_status(cmd, value);
+	if (!cmd->args[1])
+		g_exit_status = 0;
 	exit(g_exit_status);
 }
