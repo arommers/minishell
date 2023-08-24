@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/23 18:06:00 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 12:46:44 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,8 @@ int			ft_export(t_data *data, t_cmd *cmd);
 int			run_builtin(t_data *data, t_cmd *cmd, int ischild);
 int			(*isbuiltin(char *str))(t_data *data, t_cmd *cmd);
 
-int			str_isdigit(char *str);
+int					str_isdigit(char *str);
 unsigned long long	ft_atoll(const char *str);
-void		set_exit_status(t_cmd *cmd);
+void				set_exit_status(t_cmd *cmd, unsigned long long value);
 
 #endif

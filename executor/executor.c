@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/06 14:44:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 17:57:03 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 11:09:34 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	executor(t_data *data)
 		g_exit_status = ret;
 		return ;
 	}
-	// init_signals(data, 4);
+	init_signals(data, 2);
 	if (data->nr_pipes == 0)
 		ret = single_cmd(data);
 	else

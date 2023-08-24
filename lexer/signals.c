@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/12 14:45:38 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/23 17:52:32 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 11:11:52 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	handle_sigint_hd(int sig)
 
 void	handle_sigint(int sig)
 {
-	ft_printf(2, "made it here\n");
 	ft_putstr_fd("\n", 2);
 	rl_on_new_line();
 	rl_replace_line("", 0);
