@@ -6,14 +6,14 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 17:16:16 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 17:37:11 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // opens new hd file, reads and expands input, stores it in file, then exits
-static void	create_heredoc(t_data *data, t_lexer *heredoc,
+static void	heredoc_child(t_data *data, t_lexer *heredoc,
 						char *filename, int isquoted)
 {
 	int		fd;
@@ -42,6 +42,24 @@ static void	create_heredoc(t_data *data, t_lexer *heredoc,
 	exit(EXIT_SUCCESS);
 }
 
+// initializes signals and creates heredoc child process
+static int	create_heredoc(t_data *data, t_lexer *heredoc,
+						char *filename, int isquoted)
+{
+	pid_t	pid;
+	int		stat;
+
+	init_signals(data, 4);
+	pid = fork();
+	if (pid == -1)
+		return (print_error(NULL, NULL), 1);
+	if (pid == 0)
+		heredoc_child(data, heredoc, filename, isquoted);
+	waitpid(pid, &stat, 0);
+	init_signals(data, 1);
+	return (WEXITSTATUS(stat));
+}
+
 // generates new filename using a static int
 static char	*generate_filename(void)
 {
@@ -60,12 +78,9 @@ static char	*generate_filename(void)
 	return (filename);
 }
 
-// replaces old heredoc filename, checks for quotes and creates child
-// process in which a new heredoc is created
+// replaces old heredoc filename, checks for quotes
 static int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 {
-	pid_t	pid;
-	int		stat;
 	int		isquoted;
 
 	if (cmd->hd_filename)
@@ -84,15 +99,7 @@ static int	heredoc(t_data *data, t_cmd *cmd, t_lexer *heredoc)
 			return (1);
 		isquoted = 1;
 	}
-	init_signals(data, 4);
-	pid = fork();
-	if (pid == -1)
-		return (print_error(NULL, NULL), 1);
-	if (pid == 0)
-		create_heredoc(data, heredoc, cmd->hd_filename, isquoted);
-	waitpid(pid, &stat, 0);
-	init_signals(data, 1);
-	return (WEXITSTATUS(stat));
+	return (create_heredoc(data, heredoc, cmd->hd_filename, isquoted));
 }
 
 // loops through commands and redirects, makes heredocs if encountered
