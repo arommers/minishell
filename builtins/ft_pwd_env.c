@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 15:08:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/17 16:17:15 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/24 14:10:13 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	ft_env(t_data *data, t_cmd *cmd)
 	tmp = *(data->env);
 	while (tmp)
 	{
+		ft_printf(cmd->fd_io[1], "declare -x ");
 		ft_putendl_fd(tmp->chars, cmd->fd_io[1]);
 		tmp = tmp->next;
 	}
