@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:43:31 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/09 14:26:44 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 15:07:43 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	del_lex_node(t_lexer **head)
 	{
 		tmp = current;
 		current = current->next;
+		if (tmp->chars)
+			free(tmp->chars);
 		free(tmp);
 	}
 	*head = current;

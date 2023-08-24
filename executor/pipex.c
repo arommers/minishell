@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 21:13:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 19:03:39 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/24 16:45:17 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 // waits for child processes and gets exit status of last one
 static int	wait_for_children(t_data *data, pid_t *pid)
 {
-	int	stat;
-	int	i;
+	t_cmd	*cmd;
+	int		stat;
+	int		i;
 
 	i = 0;
 	while (i < data->nr_pipes + 1)
@@ -26,6 +27,9 @@ static int	wait_for_children(t_data *data, pid_t *pid)
 		i++;
 	}
 	free(pid);
+	cmd = find_last_cmd(data->cmds);
+	if (cmd->fd_io[0] == -1)
+		return (1);
 	return (WEXITSTATUS(stat));
 }
 
@@ -34,16 +38,16 @@ static int	multi_pipes(t_data *data, t_cmd *cmd, pid_t *pid, int i)
 {
 	while (i < data->nr_pipes)
 	{
+		if (i != 1)
+			data->pipe_1[0] = data->pipe_2[0];
+		if (pipe(data->pipe_2) == -1)
+			return (print_error(NULL, NULL), 1);
 		if (expand_cmd(data, cmd->args) == 1)
 			return (1);
 		cmd->fd_io = redirects(data, cmd);
 		if (!cmd->fd_io)
 			return (1);
-		if (i != 1)
-			data->pipe_1[0] = data->pipe_2[0];
-		if (pipe(data->pipe_2) == -1)
-			return (print_error(NULL, NULL), 1);
-		if (cmd->args)
+		if (cmd->fd_io[0] != -1 && cmd->args)
 		{
 			pid[i] = fork();
 			if (pid[i] == -1)

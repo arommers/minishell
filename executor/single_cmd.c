@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 17:04:08 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/24 11:11:23 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 16:41:45 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	single_cmd(t_data *data)
 	if (expand_cmd(data, data->cmds->args) == 1)
 		return (1);
 	data->cmds->fd_io = redirects(data, data->cmds);
-	if (!data->cmds->fd_io)
+	if (!data->cmds->fd_io || data->cmds->fd_io[0] == -1)
 		return (1);
 	if (!data->cmds->args)
 		return (0);

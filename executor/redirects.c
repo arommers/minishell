@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/16 16:54:21 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/24 16:39:51 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	redirect_input(t_data *data, t_cmd *cmd, t_lexer *tmp, int fd_in)
 		{
 			tmp->chars = expand_str(data, tmp->chars, 0);
 			if (!tmp->chars)
-				return (-1);
+				return (-2);
 		}
 		infile = tmp->chars;
 		fd_in = open(infile, O_RDONLY);
@@ -31,7 +31,7 @@ static int	redirect_input(t_data *data, t_cmd *cmd, t_lexer *tmp, int fd_in)
 			return (print_error(infile, NULL), -1);
 	}
 	else
-		fd_in = -2;
+		fd_in = -3;
 	return (fd_in);
 }
 
@@ -44,7 +44,7 @@ static int	redirect_output(t_data *data, t_lexer *tmp, int fd_out)
 	{
 		tmp->chars = expand_str(data, tmp->chars, 0);
 		if (!tmp->chars)
-			return (-1);
+			return (-2);
 	}
 	outfile = tmp->chars;
 	if (tmp->token == GREAT)
@@ -69,17 +69,19 @@ static int	*handle_redir(t_data *data, t_cmd *cmd, int fd_io[])
 			fd_io[0] = redirect_input(data, cmd, tmp, fd_io[0]);
 		else
 			fd_io[1] = redirect_output(data, tmp, fd_io[1]);
-		if (fd_io[0] == -1 || fd_io[1] == -1)
+		if (fd_io[0] == -2 || fd_io[1] == -2)
 			return (free(fd_io), NULL);
+		if (fd_io[0] == -1 || fd_io[1] == -1)
+			return (fd_io);
 		tmp = tmp->next;
 	}
-	if (fd_io[0] == -2)
+	if (fd_io[0] == -3)
 	{
 		fd_io[0] = open(cmd->hd_filename, O_RDONLY);
 		if (fd_io[0] == -1)
 		{
 			print_error(cmd->hd_filename, NULL);
-			return (free(fd_io), NULL);
+			return (fd_io);
 		}
 	}
 	return (fd_io);
@@ -97,5 +99,9 @@ int	*redirects(t_data *data, t_cmd *cmd)
 	fd_io[1] = STDOUT_FILENO;
 	if (cmd->re_dir)
 		fd_io = handle_redir(data, cmd, fd_io);
+	if (!fd_io)
+		return (NULL);
+	if (fd_io[1] == -1)
+		fd_io[0] = -1;
 	return (fd_io);
 }

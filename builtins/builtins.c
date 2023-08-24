@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 14:47:38 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 11:49:40 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/24 16:24:04 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	run_builtin(t_data *data, t_cmd *cmd, int ischild)
 {
 	int	exit_stat;
 
+	if (ischild == 1)
+	{
+		cmd->fd_io[0] = 0;
+		cmd->fd_io[1] = 1;
+	}
 	exit_stat = (*isbuiltin(cmd->args[0]))(data, cmd);
 	if (ischild == 1)
 		exit(exit_stat);

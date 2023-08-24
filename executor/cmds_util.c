@@ -6,14 +6,14 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 17:22:01 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 19:01:57 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/24 16:44:19 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // finds last command in list
-static t_cmd	*find_last_cmd(t_cmd *cmds)
+t_cmd	*find_last_cmd(t_cmd *cmds)
 {
 	while (cmds)
 	{
@@ -35,7 +35,7 @@ int	first_cmd(t_data *data, pid_t *pid)
 	cmd->fd_io = redirects(data, cmd);
 	if (!cmd->fd_io)
 		return (1);
-	if (cmd->args)
+	if (cmd->fd_io[0] != -1 && cmd->args)
 	{
 		pid[0] = fork();
 		if (pid[0] == -1)
@@ -59,7 +59,7 @@ int	last_cmd(t_data *data, pid_t *pid)
 	cmd->fd_io = redirects(data, cmd);
 	if (!cmd->fd_io)
 		return (1);
-	if (cmd->args)
+	if (cmd->fd_io[0] != -1 && cmd->args)
 	{
 		pid[data->nr_pipes] = fork();
 		if (pid[data->nr_pipes] == -1)
