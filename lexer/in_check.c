@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 10:46:28 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/14 18:49:15 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/25 15:27:24 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,18 @@ void	check_dup(t_data *data)
 		i += skip_spaces(data->input, i);
 		if (!data->input[i])
 			return ;
-		if (data->input[i] == '|' && data->input[i + 1] == '|')
-			syntax_error(data, PIPE);
+		if (data->input[i] == '|')
+		{
+			if (data->input[i + 1] == '|')
+			{
+				g_exit_status = 258;
+				syntax_error(data, PIPE);
+			}
+			i++;
+			i += skip_spaces(data->input, i);
+			if (data->input[i] == '|')
+				syntax_error(data, PIPE);
+		}
 		if (data->input[i] == '&' && data->input[i + 1] == '&')
 			syntax_error(data, AND);
 		i++;

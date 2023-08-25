@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 16:03:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/09 11:24:19 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/25 12:50:51 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ int	add_lex_node(t_lexer **head, t_tokens token, char *str)
 	new = NULL;
 	new = make_lex_node(new, token, str);
 	if (!new)
+	{
+		free_lexer(head);
+		print_error(NULL, NULL);
 		return (0);
+	}
 	if (!*head)
 	{
 		*head = new;

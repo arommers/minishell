@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/24 16:39:51 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/25 10:23:09 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	redirect_input(t_data *data, t_cmd *cmd, t_lexer *tmp, int fd_in)
 {
 	char	*infile;
 
+	(void) cmd;
 	if (tmp->token == LESS)
 	{
 		if (quote_strchr(tmp->chars) || ft_strchr(tmp->chars, '$'))

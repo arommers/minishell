@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/24 16:56:54 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/25 10:15:08 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	maintain_prompt(t_data *data)
 	add_history(data->input);
 	input_check(data);
 	if (!tokenizer(data))
-		exit_error(NULL, NULL, 1);
+		reset_data(data);
 	if (data->lexer && data->lexer->token == PIPE)
 		syntax_error(data, data->lexer->token);
 	parser(data);
