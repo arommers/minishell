@@ -30,7 +30,6 @@ static char	*append_value(char *orig_str, char *new_str, int varlen)
 int	alter_env(t_data *data, char *str, char *var, int isplus)
 {
 	t_lexer	*tmp;
-	char	*tmp_str;
 
 	tmp = *(data->env);
 	while (tmp)
