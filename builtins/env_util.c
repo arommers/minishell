@@ -12,41 +12,46 @@
 
 #include "../includes/minishell.h"
 
-// adds new variable + value to environment
-// str =	new environment string ("newvar=newvalue")
-static int	add_to_env(t_data *data, char *str)
+static char	*append_value(char *orig_str, char *new_str, int varlen)
 {
 	char	*tmp_str;
-
-	tmp_str = ft_strdup(str);
+	
+	tmp_str = ft_strjoin(orig_str, &new_str[varlen + 1]);
 	if (!tmp_str)
-		return (print_error(NULL, NULL), 1);
-	if (add_lex_node(data->env, 0, tmp_str) == 0)
-		return (print_error(NULL, NULL), 1);
-	return (0);
+		print_error(NULL, NULL);
+	free(new_str);
+	return (tmp_str);
 }
 
-// searches environment for variable to replace its value
-// str =	new environment string ("var=newvalue")
+// searches environment for variable to replace its value, or adds new variable
+// str =	new environment string ("var=value")
 // var =	variable of which the value is to be replaced
-int	alter_env(t_data *data, char *str, char *var)
+// isplus =	1 if str was originally of the form "var+=value"
+int	alter_env(t_data *data, char *str, char *var, int isplus)
 {
 	t_lexer	*tmp;
-	int		len;
+	char	*tmp_str;
 
-	len = ft_strlen(var);
 	tmp = *(data->env);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->chars, var, len) == 0 && tmp->chars[len] == '=')
+		if (ft_strncmp(tmp->chars, var, ft_strlen(var)) == 0 && tmp->chars[ft_strlen(var)] == '=')
 		{
+			if (isplus == 1)
+			{
+				str = append_value(tmp->chars, str, ft_strlen(var));
+				if (!str)
+					return (1);
+			}
 			free(tmp->chars);
 			tmp->chars = str;
 			return (0);
 		}
 		tmp = tmp->next;
 	}
-	return (add_to_env(data, str));
+	if (add_lex_node(data->env, 0, str) == 0)
+		return (print_error(NULL, NULL), free(str), 1);
+	return (0);
 }
 
 // our version of getenv(), searches environment for variable value

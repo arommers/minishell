@@ -12,17 +12,47 @@
 
 #include "../includes/minishell.h"
 
+static char	*remove_plus_sign(char *str, char *var)
+{
+	char	*tmp_str;
+	char	*part1;
+	char	*part2;
+
+	part1 = ft_substr(str, 0, ft_strlen(var));
+	if (!part1)
+		return (print_error(NULL, NULL), NULL);
+	part2 = ft_substr(str, ft_strlen(var) + 1, ft_strlen(str));
+	if (!part2)
+		return (free(part1), print_error(NULL, NULL), NULL);
+	tmp_str = ft_strjoin(part1, part2);
+	if (!tmp_str)
+		print_error(NULL, NULL);
+	free(part1);
+	free(part2);
+	return (tmp_str);
+}
+
 // returns if variable has no new value, otherwise alters environment
 static int	export_var(t_data *data, char *str, char *var)
 {
 	char	*tmp_str;
+	int		isplus;
 
 	if (!ft_strchr(str, '='))
 		return (0);
-	tmp_str = ft_strdup(str);
+	isplus = 0;
+	if (str[ft_strlen(var)] == '+')
+	{
+		isplus = 1;
+		tmp_str = remove_plus_sign(str, var);
+		if (!tmp_str)
+			return (1);
+	}
+	else
+		tmp_str = ft_strdup(str);
 	if (!tmp_str)
 		return (print_error(NULL, NULL), 1);
-	return (alter_env(data, tmp_str, var));
+	return (alter_env(data, tmp_str, var, isplus));
 }
 
 // checks if the variable consists only of valid variable chars
@@ -46,14 +76,19 @@ static int	check_var(char *var)
 static char	*find_var(char *str)
 {
 	char	*var;
-	int		len;
+	int		strlen;
+	int		varlen;
 
-	if (!str[0] || ft_isdigit(str[0]) || str[0] == '=' || !ft_strchr(str, '='))
+	strlen = ft_strlen(str);
+	if (!str[0] || ft_isdigit(str[0]) || str[0] == '+' || str[0] == '=' || !ft_strchr(str, '='))
 		var = ft_strdup(str);
 	else
 	{
-		len = ft_strlen(str) - ft_strlen(ft_strchr(str, '='));
-		var = ft_substr(str, 0, len);
+		if (ft_strnstr(str, "+=", strlen) && ft_strnstr(str, "+=", strlen) < ft_strchr(str, '='))
+			varlen = strlen - ft_strlen(ft_strnstr(str, "+=", strlen));
+		else
+			varlen = strlen - ft_strlen(ft_strchr(str, '='));
+		var = ft_substr(str, 0, varlen);
 	}
 	if (!var)
 		return (print_error(NULL, NULL), NULL);

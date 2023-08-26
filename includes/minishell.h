@@ -171,7 +171,7 @@ void		handle_sigint_hd(int sig);
 
 char		*get_pwd(void);
 char		*ft_getenv(t_data *data, char *str);
-int			alter_env(t_data *data, char *str, char *var);
+int			alter_env(t_data *data, char *str, char *var, int isplus);
 int			ft_cd(t_data *data, t_cmd *cmd);
 int			ft_env(t_data *data, t_cmd *cmd);
 int			ft_pwd(t_data *data, t_cmd *cmd);

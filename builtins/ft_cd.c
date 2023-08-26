@@ -33,9 +33,9 @@ static int	update_pwds(t_data *data, char *old_pwd, char *new_pwd)
 		return (free(new_pwd), free(oldpwd_str), 1);
 	}
 	free(new_pwd);
-	if (alter_env(data, oldpwd_str, "OLDPWD") == 1)
+	if (alter_env(data, oldpwd_str, "OLDPWD", 0) == 1)
 		return (free(pwd_str), 1);
-	return (alter_env(data, pwd_str, "PWD"));
+	return (alter_env(data, pwd_str, "PWD", 0));
 }
 
 // either takes home directory as path if there is no cmd->args[1],
@@ -98,7 +98,7 @@ int	ft_cd(t_data *data, t_cmd *cmd)
 		builtin_error("cd", NULL, path);
 		return (free(path), free(old_pwd), 1);
 	}
-	if (cmd->args[1][0] == '-' && !cmd->args[1][1])
+	if (cmd->args[1] && cmd->args[1][0] == '-' && !cmd->args[1][1])
 		ft_putendl_fd(path, cmd->fd_io[1]);
 	free(path);
 	new_pwd = get_pwd();
