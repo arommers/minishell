@@ -6,12 +6,12 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/08/23 13:55:24 by mgoedkoo      ########   odam.nl          #
+#    Updated: 2023/08/25 15:34:15 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
-# CFLAGS	=	-Wall -Wextra -Werror -g
+CFLAGS	=	-Wall -Wextra -Werror -g -Wno-unused-command-line-argument
 NAME	=	minishell
 LIBFT	=	./libft/libft.a
 INCLUDE =	-I./includes
@@ -56,7 +56,7 @@ START_M = 0
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	@echo "Compiled with $(BLUE)$(CFLAGS)$(RESET)"
+	@echo "Compiled with $(BLUE) -Wall -Wextra -Werror $(RESET)"
 	@$(CC) $(CFLAGS) -o $(NAME) $(BREWRL2) $(OBJ) $(LIBFT)
 	@echo "$(CYAN)------------------------------------------"
 	@echo "      $(NAME) = NOW READY FOR USE!"

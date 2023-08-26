@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 09:53:11 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/24 16:08:00 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/25 14:33:50 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	ft_exit(t_data *data, t_cmd *cmd)
 {
 	unsigned long long	value;
 
+	(void) data;
 	ft_putendl_fd("exit", 2);
 	if (cmd->args[1])
 	{
@@ -91,7 +92,7 @@ int	ft_exit(t_data *data, t_cmd *cmd)
 			exit (255);
 		}
 	}
-	if (cmd->args[1] && cmd->args[2])
+	if (cmd->args[1] && str_isdigit(cmd->args[1]) && cmd->args[2])
 	{
 		ft_putendl_fd(E_PROMPT "exit: too many arguments", 2);
 		return (1);
