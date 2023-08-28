@@ -6,11 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2023/08/28 15:51:39 by mgoedkoo      ########   odam.nl         */
-=======
-/*   Updated: 2023/08/28 13:48:15 by arommers      ########   odam.nl         */
->>>>>>> 175f6fedbdce8564e46dfc95d5e9811a45900f9d
+/*   Updated: 2023/08/28 17:05:22 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
