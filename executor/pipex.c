@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/31 21:13:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/24 16:45:17 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/28 16:17:02 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ static int	multi_pipes(t_data *data, t_cmd *cmd, pid_t *pid, int i)
 	while (i < data->nr_pipes)
 	{
 		if (i != 1)
+		{
+			close(data->pipe_1[0]);
 			data->pipe_1[0] = data->pipe_2[0];
+		}
 		if (pipe(data->pipe_2) == -1)
 			return (print_error(NULL, NULL), 1);
 		if (expand_cmd(data, cmd->args) == 1)
@@ -119,6 +122,7 @@ int	pipex(t_data *data)
 		i = 1;
 		if (multi_pipes(data, data->cmds->next, pid, i) == 1)
 			return (pipex_error(data, pid));
+		close (data->pipe_1[0]);
 		data->pipe_1[0] = data->pipe_2[0];
 	}
 	if (last_cmd(data, pid) == 1)

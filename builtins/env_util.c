@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 16:13:46 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/17 18:00:56 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:28:39 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*append_value(char *orig_str, char *new_str, int varlen)
 {
 	char	*tmp_str;
-	
+
 	tmp_str = ft_strjoin(orig_str, &new_str[varlen + 1]);
 	if (!tmp_str)
 		print_error(NULL, NULL);
@@ -34,7 +34,8 @@ int	alter_env(t_data *data, char *str, char *var, int isplus)
 	tmp = *(data->env);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->chars, var, ft_strlen(var)) == 0 && tmp->chars[ft_strlen(var)] == '=')
+		if (ft_strncmp(tmp->chars, var, ft_strlen(var)) == 0
+			&& tmp->chars[ft_strlen(var)] == '=')
 		{
 			if (isplus == 1)
 			{
@@ -73,7 +74,7 @@ char	*ft_getenv(t_data *data, char *var)
 
 // uses getcwd to store current working directory in buffer,
 // then uses ft_strdup so all superfluous memory space can be freed
-char	*get_pwd(void)
+char	*get_pwd(t_data *data)
 {
 	char	*buffer;
 	char	*pwd;
@@ -82,11 +83,13 @@ char	*get_pwd(void)
 	if (!buffer)
 		return (print_error(NULL, NULL), NULL);
 	buffer = getcwd(buffer, 200);
-	if (!buffer)
-		return (print_error(NULL, NULL), NULL);
-	pwd = ft_strdup(buffer);
+	if (buffer)
+		pwd = ft_strdup(buffer);
+	else
+		pwd = ft_strdup(data->cwd);
 	if (!pwd)
 		print_error(NULL, NULL);
-	free(buffer);
+	if (buffer)
+		free(buffer);
 	return (pwd);
 }

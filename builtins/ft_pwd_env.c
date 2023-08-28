@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 15:08:18 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/24 17:06:50 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:30:43 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_pwd(t_data *data, t_cmd *cmd)
 
 	(void)cmd;
 	(void)data;
-	pwd = get_pwd();
+	pwd = get_pwd(data);
 	if (!pwd)
 		return (1);
 	ft_putendl_fd(pwd, cmd->fd_io[1]);

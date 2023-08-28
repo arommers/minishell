@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 12:51:07 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:51:32 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_cmd {
 
 typedef struct s_data {
 	char			*input;
+	char			*cwd;
 	t_lexer			**env;
 	t_lexer			*lexer;
 	t_cmd			*cmds;
@@ -172,7 +173,7 @@ void		handle_sigint_hd(int sig);
 
 // Builtin functions
 
-char		*get_pwd(void);
+char		*get_pwd(t_data *data);
 char		*ft_getenv(t_data *data, char *str);
 int			alter_env(t_data *data, char *str, char *var, int isplus);
 int			ft_cd(t_data *data, t_cmd *cmd);

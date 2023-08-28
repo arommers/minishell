@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 13:16:14 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:51:39 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	init_data(t_data *data, char **env)
 		ft_putstr_fd("exit\n", 2);
 		exit (1);
 	}
+	data->cwd = NULL;
 	data->lexer = NULL;
 	data->cmds = NULL;
 	data->pipe_1 = NULL;

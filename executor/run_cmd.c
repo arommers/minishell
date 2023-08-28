@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/28 12:55:26 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:51:11 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,23 @@ static char	*try_all_paths(char *cmd, char **all_paths, char *cmd_path)
 		i++;
 	}
 	if (!all_paths[i])
-		exit_error(cmd, "command not found", 127);
+	{
+		if (access(cmd, F_OK | X_OK) == 0)
+			full_path = cmd;
+		else
+			exit_error(cmd, "command not found", 127);
+	}
 	free_chrarray(all_paths);
 	free(cmd_path);
 	return (full_path);
 }
 
-// tries all paths to command that are not paths from the env variable
+// searches command in root directory, then splits paths in env variable
 static char	*get_path(char *cmd, char *envp_paths)
 {
 	char	*cmd_path;
 	char	**all_paths;
 
-	if (access(cmd, F_OK | X_OK) == 0)
-		return (cmd);
 	cmd_path = ft_strjoin("/", cmd);
 	if (!cmd_path)
 		exit_error(NULL, NULL, 1);

@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/15 16:00:55 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 15:28:28 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:02:29 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ static char	*find_var(char *str)
 	int		varlen;
 
 	strlen = ft_strlen(str);
-	if (!str[0] || ft_isdigit(str[0]) || str[0] == '+' || str[0] == '=' || !ft_strchr(str, '='))
+	if (!str[0] || str[0] == '=' || !ft_strchr(str, '=')
+		|| (str[0] == '+' && str[1] == '='))
 		var = ft_strdup(str);
 	else
 	{
-		if (ft_strnstr(str, "+=", strlen) && ft_strnstr(str, "+=", strlen) < ft_strchr(str, '='))
+		if (ft_strnstr(str, "+=", strlen) 
+			&& ft_strnstr(str, "+=", strlen) < ft_strchr(str, '='))
 			varlen = strlen - ft_strlen(ft_strnstr(str, "+=", strlen));
 		else
 			varlen = strlen - ft_strlen(ft_strchr(str, '='));

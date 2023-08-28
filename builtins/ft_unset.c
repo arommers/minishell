@@ -6,11 +6,23 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/16 15:01:38 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 15:30:38 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:02:41 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// deletes first node in environment
+static void	del_first_var(t_data *data)
+{
+	t_lexer	*ex_node;
+
+	ex_node = *(data->env);
+	*(data->env) = ex_node->next;
+	free(ex_node->chars);
+	free(ex_node);
+	return ;
+}
 
 // loops through the environment, deletes the node that contains
 // the variable to be unset
@@ -24,6 +36,8 @@ static void	del_var(t_data *data, char *var)
 		return ;
 	len = ft_strlen(var);
 	tmp = *(data->env);
+	if (ft_strncmp(tmp->chars, var, len) == 0 && tmp->chars[len] == '=')
+		return (del_first_var(data));
 	while (tmp && tmp->next)
 	{
 		if (ft_strncmp(tmp->next->chars, var, len) == 0

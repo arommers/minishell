@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/16 17:20:27 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/23 15:53:55 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:33:28 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,22 @@ static int	update_pwds(t_data *data, char *old_pwd, char *new_pwd)
 	char	*oldpwd_str;
 	char	*pwd_str;
 
+	if (data->cwd)
+		free(data->cwd);
+	data->cwd = new_pwd;
 	oldpwd_str = ft_strjoin("OLDPWD=", old_pwd);
 	if (!oldpwd_str)
 	{
 		print_error(NULL, NULL);
-		return (free(old_pwd), free(new_pwd), 1);
+		return (free(old_pwd), 1);
 	}
 	free(old_pwd);
 	pwd_str = ft_strjoin("PWD=", new_pwd);
 	if (!pwd_str)
 	{
 		print_error(NULL, NULL);
-		return (free(new_pwd), free(oldpwd_str), 1);
+		return (free(oldpwd_str), 1);
 	}
-	free(new_pwd);
 	if (alter_env(data, oldpwd_str, "OLDPWD", 0) == 1)
 		return (free(pwd_str), 1);
 	return (alter_env(data, pwd_str, "PWD", 0));
@@ -90,7 +92,7 @@ int	ft_cd(t_data *data, t_cmd *cmd)
 	path = make_path(data, cmd);
 	if (!path)
 		return (1);
-	old_pwd = get_pwd();
+	old_pwd = get_pwd(data);
 	if (!old_pwd)
 		return (free(path), 1);
 	if (chdir(path) == -1)
@@ -101,7 +103,7 @@ int	ft_cd(t_data *data, t_cmd *cmd)
 	if (cmd->args[1] && cmd->args[1][0] == '-' && !cmd->args[1][1])
 		ft_putendl_fd(path, cmd->fd_io[1]);
 	free(path);
-	new_pwd = get_pwd();
+	new_pwd = get_pwd(data);
 	if (!new_pwd)
 		return (free(old_pwd), 1);
 	return (update_pwds(data, old_pwd, new_pwd));

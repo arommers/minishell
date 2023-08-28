@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 21:15:46 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/24 10:55:45 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 16:06:17 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static void	dup_fds(int fd_1, int fd_2)
 // dups pipes if there are pipes, then dups redirects if there are redirects
 void	child(t_data *data, t_cmd *cmd, int pipe_in[], int pipe_out[])
 {
-	// init_signals(data, 2);
 	if (pipe_in)
 	{
+		close(pipe_in[1]);
 		dup_fds(pipe_in[0], STDIN_FILENO);
 		close(pipe_in[0]);
 	}
