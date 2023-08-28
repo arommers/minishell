@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 15:18:45 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/25 15:29:05 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 12:40:56 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ void	store_args(t_data *data, t_cmd *cmd, int i)
 		return ;
 	}
 	tmp->args = ft_calloc (i + 1, sizeof(char *));
-	// if (!tmp->arg)
-		// 	error;
+	if (!tmp->args)
+	{
+		print_error(NULL, NULL);
+		reset_data(data);
+	}
 	while (current && current->token != PIPE)
 	{
 		if (!current->is_token)

@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/24 17:37:11 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/28 12:54:47 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	heredoc_child(t_data *data, t_lexer *heredoc,
 	fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!fd)
 		return (print_error(filename, NULL), exit(EXIT_FAILURE));
-	init_signals(data, 3);
+	init_signals(3);
 	line = readline("> ");
 	while (line && ft_strncmp(heredoc->chars, line, 
 			ft_strlen(heredoc->chars)) != 0)
@@ -49,14 +49,14 @@ static int	create_heredoc(t_data *data, t_lexer *heredoc,
 	pid_t	pid;
 	int		stat;
 
-	init_signals(data, 4);
+	ignore_signals();
 	pid = fork();
 	if (pid == -1)
 		return (print_error(NULL, NULL), 1);
 	if (pid == 0)
 		heredoc_child(data, heredoc, filename, isquoted);
 	waitpid(pid, &stat, 0);
-	init_signals(data, 1);
+	init_signals(1);
 	return (WEXITSTATUS(stat));
 }
 

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/17 12:00:21 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/12 12:06:34 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 12:41:55 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,20 @@ int	store_quoted(char *input, int i, char q)
 		return (j);
 	else
 		return (j + 1);
+}
+
+// Checks if the last node in the linked list contains a pipe
+
+int	check_last(t_lexer **head)
+{
+	t_lexer	*current;
+
+	current = *head;
+	while (current)
+	{
+		if (current->token == PIPE)
+			return (1);
+		current = current->next;
+	}
+	return (0);
 }

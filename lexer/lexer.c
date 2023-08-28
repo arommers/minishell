@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/24 15:53:00 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 12:30:46 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_tokens	check_index(char *input, int i)
 	return (WORDS);
 }
 
-// determine type of token and store it in the lexer list
+// Determine type of token and store it in the lexer list
 
 int	store_token(t_data *data, int i)
 {

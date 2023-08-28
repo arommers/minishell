@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/25 10:28:45 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 12:51:07 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <readline/history.h>
 
 # define PROMPT "\x1B[96;1m[minishell]: \x1B[0m"
+// # define PROMPT "[minishell]: "
 # define E_PROMPT "minishell: "
 
 int	g_exit_status;
@@ -72,7 +73,7 @@ void		reset_data(t_data *data);
 void		input_check(t_data *data);
 void		check_u_quotes(t_data *data);
 void		maintain_prompt(t_data *data);
-void		init_signals(t_data *data, int i);
+void		init_signals(int i);
 void		init_data(t_data *data, char **env);
 void		rl_replace_line(const char *txt, int clear_undo);
 
@@ -89,6 +90,7 @@ int			add_lex_node(t_lexer **head, t_tokens token, char *str);
 int			is_space(char c);
 int			check_quotes(char q);
 void		free_lexer(t_lexer **head);
+int			check_last(t_lexer **head);
 int			skip_spaces(char *str, int i);
 int			store_quoted(char *input, int i, char q);
 
@@ -162,6 +164,7 @@ int			single_cmd(t_data *data);
 
 //	Signal functions
 
+void		ignore_signals(void);
 void		handle_sigint(int sig);
 void		handle_sigquit(int sig);
 void		handle_sigint_ia(int sig);

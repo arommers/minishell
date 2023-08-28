@@ -6,11 +6,13 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 12:43:31 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/24 15:07:43 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/28 12:11:33 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*	Frees the lexer list */
 
 void	free_lexer(t_lexer **head)
 {
@@ -39,10 +41,6 @@ void	del_lex_node(t_lexer **head)
 	t_lexer	*tmp;
 
 	current = *head;
-	// if (current->token == 0)
-	// 	// printf("DEL_NODE: %s\n", current->chars);
-	// else
-	// 	// printf("DEL_NODE: %d\n", current->token);
 	if (current)
 	{
 		tmp = current;
