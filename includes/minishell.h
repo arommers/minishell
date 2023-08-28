@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 12:51:07 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:53:04 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int			add_lex_node(t_lexer **head, t_tokens token, char *str);
 
 int			parser(t_data *data);
 void		group_tokens(t_data *data);
-void		store_args(t_data *data, t_cmd *cmd, int i);
+void		store_args(t_data *data, t_cmd *cmd, int i, int j);
 void		store_redir(t_data *data, t_lexer **lexer, t_cmd *cmd);
 
 // Parser Utilities

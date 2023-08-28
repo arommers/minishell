@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/17 12:00:21 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 12:41:55 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 13:52:24 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,9 @@ int	check_last(t_lexer **head)
 	t_lexer	*current;
 
 	current = *head;
-	while (current)
-	{
-		if (current->token == PIPE)
-			return (1);
+	while (current->next)
 		current = current->next;
-	}
+	if (current->token == PIPE)
+		return (1);
 	return (0);
 }

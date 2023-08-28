@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 15:18:45 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 12:40:56 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/28 15:45:28 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 /*	Store the arguments in the cmd struct */
 
-void	store_args(t_data *data, t_cmd *cmd, int i)
+void	store_args(t_data *data, t_cmd *cmd, int i, int j)
 {
 	t_lexer	*current;
 	t_cmd	*tmp;
-	int		j;
 
-	j = 0;
 	tmp = cmd;
 	current = data->lexer;
 	while (tmp->next)
@@ -53,7 +51,7 @@ void	group_tokens(t_data *data)
 {
 	data->cmds = add_cmd_node(&data->cmds);
 	store_redir(data, &data->lexer, data->cmds);
-	store_args(data, data->cmds, count_args(data->lexer));
+	store_args(data, data->cmds, count_args(data->lexer), 0);
 	while (data->lexer && data->lexer->token != PIPE)
 		del_lex_node(&data->lexer);
 }
