@@ -43,7 +43,7 @@ void	check_u_quotes(t_data *data)
 }
 
 /*	Check for any double pipes or ampersands */
-
+// QUESTION: why are PIPE and AND treated differently?
 void	check_dup(t_data *data)
 {
 	int	i;

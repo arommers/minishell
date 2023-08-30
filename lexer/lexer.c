@@ -13,21 +13,21 @@
 #include "../includes/minishell.h"
 
 // check if the passed argument is a token and determine which
-
+// QUESTION: what is strlen function used for?
 t_tokens	check_index(char *input, int i)
 {
 	if (input[i] == '|')
 		return (PIPE);
 	else if (input[i] == '<')
 	{
-		if (i + 1 < (int)strlen(input) && input[i + 1] == '<')
+		if (i + 1 < ft_strlen(input) && input[i + 1] == '<')
 			return (LESSLESS);
 		else
 			return (LESS);
 	}
 	else if (input[i] == '>')
 	{
-		if (i + 1 < (int)strlen(input) && input[i + 1] == '>')
+		if (i + 1 < ft_strlen(input) && input[i + 1] == '>')
 			return (GREATGREAT);
 		else
 			return (GREAT);

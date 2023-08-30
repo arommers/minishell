@@ -26,7 +26,7 @@ void	quote_error(t_data *data, char c)
 		ft_putstr_fd(E_PROMPT "syntax error near unexpected token `\\'", 2);
 	reset_data(data);
 }
-
+// QUESTION: Why only adjust exit status after PIPE error? And why '1' for AND error?
 void	syntax_error(t_data *data, t_tokens token)
 {
 	ft_putstr_fd(E_PROMPT "syntax error near unexpected token ", 2);

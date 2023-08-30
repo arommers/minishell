@@ -14,23 +14,31 @@
 
 /*	store the env variables in a linked list
 	each node contains one variable */
-
+// QUESTION: should shell exit if malloc error here?
 void	init_env(t_data *data, char **env)
 {
-	int	i;
+	char	*var;
+	int		i;
 
 	data->env = ft_calloc(1, sizeof(t_lexer *));
+	if (!data->env)
+		exit_error(NULL, NULL, 1);
 	i = 0;
 	while (env[i])
 	{
-		add_lex_node(data->env, 0, ft_strdup(env[i]));
+		var = ft_strdup(env[i]);
+		if (!var)
+			exit_error(NULL, NULL, 1);
+		if (add_lex_node(data->env, 0, var) == 0)
+			exit_error(NULL, NULL, 1);
+		free(var);
 		i++;
 	}
 }
 
 /*	store the arguments in the data struct as struct
 	and the env as linked list */
-
+// QUESTION: Is exit code correct here?
 void	init_data(t_data *data, char **env)
 {
 	g_exit_status = 0;
@@ -39,7 +47,7 @@ void	init_data(t_data *data, char **env)
 	if (!data->input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		exit (1);
+		exit(1);
 	}
 	data->cwd = NULL;
 	data->lexer = NULL;
@@ -50,7 +58,7 @@ void	init_data(t_data *data, char **env)
 }
 
 /*	Reset the data struct for next cmd. Env stays unchanged */
-
+// QUESTION: See above ^
 void	reset_data(t_data *data)
 {
 	free_cmd_list(&data->cmds);
