@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 15:40:25 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:45:42 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ t_tokens	check_index(char *input, int i)
 		return (PIPE);
 	else if (input[i] == '<')
 	{
-		if (i + 1 < (int)strlen(input) && input[i + 1] == '<')
+		if (i + 1 < ft_strlen(input) && input[i + 1] == '<')
 			return (LESSLESS);
 		else
 			return (LESS);
 	}
 	else if (input[i] == '>')
 	{
-		if (i + 1 < (int)strlen(input) && input[i + 1] == '>')
+		if (i + 1 < ft_strlen(input) && input[i + 1] == '>')
 			return (GREATGREAT);
 		else
 			return (GREAT);

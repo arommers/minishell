@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 14:53:00 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/10 19:07:11 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:19:33 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	count_parts(char *str, char c, int parts)
 	int		i;
 
 	i = 0;
-	parts = 0;
 	while (str[i])
 	{
 		if (isquote(str[i]))

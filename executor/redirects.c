@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/25 10:23:09 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:18:57 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	*handle_redir(t_data *data, t_cmd *cmd, int fd_io[])
 	return (fd_io);
 }
 
-// QUESTION: is this the best way to initialize fd_io[]?
+// Initializes fd_in and fd_out, handles redirects if there are any
 int	*redirects(t_data *data, t_cmd *cmd)
 {
 	int		*fd_io;

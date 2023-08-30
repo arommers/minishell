@@ -6,7 +6,11 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
+<<<<<<< HEAD
 #    Updated: 2023/08/30 12:24:43 by arommers      ########   odam.nl          #
+=======
+#    Updated: 2023/08/30 15:26:27 by arommers      ########   odam.nl          #
+>>>>>>> 9aeccee95f37b4dd4a46e9546297c559e12c0cf8
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +40,7 @@ SRC 	=	./lexer/main.c ./utils/print.c						\
 			./builtins/ft_export.c ./utils/signals.c			\
 			./builtins/ft_unset.c ./builtins/ft_cd.c			\
 			./builtins/ft_exit.c ./builtins/env_util.c			\
-			./utils/signal_util.c
-
+			./utils/signal_util.c ./parser/store_redir.c
 
 OBJ_DIR =	obj
 OBJ		=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/12 14:45:38 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 12:51:20 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:49:52 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	- If the signals are received in interactive mode ctrl messages are supressed
 	- If not in interactive mode the echo settings are restored */
 
-void	init_signals( int i)
+void	init_signals(int i)
 {
 	struct termios	term;
 
