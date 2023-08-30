@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:24:13 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:35:51 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	init_env(t_data *data, char **env)
 		if (!var)
 			exit_error(NULL, NULL, 1);
 		if (add_lex_node(data->env, 0, var) == 0)
-			exit_error(NULL, NULL, 1);
-		free(var);
+			exit(1);
+		var = NULL;
 		i++;
 	}
 }
@@ -75,7 +75,7 @@ void	reset_data(t_data *data)
 	if (!data->input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		exit (1);
+		exit(1);
 	}
 	maintain_prompt(data);
 }
