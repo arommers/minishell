@@ -6,14 +6,14 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 15:40:25 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:45:42 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // check if the passed argument is a token and determine which
-// QUESTION: what is strlen function used for?
+
 t_tokens	check_index(char *input, int i)
 {
 	if (input[i] == '|')

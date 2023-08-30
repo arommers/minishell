@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:42:23 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 15:30:49 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-// QUESTION: Can you explain how these prompts work?
 # define PROMPT "\x1B[96;1m[minishell]: \x1B[0m"
 // # define PROMPT "[minishell]: "
 # define E_PROMPT "minishell: "
@@ -105,7 +104,8 @@ int			add_lex_node(t_lexer **head, t_tokens token, char *str);
 
 int			parser(t_data *data);
 void		group_tokens(t_data *data);
-void		store_args(t_data *data, t_cmd *cmd, int i, int j);
+int			check_current(t_data *data, t_lexer **head);
+int			store_args(t_data *data, t_cmd *cmd, int i, int j);
 void		store_redir(t_data *data, t_lexer **lexer, t_cmd *cmd);
 
 // Parser Utilities
@@ -117,7 +117,7 @@ void		count_pipes(t_data *data);
 
 void		clear_array(char **array);
 t_cmd		*make_cmd_node(t_cmd *new);
-t_cmd		*add_cmd_node(t_cmd **head);
+t_cmd		*add_cmd_node(t_data *data, t_cmd **head);
 void		free_cmd_list(t_cmd **head);
 
 //	Error Functions

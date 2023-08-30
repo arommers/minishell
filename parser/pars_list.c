@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:15:59 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 15:39:01 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ t_cmd	*make_cmd_node(t_cmd *new)
 {
 	new = malloc(sizeof(t_cmd));
 	if (!new)
+	{
+		print_error(NULL, NULL);
 		return (NULL);
+	}
 	new->args = NULL;
 	new->re_dir = NULL;
 	new->next = NULL;
@@ -74,7 +77,7 @@ t_cmd	*make_cmd_node(t_cmd *new)
 /*	Adds a new node to the cmd linked list.
 	If the list points to NULL it creates a new head node. */
 
-t_cmd	*add_cmd_node(t_cmd **head)
+t_cmd	*add_cmd_node(t_data *data, t_cmd **head)
 {
 	t_cmd	*new;
 	t_cmd	*current;
@@ -82,7 +85,10 @@ t_cmd	*add_cmd_node(t_cmd **head)
 	new = NULL;
 	new = make_cmd_node(new);
 	if (!new)
-		return (NULL);
+	{
+		free_lexer(&data->lexer);
+		reset_data(data);
+	}
 	if (!*head)
 	{
 		*head = new;
@@ -94,38 +100,4 @@ t_cmd	*add_cmd_node(t_cmd **head)
 	current->next = new;
 	new->next = NULL;
 	return (*head);
-}
-
-/*	Go over the lex list and store any encountered tokens
-	and subsequent filenames in a new linked list.
-	The list itself will be stored in the cmd node.
-	The original nodes are deleted from the lext list
-	and the pointer moved up. */
-// QUESTION: Add malloc protection for ft_strdup here?
-void	store_redir(t_data *data, t_lexer **head, t_cmd *cmd)
-{
-	t_lexer	*current;
-	t_cmd	*tmp;
-
-	current = *head;
-	tmp = cmd;
-	while (tmp->next)
-		tmp = tmp->next;
-	while (current && current->token == WORDS && !current->is_token)
-		current = current->next;
-	if (!current || current->token == PIPE)
-		return ;
-	if (!current->next)
-		syntax_error(data, WORDS);
-	if (current->next->token)
-		syntax_error(data, current->next->token);
-	if (current->token > 1 && current->token < 6)
-	{
-		current->is_token = 1;
-		current->next->is_token = 1;
-		add_lex_node(&tmp->re_dir, current->token,
-			ft_strdup(current->next->chars));
-		current = current->next->next;
-	}
-	store_redir(data, &current, cmd);
 }

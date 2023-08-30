@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 14:35:51 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:42:18 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*	store the env variables in a linked list
 	each node contains one variable */
-// QUESTION: should shell exit if malloc error here?
+
 void	init_env(t_data *data, char **env)
 {
 	char	*var;
@@ -38,7 +38,7 @@ void	init_env(t_data *data, char **env)
 
 /*	store the arguments in the data struct as struct
 	and the env as linked list */
-// QUESTION: Is exit code correct here?
+
 void	init_data(t_data *data, char **env)
 {
 	g_exit_status = 0;
@@ -47,7 +47,7 @@ void	init_data(t_data *data, char **env)
 	if (!data->input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		exit(1);
+		exit(0);
 	}
 	data->cwd = NULL;
 	data->lexer = NULL;
@@ -58,7 +58,7 @@ void	init_data(t_data *data, char **env)
 }
 
 /*	Reset the data struct for next cmd. Env stays unchanged */
-// QUESTION: See above ^
+
 void	reset_data(t_data *data)
 {
 	free_cmd_list(&data->cmds);
@@ -75,7 +75,7 @@ void	reset_data(t_data *data)
 	if (!data->input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		exit(1);
+		exit(0);
 	}
 	maintain_prompt(data);
 }

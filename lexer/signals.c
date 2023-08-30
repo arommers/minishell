@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/12 14:45:38 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:27:23 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:49:52 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*	Initialize the signal function with their specific ctrl input
 	- If the signals are received in interactive mode ctrl messages are supressed
 	- If not in interactive mode the echo settings are restored */
-// QUESTION: Will I be asked about "term.c_lflag" or "TCSAFLUSH"?
+
 void	init_signals(int i)
 {
 	struct termios	term;
