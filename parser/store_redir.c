@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 15:19:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 15:38:22 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 16:14:48 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	check_current(t_data *data, t_lexer **head)
 		syntax_error(data, WORDS);
 	if (current->next->token)
 		syntax_error(data, current->next->token);
+	*head = current;
 	return (1);
 }
 /*	Go over the lex list and store any encountered tokens
