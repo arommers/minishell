@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 16:27:55 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 13:42:23 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-
+// QUESTION: Can you explain how these prompts work?
 # define PROMPT "\x1B[96;1m[minishell]: \x1B[0m"
 // # define PROMPT "[minishell]: "
 # define E_PROMPT "minishell: "
