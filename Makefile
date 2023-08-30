@@ -6,7 +6,7 @@
 #    By: arommers <arommers@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/07/20 13:38:03 by arommers      #+#    #+#                  #
-#    Updated: 2023/08/28 13:12:31 by arommers      ########   odam.nl          #
+#    Updated: 2023/08/30 12:24:43 by arommers      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ INCLUDE =	-I./includes
 BREWRL1    = -I includes -I $(HOME)/.brew/Cellar/readline/8.2.1/include
 BREWRL2    = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline
 
-SRC 	=	./lexer/main.c ./lexer/print.c						\
+SRC 	=	./lexer/main.c ./utils/print.c						\
 			./lexer/lexer.c ./lexer/lex_list.c					\
 			./lexer/lex_util.c ./lexer/lex_del.c				\
 			./parser/pars_list.c ./parser/pars_util.c			\
@@ -30,13 +30,13 @@ SRC 	=	./lexer/main.c ./lexer/print.c						\
 			./executor/executor.c ./executor/heredoc.c			\
 			./executor/pipex.c ./executor/redirects.c			\
 			./executor/run_cmd.c ./executor/single_cmd.c		\
-			./error/errors.c ./lexer/in_check.c					\
-			./error/exec_errors.c ./builtins/builtins.c			\
+			./utils/errors.c ./lexer/in_check.c					\
+			./utils/exec_errors.c ./builtins/builtins.c			\
 			./builtins/ft_echo.c ./builtins/ft_pwd_env.c		\
-			./builtins/ft_export.c ./lexer/signals.c			\
+			./builtins/ft_export.c ./utils/signals.c			\
 			./builtins/ft_unset.c ./builtins/ft_cd.c			\
 			./builtins/ft_exit.c ./builtins/env_util.c			\
-			./lexer/signal_util.c
+			./utils/signal_util.c
 
 
 OBJ_DIR =	obj
@@ -83,7 +83,7 @@ $(OBJ_DIR)/%.o: ./executor/%.c
 	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 
-$(OBJ_DIR)/%.o: ./error/%.c
+$(OBJ_DIR)/%.o: ./utils/%.c
 	@echo "Compiled ✅ $(CYAN) $^ $(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 

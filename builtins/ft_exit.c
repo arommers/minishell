@@ -6,11 +6,13 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 09:53:11 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/25 14:33:50 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 12:18:29 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/* Check wether alls characters in a given string are numeric character */
 
 int	str_isdigit(char *str)
 {
@@ -29,6 +31,9 @@ int	str_isdigit(char *str)
 	}
 	return (1);
 }
+
+/*	Return the given argument in a long long to be able to
+	replicate bash's exit status behavior */
 
 unsigned long long	ft_atoll(const char *str)
 {
@@ -58,6 +63,9 @@ unsigned long long	ft_atoll(const char *str)
 	return (a * b);
 }
 
+/*	- Determines the exit status of the given argument
+	- Checks wether the argument is numeric or not */
+
 void	set_exit_status(t_cmd *cmd, unsigned long long value)
 {
 	if (cmd->args[1] && !str_isdigit(cmd->args[1]))
@@ -73,6 +81,10 @@ void	set_exit_status(t_cmd *cmd, unsigned long long value)
 	else if (value < 0 || value > 255)
 		g_exit_status = value % 256;
 }
+
+/*	- Prints an exit message with corresponding exit status
+	- Checks wether the given exit status is bigger thand 255
+	- Check the amount of given arguments */
 
 int	ft_exit(t_data *data, t_cmd *cmd)
 {
