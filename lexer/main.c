@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:57:54 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 14:42:18 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 17:23:03 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_env(t_data *data, char **env)
 	if (!data->env)
 		exit_error(NULL, NULL, 1);
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		var = ft_strdup(env[i]);
 		if (!var)
