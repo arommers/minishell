@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 16:26:12 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 16:31:06 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ int					add_lex_node(t_lexer **head, t_tokens token, char *str);
 
 // Parser Functions
 
-int			parser(t_data *data);
-void		group_tokens(t_data *data);
-int			check_current(t_data *data, t_lexer **head);
-int			store_args(t_data *data, t_cmd *cmd, int i, int j);
-void		store_redir(t_data *data, t_lexer **lexer, t_cmd *cmd);
+int					parser(t_data *data);
+void				group_tokens(t_data *data);
+int					check_current(t_data *data, t_lexer **head);
+int					store_args(t_data *data, t_cmd *cmd, int i, int j);
+void				store_redir(t_data *data, t_lexer **lexer, t_cmd *cmd);
 
 // Parser Utilities
 
@@ -116,10 +116,10 @@ void				count_pipes(t_data *data);
 
 //	Parser List Functions
 
-void		clear_array(char **array);
-t_cmd		*make_cmd_node(t_cmd *new);
-t_cmd		*add_cmd_node(t_data *data, t_cmd **head);
-void		free_cmd_list(t_cmd **head);
+void				clear_array(char **array);
+t_cmd				*make_cmd_node(t_cmd *new);
+t_cmd				*add_cmd_node(t_data *data, t_cmd **head);
+void				free_cmd_list(t_cmd **head);
 
 //	Error Functions
 
