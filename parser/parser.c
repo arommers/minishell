@@ -6,14 +6,14 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/20 15:18:45 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 15:45:28 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 13:19:09 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*	Store the arguments in the cmd struct */
-
+// QUESTION: Add malloc protection for ft_strdup here?
 void	store_args(t_data *data, t_cmd *cmd, int i, int j)
 {
 	t_lexer	*current;
@@ -28,7 +28,7 @@ void	store_args(t_data *data, t_cmd *cmd, int i, int j)
 		tmp->args = NULL;
 		return ;
 	}
-	tmp->args = ft_calloc (i + 1, sizeof(char *));
+	tmp->args = ft_calloc(i + 1, sizeof(char *));
 	if (!tmp->args)
 	{
 		print_error(NULL, NULL);
@@ -46,7 +46,7 @@ void	store_args(t_data *data, t_cmd *cmd, int i, int j)
 /*	Make a cmd node, store redirects in a linked list
 	and store a simple command in a node. Each cmd node has its own redir list.
 	Delete the nodes from the lexer that were stored. */
-
+// QUESTION: What if data->cmds == NULL because of malloc error?
 void	group_tokens(t_data *data)
 {
 	data->cmds = add_cmd_node(&data->cmds);

@@ -6,12 +6,12 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/28 12:48:00 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/28 13:36:24 by arommers      ########   odam.nl         */
+/*   Updated: 2023/08/30 13:28:43 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+// QUESTION: Can you explain rl_replace_line() and rl_redisplay one more time?
 /*	Sigint handler in interactive mode */
 
 void	handle_sigint_ia(int sig)

@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 11:51:16 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/23 15:15:10 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/30 13:15:59 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_cmd	*add_cmd_node(t_cmd **head)
 	The list itself will be stored in the cmd node.
 	The original nodes are deleted from the lext list
 	and the pointer moved up. */
-
+// QUESTION: Add malloc protection for ft_strdup here?
 void	store_redir(t_data *data, t_lexer **head, t_cmd *cmd)
 {
 	t_lexer	*current;
