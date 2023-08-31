@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/28 15:51:11 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/31 15:48:42 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 // loops through paths from the env variable until it finds working path
 // to command, exits program if no working path is found
-static char	*try_all_paths(char *cmd, char **all_paths, char *cmd_path)
+static char	*try_all_paths(char *cmd, char **all_paths)
 {
+	char	*cmd_path;
 	char	*full_path;
 	int		i;
 
+	cmd_path = ft_strjoin("/", cmd);
+	if (!cmd_path)
+		exit_error(NULL, NULL, 1);
 	i = 0;
 	while (all_paths[i])
 	{
@@ -31,36 +35,55 @@ static char	*try_all_paths(char *cmd, char **all_paths, char *cmd_path)
 		full_path = NULL;
 		i++;
 	}
-	if (!all_paths[i])
-	{
-		if (access(cmd, F_OK | X_OK) == 0)
-			full_path = cmd;
-		else
-			exit_error(cmd, "command not found", 127);
-	}
 	free_chrarray(all_paths);
 	free(cmd_path);
 	return (full_path);
 }
 
-// searches command in root directory, then splits paths in env variable
+// checks if command itself is an absolute or relative path
+static int	cmd_is_path(char *cmd)
+{
+	if (!cmd[0])
+		return (0);
+	if (cmd[0] == '/')
+		return (1);
+	if (cmd[0] == '.')
+	{
+		if (!cmd[1])
+			return (1);
+		if (cmd[1] == '/')
+			return (1);
+		if (cmd[1] == '.')
+		{
+			if (!cmd[2])
+				return (1);
+			if (cmd[2] == '/')
+				return (1);
+		}
+	}
+	return (0);
+}
+
 static char	*get_path(char *cmd, char *envp_paths)
 {
-	char	*cmd_path;
 	char	**all_paths;
+	char	*full_path;
 
-	cmd_path = ft_strjoin("/", cmd);
-	if (!cmd_path)
-		exit_error(NULL, NULL, 1);
-	if (access(cmd_path, F_OK | X_OK) == 0)
-		return (cmd_path);
 	all_paths = ft_split(envp_paths, ':');
 	if (!all_paths)
 		exit_error(NULL, NULL, 1);
 	free(envp_paths);
-	return (try_all_paths(cmd, all_paths, cmd_path));
+	full_path = try_all_paths(cmd, all_paths);
+	if (!full_path)
+	{
+		if (access(cmd, F_OK | X_OK) != 0)
+			exit_error(cmd, "command not found", 127);
+		return (cmd);
+	}
+	return (full_path);
 }
 
+// makes a 2D array out of the environment linked list
 static char	**make_envp(t_lexer *env)
 {
 	char	**envp;
@@ -89,7 +112,6 @@ static char	**make_envp(t_lexer *env)
 	return (envp);
 }
 
-// looks for working path to command before executing command
 void	run_cmd(t_data *data, char **cmd_argv)
 {
 	char	**envp;
@@ -97,8 +119,14 @@ void	run_cmd(t_data *data, char **cmd_argv)
 	char	*work_path;
 
 	envp = make_envp(*(data->env));
-	work_path = cmd_argv[0];
-	if (ft_getenv(data, "PATH"))
+	work_path = NULL;
+	if (cmd_is_path(cmd_argv[0]) == 1)
+	{
+		if (access(cmd_argv[0], F_OK) != 0)
+			exit_error(cmd_argv[0], "No such file or directory", 127);
+		work_path = cmd_argv[0];
+	}
+	if (!work_path && ft_getenv(data, "PATH"))
 	{
 		envp_paths = ft_strdup(ft_getenv(data, "PATH"));
 		if (!envp_paths)
