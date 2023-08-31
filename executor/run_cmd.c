@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/31 15:48:42 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/08/31 16:27:02 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,22 @@ static int	cmd_is_path(char *cmd)
 	return (0);
 }
 
-static char	*get_path(char *cmd, char *envp_paths)
+static char	*get_path(t_data *data, char *cmd)
 {
 	char	**all_paths;
+	char	*envp_paths;
 	char	*full_path;
 
+	envp_paths = ft_strdup(ft_getenv(data, "PATH"));
+		if (!envp_paths)
+			exit_error(NULL, NULL, 1);
 	all_paths = ft_split(envp_paths, ':');
 	if (!all_paths)
 		exit_error(NULL, NULL, 1);
 	free(envp_paths);
 	full_path = try_all_paths(cmd, all_paths);
 	if (!full_path)
-	{
-		if (access(cmd, F_OK | X_OK) != 0)
-			exit_error(cmd, "command not found", 127);
-		return (cmd);
-	}
+		exit_error(cmd, "command not found", 127);
 	return (full_path);
 }
 
@@ -115,24 +115,19 @@ static char	**make_envp(t_lexer *env)
 void	run_cmd(t_data *data, char **cmd_argv)
 {
 	char	**envp;
-	char	*envp_paths;
 	char	*work_path;
 
 	envp = make_envp(*(data->env));
 	work_path = NULL;
-	if (cmd_is_path(cmd_argv[0]) == 1)
+	if (cmd_is_path(cmd_argv[0]) == 1 || !ft_getenv(data, "PATH"))
 	{
 		if (access(cmd_argv[0], F_OK) != 0)
 			exit_error(cmd_argv[0], "No such file or directory", 127);
+		// directory check
 		work_path = cmd_argv[0];
 	}
-	if (!work_path && ft_getenv(data, "PATH"))
-	{
-		envp_paths = ft_strdup(ft_getenv(data, "PATH"));
-		if (!envp_paths)
-			exit_error(NULL, NULL, 1);
-		work_path = get_path(cmd_argv[0], envp_paths);
-	}
+	else
+		work_path = get_path(data, cmd_argv[0]);
 	if (execve(work_path, cmd_argv, envp) == -1)
 		exit_error(work_path, NULL, 126);
 }
