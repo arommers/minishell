@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/27 20:41:26 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/31 16:27:02 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/09/01 12:47:14 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static char	*get_path(t_data *data, char *cmd)
 	char	*full_path;
 
 	envp_paths = ft_strdup(ft_getenv(data, "PATH"));
-		if (!envp_paths)
-			exit_error(NULL, NULL, 1);
+	if (!envp_paths)
+		exit_error(NULL, NULL, 1);
 	all_paths = ft_split(envp_paths, ':');
 	if (!all_paths)
 		exit_error(NULL, NULL, 1);
@@ -114,8 +114,9 @@ static char	**make_envp(t_lexer *env)
 
 void	run_cmd(t_data *data, char **cmd_argv)
 {
-	char	**envp;
-	char	*work_path;
+	struct stat	*buf;
+	char		**envp;
+	char		*work_path;
 
 	envp = make_envp(*(data->env));
 	work_path = NULL;
@@ -123,7 +124,14 @@ void	run_cmd(t_data *data, char **cmd_argv)
 	{
 		if (access(cmd_argv[0], F_OK) != 0)
 			exit_error(cmd_argv[0], "No such file or directory", 127);
-		// directory check
+		buf = ft_calloc(1, sizeof(struct stat));
+		if (!buf)
+			exit_error(NULL, NULL, 1);
+		if (stat(cmd_argv[0], buf) == -1)
+			exit_error(NULL, NULL, 1);
+		if (S_ISDIR(buf->st_mode) != 0)
+			exit_error(cmd_argv[0], "is a directory", 126);
+		free(buf);
 		work_path = cmd_argv[0];
 	}
 	else
