@@ -6,13 +6,27 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 14:52:19 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 14:45:42 by arommers      ########   odam.nl         */
+/*   Updated: 2023/09/01 12:26:50 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // check if the passed argument is a token and determine which
+
+int	all_spaces(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (!isspace(input[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 t_tokens	check_index(char *input, int i)
 {
@@ -92,10 +106,12 @@ int	tokenizer(t_data *data)
 	i = 0;
 	while (data->input[i])
 	{
+		if (all_spaces(data->input))
+			return (0);
 		j = 0;
 		i += skip_spaces(data->input, i);
 		if (!data->input[i])
-			return (0);
+			return (1);
 		if (check_index(data->input, i))
 			j = store_token(data, i);
 		else

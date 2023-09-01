@@ -6,7 +6,7 @@
 /*   By: arommers <arommers@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/10 13:52:37 by arommers      #+#    #+#                 */
-/*   Updated: 2023/08/30 16:31:06 by mgoedkoo      ########   odam.nl         */
+/*   Updated: 2023/09/01 12:26:54 by arommers      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int					add_lex_node(t_lexer **head, t_tokens token, char *str);
 
 int					is_space(char c);
 int					check_quotes(char q);
+int					all_spaces(char *input);
 void				free_lexer(t_lexer **head);
 int					check_last(t_lexer **head);
 int					skip_spaces(char *str, int i);
