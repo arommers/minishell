@@ -6,7 +6,7 @@
 /*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 15:26:11 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/28 12:54:47 by arommers      ########   odam.nl         */
+/*   Updated: 2023/09/05 14:40:56 by mgoedkoo      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	heredoc_child(t_data *data, t_lexer *heredoc,
 	init_signals(3);
 	line = readline("> ");
 	while (line && ft_strncmp(heredoc->chars, line, 
-			ft_strlen(heredoc->chars)) != 0)
+			ft_strlen(heredoc->chars) + 1) != 0)
 	{
 		if (isquoted == 0 && ft_strchr(line, '$'))
 		{

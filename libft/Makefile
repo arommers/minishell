@@ -6,7 +6,7 @@
 #    By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/10 15:11:23 by mgoedkoo      #+#    #+#                  #
-#    Updated: 2023/08/07 10:12:59 by arommers      ########   odam.nl          #
+#    Updated: 2023/09/05 15:37:17 by mgoedkoo      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ all: $(NAME)
 
 $(NAME):
 	@if [ $(MESSAGE) -eq 0 ]; then									\
-		echo "$(YELLOW)----------------------------------------";		\
+		echo "$(YELLOW)----------------------------------------";	\
 		echo "           $(NAME) = STARTED";						\
 		echo "----------------------------------------$(RESET)";	\
 		export MESSAGE=1;											\
