@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   redirects.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgoedkoo <mgoedkoo@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/07/14 16:42:32 by mgoedkoo      #+#    #+#                 */
-/*   Updated: 2023/08/30 14:18:57 by mgoedkoo      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   redirects.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgoedkoo <mgoedkoo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/14 16:42:32 by mgoedkoo          #+#    #+#             */
+/*   Updated: 2023/10/09 18:42:28 by mgoedkoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static int	redirect_input(t_data *data, t_cmd *cmd, t_lexer *tmp, int fd_in)
 				return (-2);
 		}
 		infile = tmp->chars;
-		fd_in = open(infile, O_RDONLY);
-		if (fd_in == -1)
-			return (print_error(infile, NULL), -1);
 	}
 	else
-		fd_in = -3;
+		infile = cmd->hd_filename;
+	fd_in = open(infile, O_RDONLY);
+	if (fd_in == -1)
+		return (print_error(infile, NULL), -1);
 	return (fd_in);
 }
 
@@ -75,15 +75,6 @@ static int	*handle_redir(t_data *data, t_cmd *cmd, int fd_io[])
 		if (fd_io[0] == -1 || fd_io[1] == -1)
 			return (fd_io);
 		tmp = tmp->next;
-	}
-	if (fd_io[0] == -3)
-	{
-		fd_io[0] = open(cmd->hd_filename, O_RDONLY);
-		if (fd_io[0] == -1)
-		{
-			print_error(cmd->hd_filename, NULL);
-			return (fd_io);
-		}
 	}
 	return (fd_io);
 }
